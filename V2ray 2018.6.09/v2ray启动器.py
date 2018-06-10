@@ -1,5 +1,5 @@
 # -- coding:utf-8--
-from multiprocessing import Process
+import multiprocessing
 from urllib import request
 import core.mods
 import os
@@ -13,6 +13,7 @@ import sys
 
 #程序入口
 if __name__ == "__main__":
+	multiprocessing.freeze_support()
 	print('\nV2ray 启动器V1.1')
 	#检测软件是否被安装过
 	if os.path.exists(r'C:\pythonX'):
@@ -55,7 +56,7 @@ if __name__ == "__main__":
 				sys.exit(0)
 			try:
 				#申请一个子进程开启删除配置文件脚本
-				p = Process(target=core.mods.rmv2json)
+				p = multiprocessing.Process(target=core.mods.rmv2json)
 				#运行脚本
 				p.start()
 				#主进程同时打开V2RAY
