@@ -36,7 +36,7 @@ def yzkey(key):
     fhz = 0
     #打开用户信息文件
     with open(userklj) as zx_1:
-    	userk = json.load(zx_1)
+        userk = json.load(zx_1)
 
     #打开密钥库
     with open(keyklj) as zx:
@@ -45,31 +45,29 @@ def yzkey(key):
     #判断密钥是否在密钥库中
     if key in keyk.keys():
         #获取密钥时间
-    	keytime = keyk[key]
+        keytime = keyk[key]
         #将密钥时间转换为统一格式
         wl_time_sr = wl_time(keytime)
         #重新定义key
         keycr = "lucycore" + key
         #创建一个字典键-值存入key和时间
-    	userk[keycr] = wl_time_sr
+        userk[keycr] = wl_time_sr
         #写入到json文件中
-    	with open(userklj,'w') as ojbk:
-    		json.dump(userk,ojbk)
+        with open(userklj,'w') as ojbk:
+            json.dump(userk,ojbk)
         #删除密钥库中的已用密钥
-    	del keyk[key]
+        del keyk[key]
         #写入到json文件中
-    	with open(keyklj,'w') as ojbk_1:
-    		json.dump(keyk,ojbk_1)
-    	print("删除完成！")
+        with open(keyklj,'w') as ojbk_1:
+            json.dump(keyk,ojbk_1)
         fhz = 1
     else:
-    	if key in userk.keys():
-    		usertime = userk[key]
+        if key in userk.keys():
+            usertime = userk[key]
             if timeyz(usertime):
                 fhz = 1
             else:
                 fhz = 2
-    	else:
-    		print("抱歉您输入的密钥错误！")
-    		input("")
+        else:
             fhz = 3
+    return fhz
