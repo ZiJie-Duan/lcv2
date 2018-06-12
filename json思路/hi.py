@@ -14,7 +14,19 @@ with open(keyklj) as zx:
 if key in keyk.keys():
 	time = keyk[key]
 	print("您的密钥现已激活 时间：" + str(time))
-	input("")
+
+	userk[key] = keyk[key]
+	with open(userklj,'w') as ojbk:
+		json.dump(userk,ojbk)
+	print("写入完成！")
+
+	del keyk[key]
+	print(keyk)
+
+	with open(keyklj,'w') as ojbk_1:
+		json.dump(keyk,ojbk_1)
+	print("删除完成！")
+
 else:
 	if key in userk.keys():
 		usertime = userk[key]
