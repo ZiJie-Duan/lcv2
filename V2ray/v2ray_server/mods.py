@@ -62,6 +62,7 @@ def yzkey(key):
             json.dump(keyk,ojbk_1)
         fhz = 1
     else:
+        #验证时间是否可用
         if key in userk.keys():
             usertime = userk[key]
             if timeyz(usertime):

@@ -31,3 +31,4 @@ while True:
     cli.sendall(sen.encode())
     #关闭连接
     cli.close()
+

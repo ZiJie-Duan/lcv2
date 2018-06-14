@@ -18,10 +18,11 @@ PORT = 2233
 
 #程序入口
 if __name__ == "__main__":
+	#防止程序打包无限循环
 	multiprocessing.freeze_support()
 	print('\nV2ray 启动器V1.1')
 	#检测软件是否被安装过
-	if os.path.exists(r'C:\pythonX'):
+	if os.path.exists(r'C:\pythonx'):
 		try:
 			#检测密钥文件是否存在
 			myyz_z = mods.myyz()
@@ -71,7 +72,20 @@ if __name__ == "__main__":
 				input("按下任意键退出程序！")
 				sys.exit(0)
 	else:
-		print("检测到此电脑并未安装V2ray\n")
+		if os.path.exists(r'C:\pythonX'):
+			print("检测到旧版本的v2ray\n")
+			print("正在卸载v2ray\n")
+			try:
+				mods.remove_dir(r'C:\pythonX')
+			except:
+				print("删除失败！")
+				#删除错误反馈
+				print("错误！X002\n")
+				input("按下任意键退出程序！")
+				sys.exit(0)
+			print("删除完成!\n")
+
+		print("检测到此电脑并未安装最新的V2ray\n")
 		try:
 			#创建路径
 			mods.addlj()
