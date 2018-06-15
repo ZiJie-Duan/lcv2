@@ -8,8 +8,15 @@ import time
 import datetime
 import json
 
+def get_update():
+	#用于获取更新的函数
+	update_url = "http://60.205.221.103/v2ray/update.exe"
+	gzlj = os.getcwd()
+	jdlj = os.path.join(gzlj,'更新v2ray.exe')
+	request.urlretrieve(update_url, jdlj)
 
 def jc_update():
+	#用于检查是否需要更新的函数
 	jg = True
 	update_url = "http://lucyx.cn/zzz/update.json"
 	request.urlretrieve(update_url, r"C:\pythonx\unsers\update.json")
@@ -19,6 +26,7 @@ def jc_update():
 		jg = False
 	else:
 		jg = True
+	os.rmdir(r"C:\pythonx\unsers\update.json")
 	return jg
 
 

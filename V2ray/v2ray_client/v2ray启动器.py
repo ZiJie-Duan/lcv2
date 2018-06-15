@@ -20,9 +20,32 @@ PORT = 2233
 if __name__ == "__main__":
 	#防止程序打包无限循环
 	multiprocessing.freeze_support()
+	gzlj = os.getcwd()
+	gx_jdlj = os.path.join(gzlj,'更新v2ray.exe')
+
 	print('\nV2ray 启动器V1.1')
+
 	#检测软件是否被安装过
 	if os.path.exists(r'C:\pythonx'):
+		if jc_update():
+			print("已检查到更新！\n")
+			if os.path.exists(gx_jdlj):
+				print("请关闭此应用后\n")
+				print("点击此文件根目录下的‘更新v2ray.exe’\n")
+				input("按下回车后关闭此应用！")
+				sys.exit(0)
+			try:
+				print("正在下载更新文件！\n")
+				get_update()
+				print("已完成下载！\n")
+				print("请关闭此应用后\n")
+				print("点击此文件根目录下的‘更新v2ray.exe’\n")
+				input("按下回车后关闭此应用！")
+			except:
+				print("更新失败!")
+				print("错误！x004\n")
+				input("按下任意键退出程序！")
+			sys.exit(0)
 		try:
 			#检测密钥文件是否存在
 			myyz_z = mods.myyz()
@@ -49,8 +72,8 @@ if __name__ == "__main__":
             print("密钥已过期！\n")
             input("按下任意键退出程序！")
 			sys.exit(0)
-        if server_re == 1:
-            print("验证成功！\n")
+		if server_re == 1:
+			print("验证成功！\n")
 			try:
 				#下载配置文件
 				core.mods.getv2json()
@@ -85,8 +108,8 @@ if __name__ == "__main__":
 				sys.exit(0)
 			print("删除完成!\n")
 
-		print("检测到此电脑并未安装最新的V2ray\n")
 		try:
+			print("检测到此电脑并未安装最新的V2ray\n")
 			#创建路径
 			mods.addlj()
 		except:
