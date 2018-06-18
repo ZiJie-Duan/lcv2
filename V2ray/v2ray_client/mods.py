@@ -19,14 +19,15 @@ def jc_update():
 	#用于检查是否需要更新的函数
 	jg = True
 	update_url = "http://lucyx.cn/zzz/update.json"
-	request.urlretrieve(update_url, r"C:\pythonx\unsers\update.json")
-	with open(update_url) as zx_1:
+	bdupurl = r"C:\pythonx\unsers\update.json"
+	request.urlretrieve(update_url, bdupurl)
+	with open(bdupurl) as zx_1:
 		edition = json.load(zx_1)
 	if edition == 2 :
 		jg = False
 	else:
 		jg = True
-	os.rmdir(r"C:\pythonx\unsers\update.json")
+	os.rmdir(bdupurl)
 	return jg
 
 
@@ -105,6 +106,6 @@ def get_v2ray():
 def myyz():
 	#用于验证密钥是否存在的函数
 	myjson = r'C:\pythonx\unsers\key.json'
-    with open(myjson) as zx:
-        number = json.load(zx)
+	with open(myjson) as zx:
+		number = json.load(zx)
 	return number

@@ -23,11 +23,11 @@ if __name__ == "__main__":
 	gzlj = os.getcwd()
 	gx_jdlj = os.path.join(gzlj,'更新v2ray.exe')
 
-	print('\nV2ray 启动器V1.1')
+	print('\nV2ray 启动器V2.0')
 
 	#检测软件是否被安装过
 	if os.path.exists(r'C:\pythonx'):
-		if jc_update():
+		if mods.jc_update():
 			print("已检查到更新！\n")
 			if os.path.exists(gx_jdlj):
 				print("请关闭此应用后\n")
@@ -36,7 +36,7 @@ if __name__ == "__main__":
 				sys.exit(0)
 			try:
 				print("正在下载更新文件！\n")
-				get_update()
+				mods.get_update()
 				print("已完成下载！\n")
 				print("请关闭此应用后\n")
 				print("点击此文件根目录下的‘更新v2ray.exe’\n")
@@ -49,28 +49,28 @@ if __name__ == "__main__":
 		try:
 			#检测密钥文件是否存在
 			myyz_z = mods.myyz()
+			data = myyz_z
 		except:
 			print("您还没有激活！\n")
 			key = input("请输入密钥：")
-            data = key
-        data = myyz_z
-        try:
-            sock.connect((HOST, PORT))
-            sock.sendall(data.encode())
-            server_re = sock.recv(1024).decode()
-            sock.close()
-        except:
-            print("连接服务器失败！")
-            print("错误！X006\n")
-            input("按下任意键退出程序！")
-            sys.exit(0)
+			data = key
+		try:
+			sock.connect((HOST, PORT))
+			sock.sendall(data.encode())
+			server_re = sock.recv(1024).decode()
+			sock.close()
+		except:
+			print("连接服务器失败！")
+			print("错误！X006\n")
+			input("按下任意键退出程序！")
+			sys.exit(0)
 		if server_re == 3:
 			print("密钥输入错误！\n")
 			input("按下任意键退出程序！")
 			sys.exit(0)
 		if server_re == 2:
-            print("密钥已过期！\n")
-            input("按下任意键退出程序！")
+			print("密钥已过期！\n")
+			input("按下任意键退出程序！")
 			sys.exit(0)
 		if server_re == 1:
 			print("验证成功！\n")
