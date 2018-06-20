@@ -13,7 +13,7 @@ import socket
 
 sock = socket.socket()
 
-HOST = '45.32.169.9'
+HOST = '45.76.49.221'
 PORT = 2233
 
 #程序入口

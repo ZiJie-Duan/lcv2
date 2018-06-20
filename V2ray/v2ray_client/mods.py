@@ -27,7 +27,6 @@ def jc_update():
 		jg = False
 	else:
 		jg = True
-	os.rmdir(bdupurl)
 	return jg
 
 
