@@ -13,7 +13,7 @@ import socket
 
 sock = socket.socket()
 
-HOST = '45.76.49.221'
+HOST = '192.168.1.112'
 PORT = 2233
 
 #程序入口
@@ -64,15 +64,15 @@ if __name__ == "__main__":
 			print("错误！X006\n")
 			input("按下任意键退出程序！")
 			sys.exit(0)
-		if server_re == 3:
+		if server_re == "3":
 			print("密钥输入错误！\n")
 			input("按下任意键退出程序！")
 			sys.exit(0)
-		if server_re == 2:
+		if server_re == "2":
 			print("密钥已过期！\n")
 			input("按下任意键退出程序！")
 			sys.exit(0)
-		if server_re == 1:
+		if server_re == "1":
 			print("验证成功！\n")
 			try:
 				#下载配置文件
@@ -94,6 +94,8 @@ if __name__ == "__main__":
 				print("错误！X003\n")
 				input("按下任意键退出程序！")
 				sys.exit(0)
+		else:
+			print(server_re)
 	else:
 		if os.path.exists(r'C:\pythonX'):
 			print("检测到旧版本的v2ray\n")
