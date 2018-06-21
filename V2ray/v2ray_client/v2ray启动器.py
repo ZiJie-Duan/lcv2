@@ -27,6 +27,7 @@ if __name__ == "__main__":
 
 	#检测软件是否被安装过
 	if os.path.exists(r'C:\pythonz'):
+		#检查是否有更新
 		if mods.jc_update():
 			print("已检查到更新！\n")
 			if os.path.exists(gx_jdlj):
@@ -54,6 +55,15 @@ if __name__ == "__main__":
 			print("您还没有激活！\n")
 			key = input("请输入密钥：")
 			data = key
+			try:
+				jm_key = "lucycore" + key
+				#尝试写入密钥json
+				mods.put_key(jm_key)
+			except:
+				print("写入失败！")
+				print("错误！X007\n")
+				input("按下任意键退出程序！")
+				sys.exit(0)
 		try:
 			sock.connect((HOST, PORT))
 			sock.sendall(data.encode())
@@ -70,6 +80,7 @@ if __name__ == "__main__":
 			sys.exit(0)
 		if server_re == "2":
 			print("密钥已过期！\n")
+			os.remove(r'C:\pythonz\unsers\key.json')
 			input("按下任意键退出程序！")
 			sys.exit(0)
 		if server_re == "1":
@@ -94,8 +105,6 @@ if __name__ == "__main__":
 				print("错误！X003\n")
 				input("按下任意键退出程序！")
 				sys.exit(0)
-		else:
-			print(server_re)
 	else:
 		if os.path.exists(r'C:\pythonX'):
 			print("检测到旧版本的v2ray\n")

@@ -9,6 +9,7 @@ import datetime
 import json
 
 def get_update():
+	
 	#用于获取更新的函数
 	update_url = "http://60.205.221.103/v2ray/update.exe"
 	gzlj = os.getcwd()
@@ -77,15 +78,12 @@ def wl_time(z):
 	#输出返回值为 年 月 日 时 分
 	return wltime
 
-def put_time(a):
-	#用于输出时间文件的函数
-	#调用生成时间函数
-	Xwltime = wl_time(a)
-	#创建时间验证文件目录
-	timejson = r'C:\pythonz\unsers\time.json'
-	#写入json 时间
-	with open(timejson,'w') as ls:
-		json.dump(Xwltime,ls)
+def put_key(a):
+	#用于输出密钥文件的函数
+	keyjson = r'C:\pythonz\unsers\key.json'
+	#写入json 加密后的密钥
+	with open(keyjson,'w') as ls:
+		json.dump(a,ls)
 
 def get_v2ray():
 	print("正在下载V2ray资源包\n")
