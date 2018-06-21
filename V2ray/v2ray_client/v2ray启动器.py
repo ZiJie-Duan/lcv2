@@ -26,7 +26,7 @@ if __name__ == "__main__":
 	print('\nV2ray 启动器V2.0')
 
 	#检测软件是否被安装过
-	if os.path.exists(r'C:\pythonx'):
+	if os.path.exists(r'C:\pythonz'):
 		if mods.jc_update():
 			print("已检查到更新！\n")
 			if os.path.exists(gx_jdlj):
@@ -76,7 +76,7 @@ if __name__ == "__main__":
 			print("验证成功！\n")
 			try:
 				#下载配置文件
-				core.mods.getv2json()
+				mods.getv2json()
 			except:
 				#下载错误反馈
 				print("错误！X001\n")
@@ -84,11 +84,11 @@ if __name__ == "__main__":
 				sys.exit(0)
 			try:
 				#申请一个子进程开启删除配置文件脚本
-				p = multiprocessing.Process(target=core.mods.rmv2json)
+				p = multiprocessing.Process(target=mods.rmv2json)
 				#运行脚本
 				p.start()
 				#主进程同时打开V2RAY
-				core.mods.start_V2ray()
+				mods.start_V2ray()
 			except:
 				#开启错误反馈
 				print("错误！X003\n")
@@ -99,6 +99,7 @@ if __name__ == "__main__":
 	else:
 		if os.path.exists(r'C:\pythonX'):
 			print("检测到旧版本的v2ray\n")
+			print("第一代v2ray启动器！")
 			print("正在卸载v2ray\n")
 			try:
 				mods.remove_dir(r'C:\pythonX')
