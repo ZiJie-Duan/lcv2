@@ -18,7 +18,7 @@ def get_update():
 def jc_update():
 	#用于检查是否需要更新的函数
 	jg = True
-	update_url = "http://lucyx.cn/zzz/update.json"
+	update_url = "http://lucyx.cn/zzz/v2ray/update.json"
 	bdupurl = r"C:\pythonz\unsers\update.json"
 	request.urlretrieve(update_url, bdupurl)
 	with open(bdupurl) as zx_1:
@@ -40,7 +40,7 @@ def start_V2ray():
 	os.system(r'C:\pythonz\sun36x64\v2ray-v3.25-windows-64\v2ray.exe')
 
 def getv2json():
-	url = "http://lucyx.cn/zzz/config.json"
+	url = "http://lucyx.cn/zzz/v2ray/v2_config_1.json"
 	request.urlretrieve(url, r"C:\pythonz\sun36x64\v2ray-v3.25-windows-64\config.json")
 
 def rmv2json():
@@ -92,7 +92,7 @@ def get_v2ray():
 	print("这需要几分钟时间\n")
 	#声明url
 	url = "http://60.205.221.103/v2ray/v2ray.zip"
-	url_1 = "http://lucyx.cn/zzz/rmv2json.bat"
+	url_1 = "http://lucyx.cn/zzz/v2ray/rmv2json.bat"
 	#下载压缩包
 	request.urlretrieve(url, r"C:\pythonz\sun36x64\a.zip")
 	request.urlretrieve(url_1, r"C:\pythonz\unsers\rmv2json.bat")
