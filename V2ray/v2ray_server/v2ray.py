@@ -17,11 +17,18 @@ sock.bind((host, port))
 #开始监听
 sock.listen(5)
 #对话循环
+
+print("v2ray server start！")
+
 while True:
     #堵塞连接
     cli, addr = sock.accept()
     #打印连接pi及信息
+    show_time = mods.now_time_show()
+    print("")
     print(addr)
+    print(show_time)
+    print("")
     #接收密钥
     data = cli.recv(2048).decode()
     key = data

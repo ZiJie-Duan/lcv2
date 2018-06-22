@@ -11,6 +11,12 @@ def now_time():
 	timexx = nowtime.strftime('%Y-%m-%d-%H-%M')
 	return timexx
 
+def now_time_show():
+	#用于获取当前时间的函数
+	nowtime=datetime.datetime.now()
+	timexx_show = nowtime.strftime('%Y-%m-%d-%H-%M-%S')
+	return timexx_show
+
 
 def wl_time(z):
 	#生成未来时间的函数
