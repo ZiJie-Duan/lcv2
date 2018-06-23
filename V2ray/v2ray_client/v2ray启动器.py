@@ -76,6 +76,7 @@ if __name__ == "__main__":
 			sys.exit(0)
 		if server_re == "3":
 			print("密钥输入错误！\n")
+			os.remove(r'C:\pythonz\unsers\key.json')
 			input("按下任意键退出程序！")
 			sys.exit(0)
 		if server_re == "2":
