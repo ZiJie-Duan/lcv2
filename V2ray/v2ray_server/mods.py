@@ -67,6 +67,7 @@ def yzkey(key):
 		with open(keyklj,'w') as ojbk_1:
 			json.dump(keyk,ojbk_1)
 		fhz = "1"
+		usertime = wl_time_sr
 	else:
 		#验证时间是否可用
 		if key in userk.keys():
@@ -77,4 +78,5 @@ def yzkey(key):
 				fhz = "2"
 		else:
 			fhz = "3"
-	return fhz
+			usertime = "0000-00-00-00-00"
+	return fhz, usertime

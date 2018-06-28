@@ -9,7 +9,7 @@ import datetime
 import json
 
 def get_update():
-	
+
 	#用于获取更新的函数
 	update_url = "http://60.205.221.103/v2ray/update.exe"
 	gzlj = os.getcwd()

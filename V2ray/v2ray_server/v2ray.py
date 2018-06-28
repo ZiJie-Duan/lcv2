@@ -21,21 +21,27 @@ sock.listen(5)
 print("v2ray server start！")
 
 while True:
-    #堵塞连接
-    cli, addr = sock.accept()
-    #打印连接pi及信息
-    show_time = mods.now_time_show()
-    print("")
-    print(addr)
-    print(show_time)
-    print("")
-    #接收密钥
-    data = cli.recv(2048).decode()
-    key = data
-    #验证密钥
-    sen = mods.yzkey(key)
-    #发送回客户端
-    cli.sendall(sen.encode())
-    #关闭连接
-    cli.close()
-
+    try:
+        #堵塞连接
+        cli, addr = sock.accept()
+        #打印连接pi及信息
+        show_time = mods.now_time_show()
+        print("")
+        print(addr)
+        print(show_time)
+        print("")
+        #接收密钥
+        data = cli.recv(2048).decode()
+        key = data
+        #验证密钥
+        sen_zt, sen_time = mods.yzkey(key)
+        #发送回客户端
+        cli.sendall(sen_zt.encode())
+        cli.sendall(sen_time.encode())
+        #关闭连接
+        cli.close()
+    except:
+        show_time = mods.now_time_show()
+        print("\n错误！")
+        print(show_time)
+        print("\n")

@@ -68,6 +68,7 @@ if __name__ == "__main__":
 			sock.connect((HOST, PORT))
 			sock.sendall(data.encode())
 			server_re = sock.recv(1024).decode()
+			server_time = sock.recv(1024).decode()
 			sock.close()
 		except:
 			print("连接服务器失败！")
@@ -86,6 +87,8 @@ if __name__ == "__main__":
 			sys.exit(0)
 		if server_re == "1":
 			print("验证成功！\n")
+			print("到期时间：" + server_time)
+			print("")
 			try:
 				#下载配置文件
 				mods.getv2json()
