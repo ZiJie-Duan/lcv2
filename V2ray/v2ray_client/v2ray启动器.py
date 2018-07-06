@@ -11,13 +11,7 @@ import json
 import sys
 import socket
 
-sock = socket.socket()
-
-HOST = '60.205.221.103'
-PORT = 2233
-
-#程序入口
-if __name__ == "__main__":
+def go():
 	#防止程序打包无限循环
 	multiprocessing.freeze_support()
 	gzlj = os.getcwd()
@@ -65,6 +59,10 @@ if __name__ == "__main__":
 				input("按下任意键退出程序！")
 				sys.exit(0)
 		try:
+			#创建套接字
+			sock = socket.socket()
+			HOST = '60.205.221.103'
+			PORT = 2233
 			sock.connect((HOST, PORT))
 			sock.sendall(data.encode())
 			server_re = sock.recv(1024).decode()
@@ -72,19 +70,21 @@ if __name__ == "__main__":
 			sock.close()
 		except:
 			print("连接服务器失败！")
-			print("错误！X006\n")
-			input("按下任意键退出程序！")
+			print("错误！X010\n")
+			input("按下任意键关闭程序！")
 			sys.exit(0)
 		if server_re == "3":
 			print("密钥输入错误！\n")
 			os.remove(r'C:\pythonz\unsers\key.json')
-			input("按下任意键退出程序！")
-			sys.exit(0)
+			print("请重新启动再次输入")
+			input("按下任意键重启程序！")
+			go()
 		if server_re == "2":
 			print("密钥已过期！\n")
 			os.remove(r'C:\pythonz\unsers\key.json')
-			input("按下任意键退出程序！")
-			sys.exit(0)
+			print("按下任意键重启程序！")
+			input("用于重新激活程序")
+			go()
 		if server_re == "1":
 			print("验证成功！\n")
 			print("到期时间：" + server_time)
@@ -143,6 +143,12 @@ if __name__ == "__main__":
 			sys.exit(0)
 
 		print("安装成功！\n")
-		print("请重新启动程序！\n")
-		input("按下任意键退出程序！")
-		sys.exit(0)
+		print("正在重新启动程序！\n")
+		go()
+
+
+#程序入口
+if __name__ == "__main__":
+	go()
+
+
