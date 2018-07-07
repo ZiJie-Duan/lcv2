@@ -29,7 +29,6 @@ while True:
         print("")
         print(addr)
         print(show_time)
-        print("")
         #接收密钥
         data = cli.recv(2048).decode()
         key = data
@@ -37,7 +36,19 @@ while True:
         sen_zt, sen_time = mods.yzkey(key)
         #发送回客户端
         cli.sendall(sen_zt.encode())
+        time.sleep(1)
         cli.sendall(sen_time.encode())
+        if sen_zt == "1" :
+            print("ok")
+        else:
+            if sen_zt == "2" :
+                print("key_no")
+            else:   
+                if sen_zt == "3" :
+                    print("no_key")
+                else:
+                    print("哈？")
+        print("")
         #关闭连接
         cli.close()
     except:

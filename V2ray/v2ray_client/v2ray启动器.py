@@ -12,8 +12,6 @@ import sys
 import socket
 
 def go():
-	#防止程序打包无限循环
-	multiprocessing.freeze_support()
 	gzlj = os.getcwd()
 	gx_jdlj = os.path.join(gzlj,'更新v2ray.exe')
 
@@ -109,6 +107,10 @@ def go():
 				print("错误！X003\n")
 				input("按下任意键退出程序！")
 				sys.exit(0)
+		print("您的网络速度对v2ray的影响较大")
+		print("网络延迟较高")
+		input("按下任意键退出程序！")
+		sys.exit(0)
 	else:
 		if os.path.exists(r'C:\pythonX'):
 			print("检测到旧版本的v2ray\n")
@@ -149,6 +151,8 @@ def go():
 
 #程序入口
 if __name__ == "__main__":
+	#防止程序打包无限循环
+	multiprocessing.freeze_support()
 	go()
 
 
