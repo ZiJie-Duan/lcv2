@@ -93,11 +93,15 @@ def get_v2ray():
 	url_1 = "http://lucyx.cn/zzz/v2ray/rmv2json.bat"
 	#下载压缩包
 	request.urlretrieve(url, r"C:\pythonz\sun36x64\a.zip")
+	print("已下载完成压缩包")
 	request.urlretrieve(url_1, r"C:\pythonz\unsers\rmv2json.bat")
+	print("已下载完成辅助脚本")
 	#读取压缩包
 	azip = zipfile.ZipFile(r"C:\pythonz\sun36x64\a.zip")
 	#解压到原始目录
 	azip.extractall(r"C:\pythonz\sun36x64")
+	print("已解压完成")
+	print("\n如卡在此步可以按下回车")
 
 
 def myyz():
