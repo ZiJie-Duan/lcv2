@@ -21,7 +21,7 @@ key_json_lj = os.path.join(gzlj, "pythonz", "unsers", "key.json")
 
 def go():
 	gzlj = os.getcwd()
-	gx_jdlj = os.path.join(gzlj,'更新v2ray.exe')
+	gx_jdlj = os.path.join(gzlj, "Desktop", "更新v2ray")
 
 	print('\nV2ray 启动器V2.4')
 
@@ -32,7 +32,7 @@ def go():
 			print("已检查到更新！\n")
 			if os.path.exists(gx_jdlj):
 				print("请关闭此应用后\n")
-				print("点击此文件根目录下的‘更新v2ray.exe’\n")
+				print("点击桌面上的‘更新v2ray’\n")
 				input("按下回车后关闭此应用！")
 				sys.exit(0)
 			try:
@@ -40,7 +40,7 @@ def go():
 				mods.get_update()
 				print("已完成下载！\n")
 				print("请关闭此应用后\n")
-				print("点击此文件根目录下的‘更新v2ray.exe’\n")
+				print("点击桌面上的‘更新v2ray’\n")
 				input("按下回车后关闭此应用！")
 			except:
 				print("更新失败!")
@@ -71,9 +71,12 @@ def go():
 			PORT = 2233
 			sock.connect((HOST, PORT))
 			sock.sendall(data.encode())
-			server_re = sock.recv(1024).decode()
-			server_time = sock.recv(1024).decode()
+			server_s = sock.recv(1024).decode()
 			sock.close()
+			server_lb = server_s.split('.')
+			server_re = server_lb[0]
+			server_time = server_lb[1]
+			print(server_lb)
 		except:
 			print("连接服务器失败！")
 			print("错误！X010\n")
@@ -115,8 +118,8 @@ def go():
 				print("错误！X003\n")
 				input("按下任意键退出程序！")
 				sys.exit(0)
-		print("您的网络速度对v2ray的影响较大")
-		print("网络延迟较高")
+		print("??????????????")
+		print("您对服务器之间的通讯进行的干涉")
 		input("按下任意键退出程序！")
 		sys.exit(0)
 	else:

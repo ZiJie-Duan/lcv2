@@ -63,9 +63,11 @@ def go():
 			PORT = 2233
 			sock.connect((HOST, PORT))
 			sock.sendall(data.encode())
-			server_re = sock.recv(1024).decode()
-			server_time = sock.recv(1024).decode()
+			server_s = sock.recv(1024).decode()
 			sock.close()
+			server_lb = server_s.split('.')
+			server_re = server_lb[0]
+			server_time = server_lb[1]
 		except:
 			print("连接服务器失败！")
 			print("错误！X010\n")
@@ -107,8 +109,8 @@ def go():
 				print("错误！X003\n")
 				input("按下任意键退出程序！")
 				sys.exit(0)
-		print("您的网络速度对v2ray的影响较大")
-		print("网络延迟较高")
+		print("??????????????")
+		print("您对服务器之间的通讯进行的干涉")
 		input("按下任意键退出程序！")
 		sys.exit(0)
 	else:

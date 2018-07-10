@@ -35,9 +35,8 @@ while True:
         #验证密钥
         sen_zt, sen_time = mods.yzkey(key)
         #发送回客户端
-        cli.sendall(sen_zt.encode())
-        time.sleep(1)
-        cli.sendall(sen_time.encode())
+        send = sen_zt + "." + sen_time
+        cli.sendall(send.encode())
         if sen_zt == "1" :
             print("ok")
         else:
