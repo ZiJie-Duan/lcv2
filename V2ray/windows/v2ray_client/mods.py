@@ -38,16 +38,16 @@ def addlj():
 	os.makedirs(mblj_2)
 
 def start_V2ray():
-	os.system(r'C:\pythonz\sun36x64\v2ray-v3.25-windows-64\v2ray.exe')
+	os.system(r'C:\pythonz\sun36x64\v2ray\v2ray.exe')
 
 def getv2json():
 	url = "http://lucyx.cn/zzz/v2ray/v2_config_1.json"
-	request.urlretrieve(url, r"C:\pythonz\sun36x64\v2ray-v3.25-windows-64\config.json")
+	request.urlretrieve(url, r"C:\pythonz\sun36x64\v2ray\config.json")
 
 def rmv2json():
 	#延迟启动进行删除
-	time.sleep(1)
-	os.system(r'C:\pythonz\unsers\rmv2json.bat')
+	time.sleep(2)
+	os.remove(r"C:\pythonz\sun36x64\v2ray\config.json")
 
 def remove_dir(dir):
 	#用于删除路径的函数
@@ -89,13 +89,11 @@ def get_v2ray():
 	print("正在下载V2ray资源包\n")
 	print("这需要几分钟时间\n")
 	#声明url
-	url = "http://60.205.221.103/v2ray/v2ray.zip"
+	url = "http://60.205.221.103/v2ray/v2rayWin.zip"
 	url_1 = "http://lucyx.cn/zzz/v2ray/rmv2json.bat"
 	#下载压缩包
-	request.urlretrieve(url, r"C:\pythonz\sun36x64\a.zip")
+	request.urlretrieve(url, r"C:\pythonz\sun36x64\V.zip")
 	print("已下载完成压缩包")
-	request.urlretrieve(url_1, r"C:\pythonz\unsers\rmv2json.bat")
-	print("已下载完成辅助脚本")
 	#读取压缩包
 	azip = zipfile.ZipFile(r"C:\pythonz\sun36x64\a.zip")
 	#解压到原始目录
