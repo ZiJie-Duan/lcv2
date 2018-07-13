@@ -49,6 +49,7 @@ v2ray_rar_lj = r"C:\pythonz\sun36x64\V.zip"
 #用户偏好设置文件
 user_phsz_json_lj = r"C:\pythonz\unsers\Preference.json"
 
+
 def user_preference():
 	#用于验证用户偏好设置的函数
 	with open(user_phsz_json_lj) as zx:
@@ -195,6 +196,7 @@ def jcuser_cz_zt():
 		#检测密钥文件是否存在
 		ccz = myyz()
 		zh_lsxs = ccz[0]
+		zh_lsxs_jm = aes_b(keytxt,zh_lsxs)
 		try:
 			#读取个人偏好
 			phsz = user_preference()
@@ -202,7 +204,7 @@ def jcuser_cz_zt():
 			phsz = "no"
 
 		if phsz == "yes":
-			print("您的帐号：" + zh_lsxs)
+			print("您的帐号：" + zh_lsxs_jm)
 			print("\n如果您想切换账号或取消保存账号密码\n")
 			print("可以输入“off”切换，无需变动按回车跳过！\n")
 			qh = input("请输入(off/回车跳过)：")
@@ -212,7 +214,6 @@ def jcuser_cz_zt():
 				print("\n此次修改会在下一次启动生效")
 				print("\n正在重新启动!\n")
 				server_socks_zt()
-			input("\n按下回车自动登录")
 	except:
 		#普通登陆函数
 		print("在本地并没有您的存档文件\n")
@@ -267,10 +268,11 @@ def server_zc_zt():
 			#输入账号
 			print("\n请输入您的帐号(请不要输入中文)\n")
 			name = input("账号：")
+			namej = aes_a(keytxt,name)
 			#发送账号名称
-			sock.sendall(name.encode())
+			sock.sendall(namej.encode())
 			server_s = sock.recv(1024).decode()
-			if server_s == "true_username":
+			if server_s == "trueusername":
 				print("\n此用户名可用！\n")
 				break
 			else:
@@ -302,7 +304,7 @@ def server_zc_zt():
 
 	return ccz, preference
 
-def key_socks_zt():
+def key_socks_zt(name):
 	print("您的账户没有激活 或 激活已到期")
 	key = input("您的卡密：")
 	try:			
@@ -313,6 +315,9 @@ def key_socks_zt():
 		sock.connect((HOST, PORT))
 		#发送模式
 		sock.sendall("key".encode())
+		server_myd = sock.recv(1024).decode()
+		#发送名称
+		sock.sendall(name.encode())
 		server_myd = sock.recv(1024).decode()
 		#发送卡密
 		sock.sendall(key.encode())
@@ -327,7 +332,7 @@ def key_socks_zt():
 			print("此卡密输入错误或已被激活！")
 			prinr("卡密添加失败！")
 			print("请重新输入！")
-			key_socks_zt()
+			server_socks_zt()
 	except:
 		print("错误！")
 		input("按下任意键退出程序！")
@@ -405,7 +410,7 @@ def server_socks_zt():
 	if server_re == "4":
 		print("您没有使用卡密激活或卡密激活时间已到")
 		print("请输入新的卡密激活！")
-		key_socks_zt()
+		key_socks_zt(name_jm)
 
 	print("??????????????")
 	print("您对服务器之间的通讯进行的干涉")

@@ -32,10 +32,10 @@ def go():
 		#启动检测旧版本程序
 		mods.old_rm()
 		mods.installer()
-                
+
 #程序入口
 if __name__ == "__main__":
-    #防止程序打包无限循环
-    multiprocessing.freeze_support()
-    go()
+	#防止程序打包无限循环
+	multiprocessing.freeze_support()
+	go()
 
