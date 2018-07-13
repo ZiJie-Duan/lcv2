@@ -29,24 +29,24 @@ while True:
         print("")
         print(addr)
         print(show_time)
-        #接收密钥
+        #接收模式识别码
         data = cli.recv(2048).decode()
-        key = data
+        cli.sendall("...".encode())
         #验证密钥
-        sen_zt, sen_time = mods.yzkey(key)
-        #发送回客户端
-        send = sen_zt + "." + sen_time
-        cli.sendall(send.encode())
-        if sen_zt == "1" :
-            print("ok")
-        else:
-            if sen_zt == "2" :
-                print("key_no")
-            else:   
-                if sen_zt == "3" :
-                    print("no_key")
-                else:
-                    print("哈？")
+        if data == "key":
+            #接受名称
+            name = cli.recv(2048).decode()
+            cli.sendall("...".encode())
+            #接受密钥
+            key = cli.recv(2048).decode()
+            cli.sendall("...".encode())
+            key_time_xr(key,name)
+        if data == "zc":
+            zczh_zt()
+        if data == "dl":
+            dlyz_zt()
+
+
         print("")
         #关闭连接
         cli.close()

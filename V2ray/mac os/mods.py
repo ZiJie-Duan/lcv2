@@ -303,7 +303,7 @@ def server_zc_zt():
 
 	return ccz, preference
 
-def key_socks_zt():
+def key_socks_zt(name):
 	print("您的账户没有激活 或 激活已到期")
 	key = input("您的卡密：")
 	try:			
@@ -314,6 +314,9 @@ def key_socks_zt():
 		sock.connect((HOST, PORT))
 		#发送模式
 		sock.sendall("key".encode())
+		server_myd = sock.recv(1024).decode()
+		#发送名称
+		sock.sendall(name.encode())
 		server_myd = sock.recv(1024).decode()
 		#发送卡密
 		sock.sendall(key.encode())
@@ -328,7 +331,7 @@ def key_socks_zt():
 			print("此卡密输入错误或已被激活！")
 			prinr("卡密添加失败！")
 			print("请重新输入！")
-			key_socks_zt()
+			server_socks_zt()
 	except:
 		print("错误！")
 		input("按下任意键退出程序！")
@@ -406,7 +409,7 @@ def server_socks_zt():
 	if server_re == "4":
 		print("您没有使用卡密激活或卡密激活时间已到")
 		print("请输入新的卡密激活！")
-		key_socks_zt()
+		key_socks_zt(name_jm)
 
 	print("??????????????")
 	print("您对服务器之间的通讯进行的干涉")

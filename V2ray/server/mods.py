@@ -137,6 +137,23 @@ def yzkey_zt(key):
 
 	return fhz, usertime
 
+def key_time_xr(key,username):
+	#用于写入时间的函数
+	zt, time = yzkey_zt(key)
+	if zt == "1":
+		userklj = "userk.json"
+
+		with open(userklj) as zx:
+			userzd = json.load(zx)
+
+		yhxx = userzd[username]
+		yhxx[2] = time
+
+		userzd[username] = yhxx
+		with open(userklj,'w') as ojbk_1:
+			json.dump(userzd,ojbk_1)
+
+
 def zczh_zt():
 	#用于进行注册的函数
 	while True:
@@ -152,6 +169,7 @@ def zczh_zt():
 			cli.sendall(send.encode())
 			userk_username_xr_dq(data)
 			break
+
 
 def dlyz_zt():
 	#用于进行登录验证的函数
@@ -186,24 +204,20 @@ def dlyz_zt():
 			userk_xr(name,password,mac,time)
 		else:
 			ztm = 2
-	
+	#进入回传数据模块		
+	if ztm == 1:
+		send_hc = "1" + "." + time
+		cli.sendall(send_hc.encode())
+	if ztm == 2:
+		send_hc = "2" + "." + "0000-00-00-00-00"
+		cli.sendall(send_hc.encode())
+	if ztm == 3:
+		send_hc = "3" + "." + "0000-00-00-00-00"
+		cli.sendall(send_hc.encode())
+	if ztm == 4:
+		send_hc = "4" + "." + time
+		cli.sendall(send_hc.encode())
 
-
-
-
-
-	cli.sendall(wuyong.encode())
-
-
-
-
-
-
-
-
-
-
-def 
 
 
 

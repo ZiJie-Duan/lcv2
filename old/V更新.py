@@ -14,7 +14,7 @@ def rm_json():
 
 def get_json():
 
-	url = "http://lucyx.cn/zzz/v2ray/config.json"
+	url = "http://lucyx.cn/zzz/v2ray/v2_config_1.json"
 	request.urlretrieve(url, json_lj)
 
 print("\n\nv2ray json配置文件更新工具\n")
