@@ -195,6 +195,7 @@ def jcuser_cz_zt():
 		#检测密钥文件是否存在
 		ccz = myyz()
 		zh_lsxs = ccz[0]
+		zh_lsxs_jm = aes_b(keytxt,zh_lsxs)
 		try:
 			#读取个人偏好
 			phsz = user_preference()
@@ -202,7 +203,7 @@ def jcuser_cz_zt():
 			phsz = "no"
 
 		if phsz == "yes":
-			print("您的帐号：" + zh_lsxs)
+			print("您的帐号：" + zh_lsxs_jm)
 			print("\n如果您想切换账号或取消保存账号密码\n")
 			print("可以输入“off”切换，无需变动按回车跳过！\n")
 			qh = input("请输入(off/回车跳过)：")
@@ -212,7 +213,6 @@ def jcuser_cz_zt():
 				print("\n此次修改会在下一次启动生效")
 				print("\n正在重新启动!\n")
 				server_socks_zt()
-			input("\n按下回车自动登录")
 	except:
 		#普通登陆函数
 		print("在本地并没有您的存档文件\n")
@@ -267,10 +267,11 @@ def server_zc_zt():
 			#输入账号
 			print("\n请输入您的帐号(请不要输入中文)\n")
 			name = input("账号：")
+			namej = aes_a(keytxt,name)
 			#发送账号名称
-			sock.sendall(name.encode())
+			sock.sendall(namej.encode())
 			server_s = sock.recv(1024).decode()
-			if server_s == "true_username":
+			if server_s == "trueusername":
 				print("\n此用户名可用！\n")
 				break
 			else:
