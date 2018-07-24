@@ -5,6 +5,7 @@ import datetime
 import json
 import os
 
+
 def now_time():
 	#用于获取当前时间的函数
 	nowtime=datetime.datetime.now()
@@ -27,6 +28,28 @@ def wl_time(z):
 	#输出返回值为 年 月 日 时 分
 	return wltime
 
+def userk_username_dzcdq(name):
+	yzm = False
+	userzclj = "userzc.json"
+
+	with open(userzclj) as zx:
+		userdzc = json.load(zx)
+	if name in userdzc:
+		yzm = True
+	else:
+		yzm = False
+
+	return yzm
+
+
+def userk_yz_qu():
+	#用于取出userk信息的函数
+	userklj = "userk.json"
+	with open(userklj) as zx:
+		userdzc = json.load(zx)
+	return userdzc
+
+
 def timeyz(tiz):
 	yzjg = False
 	timex = now_time()
@@ -36,13 +59,38 @@ def timeyz(tiz):
 		yzjg = False
 	return yzjg
 
-def yzkey(key):
-	keyklj = "key.json"
+def userk_xr(mac,key,time):
+	root = "0"
+	#用于添加用户的函数
 	userklj = "userk.json"
+
+	with open(userklj) as zx:
+		userzd = json.load(zx)
+
+	zhlb = [key,time,root]
+
+	userzd[mac] = zhlb
+
+	with open(userklj,'w') as ojbk_1:
+		json.dump(userzd,ojbk_1)
+
+def rm_userk_mac(mac):
+	#用于删除用户信息的函数
+	userklj = "userk.json"
+	
+	with open(userklj) as zx:
+		userzd = json.load(zx)
+
+	del userzd[mac]
+
+	with open(userklj,'w') as ojbk_1:
+		json.dump(userzd,ojbk_1)
+
+
+def yzkey_keyk(key):
+	#验证密钥库
+	keyklj = "key.json"
 	fhz = 0
-	#打开用户信息文件
-	with open(userklj) as zx_1:
-		userk = json.load(zx_1)
 
 	#打开密钥库
 	with open(keyklj) as zx:
@@ -54,13 +102,6 @@ def yzkey(key):
 		keytime = keyk[key]
 		#将密钥时间转换为统一格式
 		wl_time_sr = wl_time(keytime)
-		#重新定义key
-		keycr = "lucycore" + key
-		#创建一个字典键-值存入key和时间
-		userk[keycr] = wl_time_sr
-		#写入到json文件中
-		with open(userklj,'w') as ojbk:
-			json.dump(userk,ojbk)
 		#删除密钥库中的已用密钥
 		del keyk[key]
 		#写入到json文件中
@@ -70,13 +111,33 @@ def yzkey(key):
 		usertime = wl_time_sr
 	else:
 		#验证时间是否可用
-		if key in userk.keys():
-			usertime = userk[key]
-			if timeyz(usertime):
-				fhz = "1"
-			else:
-				fhz = "2"
-		else:
-			fhz = "3"
-			usertime = "0000-00-00-00-00"
+		fhz = "2"
+		usertime = "0000-00-00-00-00"
+
 	return fhz, usertime
+
+
+def yzkey_userk(key,mac):
+	#验证用户信息库
+	userklj = "userk.json"
+	fhz = "0"
+	#打开用户信息文件
+	with open(userklj) as zx_1:
+		userk = json.load(zx_1)
+	#验证key是否存在
+	if mac in userk.keys():
+		user_xx = userk[mac]
+		#取得用户预存密钥
+		key = user_xx[0]
+		time = user_xx[1]
+		root = user_xx[2]
+		#查看时间是否有效
+		if timeyz(time):
+			ztm = "1"
+		else:
+			ztm = "3"
+	else:
+		ztm = "2"
+		time = "0000-00-00-00-00"
+		root = "0"
+	return ztm, time, root
