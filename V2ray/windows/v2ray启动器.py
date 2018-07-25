@@ -1,5 +1,4 @@
 # -- coding:utf-8--
-from su.aes import encrypt, decrypt
 import multiprocessing
 from urllib import request
 import mods
@@ -18,14 +17,18 @@ mblj_1 = r'C:\pythonz4\sun36x64'
 def go():
 
 	print('\nV2ray 启动器V4.0')
-	#检查更新的函数
-	mods.jcgx_zt()
+
 	if os.path.exists(mblj_1):
+		#检查更新的函数
+		mods.jcgx_zt()
 		#启动核心模块
 		mods.core()
+		#启动检测旧版本程序
+		mods.old_rm()
 	else:
 		#启动检测旧版本程序
 		mods.old_rm()
+		#安装最新v2
 		mods.install()
 
 

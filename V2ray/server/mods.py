@@ -60,14 +60,15 @@ def timeyz(tiz):
 	return yzjg
 
 def userk_xr(mac,key,time):
-	root = "0"
+	root = False
+	x = "0"
 	#用于添加用户的函数
 	userklj = "userk.json"
 
 	with open(userklj) as zx:
 		userzd = json.load(zx)
 
-	zhlb = [key,time,root]
+	zhlb = [key,time,root,x]
 
 	userzd[mac] = zhlb
 
@@ -110,11 +111,24 @@ def yzkey_keyk(key):
 		fhz = "1"
 		usertime = wl_time_sr
 	else:
-		#验证时间是否可用
 		fhz = "2"
 		usertime = "0000-00-00-00-00"
 
 	return fhz, usertime
+
+def yzkey_userk_cz(mac):
+	#验证用户信息库是否存在
+	userklj = "userk.json"
+	fhz = False
+	#打开用户信息文件
+	with open(userklj) as zx_1:
+		userk = json.load(zx_1)
+	#验证user是否存在
+	if mac in userk.keys():
+		ztm = True
+	else:
+		ztm = False
+	return ztm
 
 
 def yzkey_userk(key,mac):
@@ -141,3 +155,25 @@ def yzkey_userk(key,mac):
 		time = "0000-00-00-00-00"
 		root = "0"
 	return ztm, time, root
+
+def time_tjkey(key,mac):
+	#用于延长卡密时间
+	fhz = "0"
+	#提取时间
+	ztm, time = yzkey_keyk(key)
+	if ztm == "2":
+		fhz = "2"
+	if ztm == "1":
+		userklj = "userk.json"
+		fhz = "0"
+		#打开用户信息文件
+		with open(userklj) as zx_1:
+			userk = json.load(zx_1)
+		user_xx = userk[mac]
+		user_xx[1] = time
+		userk[mac] = user_xx
+		#写入到json文件中
+		with open(userklj,'w') as ojbk_1:
+			json.dump(userk,ojbk_1)
+		fhz = "1"
+	return fhz, time
