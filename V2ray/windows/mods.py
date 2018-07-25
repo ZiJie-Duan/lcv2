@@ -143,7 +143,7 @@ def get_v2ray():
 
 def myyz():
 	#用于验证密钥是否存在的函数
-	with open(user_json_lj) as zx:
+	with open(key_json_lj) as zx:
 		number = json.load(zx)
 	return number
 
@@ -232,21 +232,23 @@ def install():
 def core():
 	try:
 		data = myyz()
+		print(data)
 	except:
 		print("您还没有激活！\n")
 		key = input("请输入密钥：")
 		data = key
-	#try:
-		#尝试写入密钥json
-		put_key(key)
-	#except:
-	#	print("写入失败！")
-	#	print("错误！X007\n")
-	#	input("按下任意键退出程序！")
-	#	sys.exit(0)
+		try:
+			#尝试写入密钥json
+			put_key(key)
+		except:
+			print("写入失败！")
+			print("错误！X007\n")
+			input("按下任意键退出程序！")
+			sys.exit(0)
 		try:
 			#获取mac号
 			mac = get_MAC()
+			print("获取mac完成")
 			#开始创建socks
 			sock = socket.socket()
 			HOST = '192.168.1.233'
@@ -254,14 +256,20 @@ def core():
 			sock.connect((HOST, PORT))
 			#发送模式
 			sock.sendall("key".encode())
+			print("模式发送完成")
 			server_myd = sock.recv(1024).decode()
+			print("第一次对话完成")
 			#发送key
 			sock.sendall(data.encode())
+			print("key发送完成")
 			server_myd = sock.recv(1024).decode()
+			print("第二次对话完成")
 			#发送mac号
 			sock.sendall(mac.encode())
+			print("mac发送完成")
 			#接受服务器的状态码
 			server_s = sock.recv(1024).decode()
+			print("第三次对话完成")
 			sock.close()
 			#服务器命令分割
 			server_lb = server_s.split('.')
@@ -310,38 +318,43 @@ def core():
 		input("按下任意键退出程序！")
 		sys.exit(0)
 
-#try:
-	#获取mac号
-	mac = get_MAC()
-	#开始创建socks
-	sock = socket.socket()
-	HOST = '192.168.1.233'
-	PORT = 2233
-	sock.connect((HOST, PORT))
-	#发送模式
-	sock.sendall("mac".encode())
-	server_myd = sock.recv(1024).decode()
-	print("1")
-	#发送key
-	sock.sendall(data.encode())
-	server_myd = sock.recv(1024).decode()
-	print("1")
-	#发送mac号
-	sock.sendall(mac.encode())
-	#接受服务器的状态码
-	server_s = sock.recv(1024).decode()
-	sock.close()
-	#服务器命令分割
-	server_lb = server_s.split('.')
-	server_re = server_lb[0]
-	server_time = server_lb[1]
-	server_ml = server_lb[2]
-	server_x = server_lb[3]
-#except:
-#	print("连接失败！")
-#	print("错误！X008\n")
-#	input("按下任意键退出程序！")
-#	sys.exit(0)
+	try:
+		#获取mac号
+		mac = get_MAC()
+		print("获取mac完成")
+		#开始创建socks
+		sock = socket.socket()
+		HOST = '192.168.1.233'
+		PORT = 2233
+		sock.connect((HOST, PORT))
+		#发送模式
+		sock.sendall("mac".encode())
+		print("模式发送完成")
+		server_myd = sock.recv(1024).decode()
+		print("第一次对话完成")
+		#发送key
+		sock.sendall(data.encode())
+		print("key发送完成")
+		server_myd = sock.recv(1024).decode()
+		print("第二次对话完成")
+		#发送mac号
+		sock.sendall(mac.encode())
+		print("mac发送完成")
+		#接受服务器的状态码
+		server_s = sock.recv(1024).decode()
+		print("第三次对话完成")
+		sock.close()
+		#服务器命令分割
+		server_lb = server_s.split('.')
+		server_re = server_lb[0]
+		server_time = server_lb[1]
+		server_ml = server_lb[2]
+		server_x = server_lb[3]
+	except:
+		print("连接失败！")
+		print("错误！X008\n")
+		input("按下任意键退出程序！")
+		sys.exit(0)
 
 	if server_re == "1":
 		print("验证成功！\n")

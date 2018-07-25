@@ -31,12 +31,14 @@ while True:
 		print(show_time)
 		#接收模式识别
 		mod = cli.recv(2048).decode()
+		print("接受模式")
 		cli.sendall("my".encode())
-		print("1")
+		print("第一次对话完成")
 		#接收key
 		key = cli.recv(2048).decode()
+		print("接受key")
 		cli.sendall("my".encode())
-		print("1")
+		print("第二次对话完成")
 		#接收mac
 		mac = cli.recv(2048).decode()
 		print("1")
