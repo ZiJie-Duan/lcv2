@@ -145,6 +145,7 @@ def yzkey_userk(key,mac):
 		key = user_xx[0]
 		time = user_xx[1]
 		root = user_xx[2]
+		x = user_xx[3]
 		#查看时间是否有效
 		if timeyz(time):
 			ztm = "1"
@@ -153,8 +154,9 @@ def yzkey_userk(key,mac):
 	else:
 		ztm = "2"
 		time = "0000-00-00-00-00"
-		root = "0"
-	return ztm, time, root
+		root = False
+		x = "0"
+	return ztm, time, root, x
 
 def time_tjkey(key,mac):
 	#用于延长卡密时间

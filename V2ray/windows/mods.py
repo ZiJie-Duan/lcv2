@@ -84,7 +84,7 @@ def getv2json():
 
 def rmv2key():
 	#删除key文件
-	os.remove(user_json_lj)
+	os.remove(key_json_lj)
 
 def rmv2json():
 	#延迟启动进行删除
@@ -230,10 +230,12 @@ def install():
 
 
 def core():
+	cfz = 0
 	try:
 		data = myyz()
 		print(data)
 	except:
+		cfz = 1
 		print("您还没有激活！\n")
 		key = input("请输入密钥：")
 		data = key
@@ -248,7 +250,6 @@ def core():
 		try:
 			#获取mac号
 			mac = get_MAC()
-			print("获取mac完成")
 			#开始创建socks
 			sock = socket.socket()
 			HOST = '192.168.1.233'
@@ -256,20 +257,14 @@ def core():
 			sock.connect((HOST, PORT))
 			#发送模式
 			sock.sendall("key".encode())
-			print("模式发送完成")
 			server_myd = sock.recv(1024).decode()
-			print("第一次对话完成")
 			#发送key
 			sock.sendall(data.encode())
-			print("key发送完成")
 			server_myd = sock.recv(1024).decode()
-			print("第二次对话完成")
 			#发送mac号
 			sock.sendall(mac.encode())
-			print("mac发送完成")
 			#接受服务器的状态码
 			server_s = sock.recv(1024).decode()
-			print("第三次对话完成")
 			sock.close()
 			#服务器命令分割
 			server_lb = server_s.split('.')
@@ -311,6 +306,7 @@ def core():
 			print("此密钥不存在！\n")
 			print("按下任意键重启程序！")
 			input("重新输入密钥")
+			rmv2key()
 			core()
 
 		print("??????????????")
@@ -318,110 +314,108 @@ def core():
 		input("按下任意键退出程序！")
 		sys.exit(0)
 
-	try:
-		#获取mac号
-		mac = get_MAC()
-		print("获取mac完成")
-		#开始创建socks
-		sock = socket.socket()
-		HOST = '192.168.1.233'
-		PORT = 2233
-		sock.connect((HOST, PORT))
-		#发送模式
-		sock.sendall("mac".encode())
-		print("模式发送完成")
-		server_myd = sock.recv(1024).decode()
-		print("第一次对话完成")
-		#发送key
-		sock.sendall(data.encode())
-		print("key发送完成")
-		server_myd = sock.recv(1024).decode()
-		print("第二次对话完成")
-		#发送mac号
-		sock.sendall(mac.encode())
-		print("mac发送完成")
-		#接受服务器的状态码
-		server_s = sock.recv(1024).decode()
-		print("第三次对话完成")
-		sock.close()
-		#服务器命令分割
-		server_lb = server_s.split('.')
-		server_re = server_lb[0]
-		server_time = server_lb[1]
-		server_ml = server_lb[2]
-		server_x = server_lb[3]
-	except:
-		print("连接失败！")
-		print("错误！X008\n")
+	#.............................................................
+	
+	if cfz == 0:
+		try:
+			#获取mac号
+			mac = get_MAC()
+			#开始创建socks
+			sock = socket.socket()
+			HOST = '192.168.1.233'
+			PORT = 2233
+			sock.connect((HOST, PORT))
+			#发送模式
+			sock.sendall("mac".encode())
+			server_myd = sock.recv(1024).decode()
+			#发送key
+			sock.sendall(data.encode())
+			server_myd = sock.recv(1024).decode()
+			#发送mac号
+			sock.sendall(mac.encode())
+			#接受服务器的状态码
+			server_s = sock.recv(1024).decode()
+			sock.close()
+			#服务器命令分割
+			server_lb = server_s.split('.')
+			print(server_lb)
+			server_re = server_lb[0]
+			server_time = server_lb[1]
+			server_ml = server_lb[2]
+			server_x = server_lb[3]
+		except:
+			print("连接失败！")
+			print("错误！X008\n")
+			input("按下任意键退出程序！")
+			sys.exit(0)
+
+		if server_re == "1":
+			print("验证成功！\n")
+			print("到期时间：" + server_time)
+			print("")
+			try:
+				#下载配置文件
+				getv2json()
+			except:
+				#下载错误反馈
+				print("错误！X001\n")
+				input("按下任意键退出程序！")
+				sys.exit(0)
+			try:
+				#申请一个子进程开启删除配置文件脚本
+				p = multiprocessing.Process(target=rmv2json)
+				#运行脚本
+				p.start()
+				#主进程同时打开V2RAY
+				start_V2ray()
+			except:
+				#开启错误反馈
+				print("错误！X003\n")
+				input("按下任意键退出程序！")
+				sys.exit(0)
+
+		if server_re == "2":
+			print("此密钥不存在！\n")
+			print("按下任意键重启程序！")
+			input("重新输入密钥")
+			rmv2key()
+			core()
+
+		if server_re == "3":
+			print("此密钥已过期！")
+			print("按下任意键重启程序！")
+			input("重新输入密钥")
+			rmv2key()
+			core()
+
+		if server_re == "4":
+			print("Lucy core 超级用户")
+			print("验证成功！")
+			print("")
+			try:
+				#下载配置文件
+				getv2json()
+			except:
+				#下载错误反馈
+				print("错误！X001\n")
+				input("按下任意键退出程序！")
+				sys.exit(0)
+			try:
+				#申请一个子进程开启删除配置文件脚本
+				p = multiprocessing.Process(target=rmv2json)
+				#运行脚本
+				p.start()
+				#主进程同时打开V2RAY
+				start_V2ray()
+			except:
+				#开启错误反馈
+				print("错误！X003\n")
+				input("按下任意键退出程序！")
+				sys.exit(0)
+
+
+		print("??????????????")
+		print("您对服务器之间的通讯进行的干涉")
 		input("按下任意键退出程序！")
 		sys.exit(0)
-
-	if server_re == "1":
-		print("验证成功！\n")
-		print("到期时间：" + server_time)
-		print("")
-		try:
-			#下载配置文件
-			getv2json()
-		except:
-			#下载错误反馈
-			print("错误！X001\n")
-			input("按下任意键退出程序！")
-			sys.exit(0)
-		try:
-			#申请一个子进程开启删除配置文件脚本
-			p = multiprocessing.Process(target=rmv2json)
-			#运行脚本
-			p.start()
-			#主进程同时打开V2RAY
-			start_V2ray()
-		except:
-			#开启错误反馈
-			print("错误！X003\n")
-			input("按下任意键退出程序！")
-			sys.exit(0)
-
-	if server_re == "2":
-		print("此密钥不存在！\n")
-		print("按下任意键重启程序！")
-		input("重新输入密钥")
-		core()
-
-	if server_re == "3":
-		print("此密钥已过期！")
-		print("按下任意键重启程序！")
-		input("重新输入密钥")
-		rmv2key()
-		core()
-
-	if server_re == "4":
-		print("Lucy core 超级用户")
-		print("验证成功！")
-		print("")
-		try:
-			#下载配置文件
-			getv2json()
-		except:
-			#下载错误反馈
-			print("错误！X001\n")
-			input("按下任意键退出程序！")
-			sys.exit(0)
-		try:
-			#申请一个子进程开启删除配置文件脚本
-			p = multiprocessing.Process(target=rmv2json)
-			#运行脚本
-			p.start()
-			#主进程同时打开V2RAY
-			start_V2ray()
-		except:
-			#开启错误反馈
-			print("错误！X003\n")
-			input("按下任意键退出程序！")
-			sys.exit(0)
-
-
-	print("??????????????")
-	print("您对服务器之间的通讯进行的干涉")
-	input("按下任意键退出程序！")
-	sys.exit(0)
 
