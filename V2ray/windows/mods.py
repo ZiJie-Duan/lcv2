@@ -338,7 +338,6 @@ def core():
 			sock.close()
 			#服务器命令分割
 			server_lb = server_s.split('.')
-			print(server_lb)
 			server_re = server_lb[0]
 			server_time = server_lb[1]
 			server_ml = server_lb[2]

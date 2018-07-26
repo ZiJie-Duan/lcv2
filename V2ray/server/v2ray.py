@@ -43,24 +43,24 @@ while True:
 			#验证mac
 			ztm, time, root, x = mods.yzkey_userk(key,mac)
 			if root == True:
-				print("超级用户接入")
+				print("超级用户接入 允许连接")
 				time = "0000-00-00-00-00"
 				ml = "0"
 				ztmh = "4"
 				send = ztmh + "." + time + "." + ml + "." + x
 				cli.sendall(send.encode())
 			if ztm == "1":
-				print("允许连接")
+				print("mac验证通过 允许连接")
 				ml = "0"
 				send = ztm + "." + time + "." + ml + "." + x
 				cli.sendall(send.encode())
 			if ztm == "2":
-				print("mac不存在")
+				print("mac不存在 拒绝连接")
 				ml = "0"
 				send = ztm + "." + time + "." + ml + "." + x
 				cli.sendall(send.encode())
 			if ztm == "3":
-				print("时间过期")
+				print("时间过期 拒绝连接")
 				ml = "0"
 				send = ztm + "." + time + "." + ml + "." + x
 				cli.sendall(send.encode())
@@ -72,26 +72,26 @@ while True:
 				#根据密钥延长时间
 				fhz, time = mods.time_tjkey(key,mac)
 				if fhz == "1":
-					print("延长成功")
+					print("延长成功 允许连接")
 					ml = "0"
 					send = fhz + "." + time + "." + ml
 					cli.sendall(send.encode())
 				if fhz == "2":
-					print("密钥不存在")
+					print("密钥不存在 拒绝连接")
 					ml = "0"
 					send = fhz + "." + time + "." + ml
 					cli.sendall(send.encode())
 			else:
 				fhz, time = mods.yzkey_keyk(key)
 				if fhz == "1":
-					print("创建mac")
+					print("创建mac 允许连接")
 					print("")
 					mods.userk_xr(mac,key,time)
 					ml = "0"
 					send = fhz + "." + time + "." + ml
 					cli.sendall(send.encode())
 				if fhz == "2":
-					print("密钥不存在")
+					print("密钥不存在 拒绝连接")
 					ml = "0"
 					send = fhz + "." + time + "." + ml
 					cli.sendall(send.encode())
