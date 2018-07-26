@@ -20,7 +20,7 @@ update_exe_url = "http://60.205.221.103/v2ray/updateformac"
 #更新验证文件位置
 up_json_lj = os.path.join(gzlj, "pythonz4", "unsers", "update.json")
 #更新插件位置
-up_exe_lj = os.path.join(gzlj, "更新v2ray")
+up_exe_lj = os.path.join(gzlj, "Desktop", "更新v2ray")
 
 #创建的根目录
 mblj_1 = os.path.join(gzlj, "pythonz4", "sun36x64")
@@ -61,7 +61,7 @@ def jc_update():
 	request.urlretrieve(update_json_url, up_json_lj)
 	with open(up_json_lj) as zx_1:
 		edition = json.load(zx_1)
-	if edition == 2 :
+	if edition == 4 :
 		jg = False
 	else:
 		jg = True
