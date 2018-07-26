@@ -46,6 +46,7 @@ while True:
 				print("超级用户接入 允许连接")
 				time = "0000-00-00-00-00"
 				ml = "0"
+				ztm = "100"
 				ztmh = "4"
 				send = ztmh + "." + time + "." + ml + "." + x
 				cli.sendall(send.encode())

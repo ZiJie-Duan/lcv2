@@ -173,7 +173,7 @@ def jcgx_zt():
 def old_rm():
 
 	#检测第一代程序
-	one_old_az_lj = os.path.join(gzlj, "pythonX")
+	one_old_az_lj = os.path.join(r"C:\pythonX")
 	if os.path.exists(one_old_az_lj):
 		print("检测到旧版本的v2ray\n")
 		print("第一代v2ray启动器！")
@@ -189,7 +189,7 @@ def old_rm():
 		print("删除完成!\n")
 
 	#检测第二代程序
-	one_old_az_lj = os.path.join(gzlj, "pythonz")
+	one_old_az_lj = os.path.join(r"C:\pythonz")
 	if os.path.exists(one_old_az_lj):
 		print("检测到旧版本的v2ray\n")
 		print("第二代v2ray启动器！")
@@ -233,7 +233,6 @@ def core():
 	cfz = 0
 	try:
 		data = myyz()
-		print(data)
 	except:
 		cfz = 1
 		print("您还没有激活！\n")
@@ -388,7 +387,7 @@ def core():
 			core()
 
 		if server_re == "4":
-			print("Lucy core 超级用户")
+			print("\nLucy core 超级用户\n")
 			print("验证成功！")
 			print("")
 			try:
