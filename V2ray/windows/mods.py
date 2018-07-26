@@ -153,7 +153,7 @@ def jcgx_zt():
 		print("已检查到更新！\n")
 		if os.path.exists(up_exe_lj):
 			print("请关闭此应用后\n")
-			print("点击桌面上的‘更新v2ray’\n")
+			print("点击根目录的‘更新v2ray’\n")
 			input("按下回车后关闭此应用！")
 			sys.exit(0)
 		try:
@@ -161,7 +161,7 @@ def jcgx_zt():
 			get_update()
 			print("已完成下载！\n")
 			print("请关闭此应用后\n")
-			print("点击桌面上的‘更新v2ray’\n")
+			print("点击根目录的‘更新v2ray’\n")
 			input("按下回车后关闭此应用！")
 		except:
 			print("更新失败!")
