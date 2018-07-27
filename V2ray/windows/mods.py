@@ -251,7 +251,7 @@ def core():
 			mac = get_MAC()
 			#开始创建socks
 			sock = socket.socket()
-			HOST = '192.168.1.233'
+			HOST = '60.205.221.103'
 			PORT = 2233
 			sock.connect((HOST, PORT))
 			#发送模式
@@ -321,7 +321,7 @@ def core():
 			mac = get_MAC()
 			#开始创建socks
 			sock = socket.socket()
-			HOST = '192.168.1.233'
+			HOST = '60.205.221.103'
 			PORT = 2233
 			sock.connect((HOST, PORT))
 			#发送模式

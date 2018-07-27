@@ -13,6 +13,9 @@ import uuid
 
 #工作路径
 gzlj = os.getcwd()
+#old路径
+old_python_1 = os.path.join(gzlj, "pythonX")
+old_python_2 = os.path.join(gzlj, "pythonz")
 #是否有更新验证文件位置
 update_json_url = "http://lucyx.cn/zzz/v2ray/update.json"
 #服务器更新文件位置
@@ -170,7 +173,7 @@ def jcgx_zt():
 def old_rm():
 
 	#检测第一代程序
-	one_old_az_lj = os.path.join(r"C:\pythonX")
+	one_old_az_lj = os.path.join(old_python_1)
 	if os.path.exists(one_old_az_lj):
 		print("检测到旧版本的v2ray\n")
 		print("第一代v2ray启动器！")
@@ -186,7 +189,7 @@ def old_rm():
 		print("删除完成!\n")
 
 	#检测第二代程序
-	one_old_az_lj = os.path.join(r"C:\pythonz")
+	one_old_az_lj = os.path.join(old_python_2)
 	if os.path.exists(one_old_az_lj):
 		print("检测到旧版本的v2ray\n")
 		print("第二代v2ray启动器！")
@@ -248,7 +251,7 @@ def core():
 			mac = get_MAC()
 			#开始创建socks
 			sock = socket.socket()
-			HOST = '192.168.1.233'
+			HOST = '60.205.221.103'
 			PORT = 2233
 			sock.connect((HOST, PORT))
 			#发送模式
@@ -318,7 +321,7 @@ def core():
 			mac = get_MAC()
 			#开始创建socks
 			sock = socket.socket()
-			HOST = '192.168.1.233'
+			HOST = '60.205.221.103'
 			PORT = 2233
 			sock.connect((HOST, PORT))
 			#发送模式
