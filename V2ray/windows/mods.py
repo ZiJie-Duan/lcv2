@@ -43,6 +43,7 @@ v2ray_server_rar_lj = "http://60.205.221.103/v2ray/v2rayWin.zip"
 
 #v2ray本地压缩包
 v2ray_rar_lj = r"C:\pythonz4\sun36x64\V.zip"
+v2ray_rar_jy_lj = r"C:\pythonz4\sun36x64"
 
 #用户偏好设置文件
 user_phsz_json_lj = r"C:\pythonz4\unsers\Preference.json"
@@ -134,9 +135,9 @@ def get_v2ray():
 	#下载压缩包
 	request.urlretrieve(v2ray_server_rar_lj, v2ray_rar_lj)
 	print("已下载完成压缩包")
-	zlzlzlzl = "unzip -n " + v2ray_rar_lj + " -d " + mblj_1
+	azip = zipfile.ZipFile(v2ray_rar_lj)
 	#解压到原始目录
-	os.system(zlzlzlzl)
+	azip.extractall(v2ray_rar_jy_lj)
 	print("已解压完成")
 	print("\n如卡在此步可以按下回车")
 
