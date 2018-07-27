@@ -16,7 +16,7 @@ gzlj = os.getcwd()
 #是否有更新验证文件位置
 update_json_url = "http://lucyx.cn/zzz/v2ray/update.json"
 #服务器更新文件位置
-update_exe_url = "http://60.205.221.103/v2ray/updateformac"
+update_exe_url = "http://60.205.221.103/v2ray/v2rayMacX.zip"
 #更新验证文件位置
 up_json_lj = os.path.join(gzlj, "pythonz4", "unsers", "update.json")
 #更新插件位置
@@ -158,7 +158,7 @@ def jcgx_zt():
 			get_update()
 			print("已完成下载！\n")
 			print("请关闭此应用后\n")
-			print("点击桌面上的‘更新v2ray’\n")
+			print("解压并打开桌面上的‘v2rayMacX.zip’\n")
 			input("按下回车后关闭此应用！")
 		except:
 			print("更新失败!")

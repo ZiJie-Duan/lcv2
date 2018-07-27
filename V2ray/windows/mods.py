@@ -18,7 +18,7 @@ gzlj = os.getcwd()
 #是否有更新验证文件位置
 update_json_url = "http://lucyx.cn/zzz/v2ray/update.json"
 #服务器更新文件位置
-update_exe_url = "http://60.205.221.103/v2ray/update.exe"
+update_exe_url = "http://60.205.221.103/v2ray/v2rayWinX.zip"
 #更新验证文件位置
 up_json_lj = r"C:\pythonz4\unsers\update.json"
 #更新插件位置
@@ -153,7 +153,7 @@ def jcgx_zt():
 		print("已检查到更新！\n")
 		if os.path.exists(up_exe_lj):
 			print("请关闭此应用后\n")
-			print("点击根目录的‘更新v2ray’\n")
+			print("解压并打开根目录的‘v2rayWinX.zip’\n")
 			input("按下回车后关闭此应用！")
 			sys.exit(0)
 		try:
