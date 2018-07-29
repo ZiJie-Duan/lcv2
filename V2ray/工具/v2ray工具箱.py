@@ -164,6 +164,91 @@ def dq_userk_cz_key():
 
 #---------------------------------------------------------------------------------------
 
+def dq_userk_cz_name():
+	#用于使用标记名称查找用户
+	name_sr = input("名称：")
+	#用户信息库
+	userklj = "userk.json"
+	#打开用户信息文件
+	with open(userklj) as zx_1:
+		userk = json.load(zx_1)
+	#验证key是否存在
+	for key, value in userk.items():
+		keyy = value[0]
+		time = value[1]
+		root = value[2]
+		x = value[3]
+		try:
+			name = value[4]
+		except:
+			name = "无"
+		if name_sr == name:
+			print("")
+			print("用户名称：" + name)
+			print("用户mac：" + key)
+			print("密钥：" + keyy)
+			print("时间：" + time)
+			if root:
+				print("root：True")
+			else:
+				print("root：False")
+			print("命令标记：" + x)
+			print("")
+
+#---------------------------------------------------------------------------------------
+
+def xr_userk_rot():
+	#用于修改用户权限的函数
+	macc = input("mac号:")
+	zbz = input("y/n:")
+	#用户信息库
+	userklj = "userk.json"
+	#打开用户信息文件
+	with open(userklj) as zx_1:
+		userk = json.load(zx_1)
+
+	user_xx = userk[macc]
+	if zbz == "y":
+		user_xx[2] = True
+		print("添加权限")
+	if zbz == "n":
+		user_xx[2] = False
+		print("删除权限")
+
+	userk[macc] = user_xx
+
+	with open(userklj,'w') as ojbk_1:
+		json.dump(userk,ojbk_1)
+
+
+#---------------------------------------------------------------------------------------
+
+def xr_userk_xml():
+	#用于修改用户权限的函数
+	print("删除命令标记输入“del”")
+	macc = input("mac号:")
+	zbz = input("命令:")
+	#用户信息库
+	userklj = "userk.json"
+	#打开用户信息文件
+	with open(userklj) as zx_1:
+		userk = json.load(zx_1)
+
+	user_xx = userk[macc]
+	if zbz == "del":
+		user_xx[3] = "0"
+		print("删除命令")
+	else:
+		user_xx[3] = zbz
+		print("添加命令")
+
+	userk[macc] = user_xx
+
+	with open(userklj,'w') as ojbk_1:
+		json.dump(userk,ojbk_1)
+
+#---------------------------------------------------------------------------------------
+
 def help():
 	#api列表
 	print("")
@@ -172,6 +257,9 @@ def help():
 	print("ukl--------列出userk所有用户信息")
 	print("uklb-------列出userk所有标记用户的信息")
 	print("ukcz-------使用密钥查找userk用户")
+	print("ukczn------使用名称查找userk用户")
+	print("ukrot------使用mac修改userk用户等级")
+	print("ukx--------使用mac写入userk用户操作命令")
 	print("")
 	print("--------------卡密操作---------------")
 	print("")
@@ -207,13 +295,31 @@ def core():
 		try:
 			dq_userk_lcbj()
 		except:
-			print("错误！函数kmsc_bt")
+			print("错误！函数dq_userk_lcbj")
 
 	if core_ml == "ukcz":
 		try:
 			dq_userk_cz_key()
 		except:
-			print("错误！函数kmsc_bt")
+			print("错误！函数dq_userk_cz_key")
+
+	if core_ml == "ukczn":
+		try:
+			dq_userk_cz_name()
+		except:
+			print("错误！函数dq_userk_cz_name")
+
+	if core_ml == "ukrot":
+		try:
+			xr_userk_rot()
+		except:
+			print("错误！函数xr_userk_rot")
+
+	if core_ml == "ukx":
+		try:
+			xr_userk_xml()
+		except:
+			print("错误！函数xr_userk_xml")
 
 
 	if core_ml == "q!":
