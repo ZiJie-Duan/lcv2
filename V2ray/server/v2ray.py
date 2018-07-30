@@ -96,6 +96,10 @@ while True:
 					ml = "0"
 					send = fhz + "." + time + "." + ml
 					cli.sendall(send.encode())
+		#mod3
+		#if mod == "tool":
+
+
 		print("")
 		#关闭连接
 		cli.close()

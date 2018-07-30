@@ -1,5 +1,6 @@
 # -- coding:utf-8--
 import json
+import paramiko
 
 #---------------------------------------------------------------------------------------
 #卡密生成模块
@@ -249,6 +250,99 @@ def xr_userk_xml():
 
 #---------------------------------------------------------------------------------------
 
+def xr_userk_namebj():
+	#用于修改用户名称标记的函数
+	print("删除名称标记输入“del”")
+	macc = input("mac号:")
+	zbz = input("名称:")
+	#用户信息库
+	userklj = "userk.json"
+	#打开用户信息文件
+	with open(userklj) as zx_1:
+		userk = json.load(zx_1)
+
+	user_xx = userk[macc]
+	if zbz == "del":
+		user_xx[4] = "0"
+		print("删除命令")
+	else:
+		user_xx[4] = zbz
+		print("添加命令")
+
+	userk[macc] = user_xx
+
+	with open(userklj,'w') as ojbk_1:
+		json.dump(userk,ojbk_1)
+
+#---------------------------------------------------------------------------------------
+
+def get_userk_json():
+	#用于获取userk.json的函数
+	ps = input("server_password：")
+	transport = paramiko.Transport(('60.205.221.103', 22))
+	transport.connect(username='root', password=ps)
+	 
+	sftp = paramiko.SFTPClient.from_transport(transport)
+	 
+	sftp.get('/zzz/userk.json', 'userk.json')
+	 
+	transport.close()
+
+#---------------------------------------------------------------------------------------
+
+def get_key_json():
+	#用于获取key.json的函数
+	ps = input("server_password：")
+	transport = paramiko.Transport(('60.205.221.103', 22))
+	transport.connect(username='root', password=ps)
+	 
+	sftp = paramiko.SFTPClient.from_transport(transport)
+	 
+	sftp.get('/zzz/key.json', 'key.json')
+	 
+	transport.close()
+
+#---------------------------------------------------------------------------------------
+
+def ssh_user_rm_key():
+	#删除key.json的函数
+	cmd = "rmkey"
+	sock = socket.socket()
+	HOST = '60.205.221.103'
+	PORT = 2233
+	sock.connect((HOST, PORT))
+	#发送模式
+	sock.sendall("tool".encode())
+	server_myd = sock.recv(1024).decode()
+	#发送命令
+	sock.sendall(cmd.encode())
+	#接受状态
+	server_myd = sock.recv(1024).decode()
+	print(server_myd)
+
+#---------------------------------------------------------------------------------------
+
+def ssh_user_rm_userk():
+	#删除userk.json的函数
+	cmd = "rmuserk"
+	sock = socket.socket()
+	HOST = '60.205.221.103'
+	PORT = 2233
+	sock.connect((HOST, PORT))
+	#发送模式
+	sock.sendall("tool".encode())
+	server_myd = sock.recv(1024).decode()
+	#充填位置
+	sock.sendall("tool".encode())
+	server_myd = sock.recv(1024).decode()
+	#发送命令
+	sock.sendall(cmd.encode())
+	#接受状态
+	server_myd = sock.recv(1024).decode()
+	print(server_myd)
+
+#---------------------------------------------------------------------------------------
+
 def help():
 	#api列表
 	print("")
@@ -256,14 +350,25 @@ def help():
 	print("")
 	print("ukl--------列出userk所有用户信息")
 	print("uklb-------列出userk所有标记用户的信息")
+	print("")
 	print("ukcz-------使用密钥查找userk用户")
 	print("ukczn------使用名称查找userk用户")
+	print("")
 	print("ukrot------使用mac修改userk用户等级")
+	print("ukbjx------使用mac写入userk用户名称标记")
 	print("ukx--------使用mac写入userk用户操作命令")
 	print("")
 	print("--------------卡密操作---------------")
 	print("")
 	print("kmsc-------启动卡密生成模块")
+	print("")
+	print("-------------server操作--------------")
+	print("")
+	print("guk--------获取server中的userk.json")
+	print("gkey-------获取server中的key.json")
+	print("")
+	print("rmkey------删除server中的key.json")
+	print("rmuserk----删除server中的userk.json")
 	print("")
 
 #---------------------------------------------------------------------------------------
@@ -321,10 +426,38 @@ def core():
 		except:
 			print("错误！函数xr_userk_xml")
 
+	if core_ml == "ukbjx":
+		try:
+			xr_userk_namebj()
+		except:
+			print("错误！函数xr_userk_namebj")
+
+	if core_ml == "guk":
+		try:
+			get_userk_json()
+		except:
+			print("错误！函数get_userk_json")
+
+	if core_ml == "gkey":
+		try:
+			get_key_json()
+		except:
+			print("错误！函数get_key_json")
+
+	if core_ml == "rmkey":
+		try:
+			ssh_user_rm_key()
+		except:
+			print("错误！函数ssh_user_rm_key")
+
+	if core_ml == "rmuserk":
+		try:
+			ssh_user_rm_userk()
+		except:
+			print("错误！函数ssh_user_rm_userk")
 
 	if core_ml == "q!":
 		sys.exit(0)
-
 	core()
 
 print("\nlucycore v2ray工具箱\n")
