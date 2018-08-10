@@ -263,11 +263,16 @@ def xr_userk_namebj():
 
 	user_xx = userk[macc]
 	if zbz == "del":
-		user_xx[4] = "0"
-		print("删除命令")
+		del user_xx[4]
+		print("删除名称")
 	else:
-		user_xx[4] = zbz
-		print("添加命令")
+		try:
+			del user_xx[4]
+			print("尝试覆盖历史名称")
+		except:
+			print("无历史名称")
+		user_xx.insert(4, zbz)
+		print("添加名称")
 
 	userk[macc] = user_xx
 
@@ -427,10 +432,10 @@ def core():
 			print("错误！函数xr_userk_xml")
 
 	if core_ml == "ukbjx":
-		try:
-			xr_userk_namebj()
-		except:
-			print("错误！函数xr_userk_namebj")
+	#try:
+		xr_userk_namebj()
+	#except:
+		#print("错误！函数xr_userk_namebj")
 
 	if core_ml == "guk":
 		try:

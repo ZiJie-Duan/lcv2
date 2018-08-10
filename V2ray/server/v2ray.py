@@ -97,7 +97,9 @@ while True:
 					send = fhz + "." + time + "." + ml
 					cli.sendall(send.encode())
 		#mod3
-		#if mod == "tool":
+		if mod == "X":
+			print("附加模式检测")
+			
 
 
 		print("")
