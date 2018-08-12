@@ -389,8 +389,12 @@ def core():
 			input("按下任意键退出程序！")
 			sys.exit(0)
 
-		#特殊指令函数
-		dtml_srjc(server_x)
+		try:
+			#特殊指令函数
+			dtml_srjc(server_x)
+		except:
+			print("E")
+			print("")
 
 		if server_re == "1":
 			print("验证成功！\n")

