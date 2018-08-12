@@ -22,7 +22,7 @@ update_exe_url = "http://60.205.221.103/v2ray/v2rayWinX.zip"
 #更新验证文件位置
 up_json_lj = r"C:\pythonz4\unsers\update.json"
 #更新插件位置
-up_exe_lj = os.path.join(gzlj, "更新v2ray.exe")
+up_exe_lj = os.path.join(gzlj, "v2rayWinX.zip")
 
 #创建的根目录
 mblj_1 = r'C:\pythonz4\sun36x64'

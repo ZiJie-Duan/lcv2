@@ -23,7 +23,7 @@ update_exe_url = "http://60.205.221.103/v2ray/v2rayMacX.zip"
 #更新验证文件位置
 up_json_lj = os.path.join(gzlj, "pythonz4", "unsers", "update.json")
 #更新插件位置
-up_exe_lj = os.path.join(gzlj, "Desktop", "更新v2ray")
+up_exe_lj = os.path.join(gzlj, "Desktop", "v2rayMacX.zip")
 
 #创建的根目录
 mblj_1 = os.path.join(gzlj, "pythonz4", "sun36x64")
