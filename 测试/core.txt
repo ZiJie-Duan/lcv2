@@ -1,0 +1,3 @@
+print("hello!")
+print("I come from china")
+print("I well kill you!")
