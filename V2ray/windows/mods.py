@@ -31,9 +31,9 @@ mblj_2 = r'C:\pythonz4\unsers'
 #动态命令对照文件服务器位置
 dtml_dz_ml = "http://lucyx.cn/zzz/v2ray/dtml.json"
 #动态命令对照文件本地位置
-dtml_dz_ml_bd = r"C:\pythonz4\unsers\dtml.json"
+dtml_dz_ml_bd = "C:/pythonz4/unsers/dtml.json"
 #动态命令正文本地位置
-dtml_dz_ml_bd_zw = r"C:\pythonz4\unsers\dtmlzw.txt"
+dtml_dz_ml_bd_zw = "C:/pythonz4/unsers/dtmlzw.txt"
 
 
 #v2ray本体路径
@@ -249,8 +249,8 @@ def get_dtml_xsdz(wz):
 
 def dq_dtml_ml(x):
 	#用于读取动态命令目录的函数
-	with open(dtml_dz_ml) as zx:
-	dtml_ml = json.load(zx)
+	with open(dtml_dz_ml_bd) as zx:
+		dtml_ml = json.load(zx)
 	ml_dz = dtml_ml[x]
 	return ml_dz
 
@@ -261,7 +261,8 @@ def dtml_srjc(Xx):
 		print("")
 	else:
 		#获取命令对照表
-		wz = get_dtml_dzb(Xx)
+		get_dtml_dzb()
+		wz = dq_dtml_ml(Xx)
 		#下载命令正文
 		get_dtml_xsdz(wz)
 		#读取并运行命令
