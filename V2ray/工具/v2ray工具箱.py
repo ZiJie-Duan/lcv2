@@ -46,6 +46,19 @@ def mod_3():
 			with open("key_1.txt",'a') as hii:
 				hii.write(keyzl_1)
 
+def mod_4():
+	with open("1.json") as zx:
+		zd_1 = json.load(zx)
+
+	with open("2.json") as zx:
+		zd_2 = json.load(zx)
+
+	zd_3 = {}
+	zd_3.update(zd_1)
+	zd_3.update(zd_2)
+
+	with open("key.json",'w') as ojbk:
+		json.dump(zd_3,ojbk)
 
 def modxzhs(mod):
 	
@@ -61,11 +74,16 @@ def modxzhs(mod):
 		print("开始运行mod3\n")
 		mod_3()
 
+	if mod == "4":
+		print("开始运行mod4\n")
+		mod_4()
+
 def kmsc_bt():
 	print("请选择生成模式\n")
-	print("1.手动输入生成 2.大批量导入生成 3.爱发卡整理\n")
-	mod = input("请选择数字：\n")
-	if mod > "0" and mod < "4":
+	print("1.手动输入生成 2.大批量导入生成 3.爱发卡整理")
+	print("4.二次添加卡密\n")
+	mod = input("请选择数字：")
+	if mod > "0" and mod < "5":
 		modxzhs(mod)
 
 #---------------------------------------------------------------------------------------
