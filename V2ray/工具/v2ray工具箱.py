@@ -309,42 +309,58 @@ def get_key_json():
 
 #---------------------------------------------------------------------------------------
 
+
+def put_userk_json():
+	#用于上传userk.json的函数
+	ps = input("server_password：")
+	transport = paramiko.Transport(('60.205.221.103', 22))
+	transport.connect(username='root', password=ps)
+	 
+	sftp = paramiko.SFTPClient.from_transport(transport)
+	 
+	sftp.put('userk.json', '/zzz/userk.json')
+	 
+	transport.close()
+
+#---------------------------------------------------------------------------------------
+
+def put_key_json():
+	#用于上传key.json的函数
+	ps = input("server_password：")
+	transport = paramiko.Transport(('60.205.221.103', 22))
+	transport.connect(username='root', password=ps)
+	 
+	sftp = paramiko.SFTPClient.from_transport(transport)
+	 
+	sftp.put('key.json', '/zzz/key.json')
+	 
+	transport.close()
+
+#---------------------------------------------------------------------------------------
+
 def ssh_user_rm_key():
 	#删除key.json的函数
-	cmd = "rmkey"
-	sock = socket.socket()
-	HOST = '60.205.221.103'
-	PORT = 2233
-	sock.connect((HOST, PORT))
-	#发送模式
-	sock.sendall("tool".encode())
-	server_myd = sock.recv(1024).decode()
-	#发送命令
-	sock.sendall(cmd.encode())
-	#接受状态
-	server_myd = sock.recv(1024).decode()
-	print(server_myd)
+	ps = input("server_password：")
+	client = paramiko.SSHClient()
+
+	client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+	client.connect('60.205.221.103', username='root', password=ps, timeout=5)
+
+	client.exec_command('rm /zzz/key.json')
 
 #---------------------------------------------------------------------------------------
 
 def ssh_user_rm_userk():
 	#删除userk.json的函数
-	cmd = "rmuserk"
-	sock = socket.socket()
-	HOST = '60.205.221.103'
-	PORT = 2233
-	sock.connect((HOST, PORT))
-	#发送模式
-	sock.sendall("tool".encode())
-	server_myd = sock.recv(1024).decode()
-	#充填位置
-	sock.sendall("tool".encode())
-	server_myd = sock.recv(1024).decode()
-	#发送命令
-	sock.sendall(cmd.encode())
-	#接受状态
-	server_myd = sock.recv(1024).decode()
-	print(server_myd)
+	ps = input("server_password：")
+	client = paramiko.SSHClient()
+
+	client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+	client.connect('60.205.221.103', username='root', password=ps, timeout=5)
+
+	client.exec_command('rm /zzz/userk.json')
 
 #---------------------------------------------------------------------------------------
 
@@ -356,21 +372,24 @@ def help():
 	print("ukl--------列出userk所有用户信息")
 	print("uklb-------列出userk所有标记用户的信息")
 	print("")
-	print("ukcz-------使用密钥查找userk用户")
-	print("ukczn------使用名称查找userk用户")
+	print("mc---------使用密钥查找userk用户")
+	print("nc---------使用名称查找userk用户")
 	print("")
-	print("ukrot------使用mac修改userk用户等级")
-	print("ukbjx------使用mac写入userk用户名称标记")
-	print("ukx--------使用mac写入userk用户操作命令")
+	print("ur---------使用mac修改userk用户等级")
+	print("un---------使用mac写入userk用户名称标记")
+	print("ux---------使用mac写入userk用户操作命令")
 	print("")
 	print("--------------卡密操作---------------")
 	print("")
-	print("kmsc-------启动卡密生成模块")
+	print("km---------启动卡密生成模块")
 	print("")
 	print("-------------server操作--------------")
 	print("")
 	print("guk--------获取server中的userk.json")
-	print("gkey-------获取server中的key.json")
+	print("gky--------获取server中的key.json")
+	print("")
+	print("puk--------上传本地的userk.json")
+	print("pky--------上传本地的key.json")
 	print("")
 	print("rmkey------删除server中的key.json")
 	print("rmuserk----删除server中的userk.json")
@@ -395,7 +414,7 @@ def core():
 		except:
 			print("错误！函数dq_userk")
 
-	if core_ml == "kmsc":
+	if core_ml == "km":
 		try:
 			kmsc_bt()
 		except:
@@ -407,35 +426,35 @@ def core():
 		except:
 			print("错误！函数dq_userk_lcbj")
 
-	if core_ml == "ukcz":
+	if core_ml == "mc":
 		try:
 			dq_userk_cz_key()
 		except:
 			print("错误！函数dq_userk_cz_key")
 
-	if core_ml == "ukczn":
+	if core_ml == "nc":
 		try:
 			dq_userk_cz_name()
 		except:
 			print("错误！函数dq_userk_cz_name")
 
-	if core_ml == "ukrot":
+	if core_ml == "ur":
 		try:
 			xr_userk_rot()
 		except:
 			print("错误！函数xr_userk_rot")
 
-	if core_ml == "ukx":
+	if core_ml == "ux":
 		try:
 			xr_userk_xml()
 		except:
 			print("错误！函数xr_userk_xml")
 
-	if core_ml == "ukbjx":
-	#try:
-		xr_userk_namebj()
-	#except:
-		#print("错误！函数xr_userk_namebj")
+	if core_ml == "un":
+		try:
+			xr_userk_namebj()
+		except:
+			print("错误！函数xr_userk_namebj")
 
 	if core_ml == "guk":
 		try:
@@ -443,7 +462,7 @@ def core():
 		except:
 			print("错误！函数get_userk_json")
 
-	if core_ml == "gkey":
+	if core_ml == "gky":
 		try:
 			get_key_json()
 		except:
@@ -460,6 +479,19 @@ def core():
 			ssh_user_rm_userk()
 		except:
 			print("错误！函数ssh_user_rm_userk")
+
+	if core_ml == "pky":
+		try:
+			put_key_json()
+		except:
+			print("错误！函数ssh_user_rm_userk")
+
+	if core_ml == "puk":
+		try:
+			put_userk_json()
+		except:
+			print("错误！函数ssh_user_rm_userk")
+
 
 	if core_ml == "q!":
 		sys.exit(0)
