@@ -47,18 +47,93 @@ def mod_3():
 				hii.write(keyzl_1)
 
 def mod_4():
-	with open("1.json") as zx:
-		zd_1 = json.load(zx)
 
-	with open("2.json") as zx:
-		zd_2 = json.load(zx)
+	zl = input("数量(2-5)：")
 
-	zd_3 = {}
-	zd_3.update(zd_1)
-	zd_3.update(zd_2)
+	if zl == "2":
 
-	with open("key.json",'w') as ojbk:
-		json.dump(zd_3,ojbk)
+		with open("1.json") as zx:
+			zd_1 = json.load(zx)
+
+		with open("2.json") as zx:
+			zd_2 = json.load(zx)
+
+		zd_3 = {}
+		zd_3.update(zd_1)
+		zd_3.update(zd_2)
+
+		with open("key.json",'w') as ojbk:
+			json.dump(zd_3,ojbk)
+
+	if zl == "3":
+
+		with open("1.json") as zx:
+			zd_1 = json.load(zx)
+
+		with open("2.json") as zx:
+			zd_2 = json.load(zx)
+
+		with open("3.json") as zx:
+			zd_4 = json.load(zx)
+
+		zd_3 = {}
+		zd_3.update(zd_1)
+		zd_3.update(zd_2)
+		zd_3.update(zd_4)
+
+		with open("key.json",'w') as ojbk:
+			json.dump(zd_3,ojbk)
+
+	if zl == "4":
+
+		with open("1.json") as zx:
+			zd_1 = json.load(zx)
+
+		with open("2.json") as zx:
+			zd_2 = json.load(zx)
+
+		with open("3.json") as zx:
+			zd_4 = json.load(zx)
+
+		with open("4.json") as zx:
+			zd_5 = json.load(zx)
+
+		zd_3 = {}
+		zd_3.update(zd_1)
+		zd_3.update(zd_2)
+		zd_3.update(zd_4)
+		zd_3.update(zd_5)
+
+		with open("key.json",'w') as ojbk:
+			json.dump(zd_3,ojbk)
+
+	if zl == "5":
+
+		with open("1.json") as zx:
+			zd_1 = json.load(zx)
+
+		with open("2.json") as zx:
+			zd_2 = json.load(zx)
+
+		with open("3.json") as zx:
+			zd_4 = json.load(zx)
+
+		with open("4.json") as zx:
+			zd_5 = json.load(zx)
+
+		with open("5.json") as zx:
+			zd_6 = json.load(zx)
+
+		zd_3 = {}
+		zd_3.update(zd_1)
+		zd_3.update(zd_2)
+		zd_3.update(zd_4)
+		zd_3.update(zd_5)
+		zd_3.update(zd_6)
+
+		with open("key.json",'w') as ojbk:
+			json.dump(zd_3,ojbk)
+
 
 def modxzhs(mod):
 	
