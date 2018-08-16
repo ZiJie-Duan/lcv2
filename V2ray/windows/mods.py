@@ -257,6 +257,9 @@ def dq_dtml_ml(x):
 
 def dtml_srjc(Xx):
 	#用于判断并执行特殊命令的函数
+	e = ""
+	mllb = []
+	zcml = []
 	if Xx == "0":
 		print("")
 	else:
@@ -267,8 +270,16 @@ def dtml_srjc(Xx):
 		get_dtml_xsdz(wz)
 		#读取并运行命令
 		with open(dtml_dz_ml_bd_zw) as xxx:
-			for hii in xxx: 
-				exec(hii)
+			for hii in xxx:
+				if hii == "~\n":
+					e = "".join(zcml)
+					mllb.append(e)
+					zcml = []
+				else:
+					zcml.append(hii)
+		for ml in mllb:
+			exec(ml)
+
 
 def core():
 #.......................................................................
