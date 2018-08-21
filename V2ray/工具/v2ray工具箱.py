@@ -4,9 +4,9 @@ import paramiko
 
 #---------------------------------------------------------------------------------------
 #卡密生成模块
-key_zd = {}
 
-def mod_1():	
+def mod_1():
+	key_zd = {}
 	while True :
 		key = input("密钥名称：")
 		key_z = input("密钥时间：")
@@ -22,6 +22,7 @@ def mod_1():
 
 
 def mod_2():
+	key_zd = {}
 	while True :
 		key_z = input("请输入此批密钥时间")
 		if key_z == "0":
@@ -38,6 +39,7 @@ def mod_2():
 		json.dump(key_zd,ojbk_1)
 
 def mod_3():
+	key_zd = {}
 	hhz = 0
 	with open("key.txt") as xxx:
 		for key_zlq in xxx:
@@ -47,6 +49,7 @@ def mod_3():
 				hii.write(keyzl_1)
 
 def mod_4():
+	key_zd = {}
 
 	zl = input("数量(2-5)：")
 
