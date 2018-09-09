@@ -160,7 +160,7 @@ def jcgx_zt():
 		print("已检查到更新！\n")
 		if os.path.exists(up_exe_lj):
 			print("请关闭此应用后\n")
-			print("点击桌面上的‘更新v2ray’\n")
+			print("解压并打开桌面上的‘v2rayMacX.zip’\n")
 			input("按下回车后关闭此应用！")
 			sys.exit(0)
 		try:
@@ -247,7 +247,7 @@ def get_dtml_xsdz(wz):
 
 def dq_dtml_ml(x):
 	#用于读取动态命令目录的函数
-	with open(dtml_dz_ml_bd) as zx:
+	with open(dtml_dz_ml_bd, encoding='gbk') as zx:
 		dtml_ml = json.load(zx)
 	ml_dz = dtml_ml[x]
 	return ml_dz
@@ -267,7 +267,7 @@ def dtml_srjc(Xx):
 		#下载命令正文
 		get_dtml_xsdz(wz)
 		#读取并运行命令
-		with open(dtml_dz_ml_bd_zw) as xxx:
+		with open(dtml_dz_ml_bd_zw,encoding='UTF-8') as xxx:
 			for hii in xxx:
 				if hii == "~\n":
 					e = "".join(zcml)

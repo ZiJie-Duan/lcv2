@@ -166,6 +166,23 @@ def kmsc_bt():
 
 #---------------------------------------------------------------------------------------
 
+def userk_x_pl():
+	#用户信息库
+	userklj = "userk.json"
+	#打开用户信息文件
+	with open(userklj) as zx_1:
+		userk = json.load(zx_1)
+	#读取详细信息
+	for key, value in userk.items():
+		keyy = value[0]
+		time = value[1]
+		root = value[2]
+		x = value[3]
+
+
+
+#---------------------------------------------------------------------------------------
+
 def dq_userk():
 	#用户信息库
 	userklj = "userk.json"
