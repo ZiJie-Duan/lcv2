@@ -71,7 +71,7 @@ def jc_update():
 	request.urlretrieve(update_json_url, up_json_lj)
 	with open(up_json_lj) as zx_1:
 		edition = json.load(zx_1)
-	if edition == 5 :
+	if edition == 6 :
 		jg = False
 	else:
 		jg = True
@@ -145,7 +145,7 @@ def get_v2ray():
 	#解压到原始目录
 	os.system(zlzlzlzl)
 	print("已解压完成")
-	print("\n如卡在此步可以按下回车")
+	input("按下回车继续！")
 
 
 def myyz():
@@ -286,6 +286,9 @@ def core():
 		cfz = 1
 		print("您还没有激活！\n")
 		key = input("请输入密钥：")
+		while key == "":
+			print("不可以输入空白内容！")
+			key = input("请输入密钥：")
 		data = key
 		try:
 			#尝试写入密钥json
