@@ -180,4 +180,17 @@ def time_tjkey(key,mac):
 		fhz = "1"
 	return fhz, time
 
+def rzxr(rznr):
+	hi = 'rz.txt'
+	with open(hi,'a') as hii:
+		hii.write(rznr)
 
+def rzzl(mac, addr, show_time, time, x, yj):
+	#日志写入
+	addr_b = []
+	for addr_z in addr:
+		addr_e = str(addr_z)
+		addr_b.append(addr_e)
+	addr_a = " ".join(addr_b)
+	rz_zc = show_time + "\n" + mac + "\n" + addr_a + "\n" + yj + "\n" + time + "\n" + x + "\n" + "\n"
+	rzxr(rz_zc)

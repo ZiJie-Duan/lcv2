@@ -50,21 +50,33 @@ while True:
 				ztmh = "4"
 				send = ztmh + "." + time + "." + ml + "." + x
 				cli.sendall(send.encode())
+				#日志写入
+				yj = "超级用户接入 允许连接"
+				mods.rzzl(mac, addr, show_time, time, x, yj)
 			if ztm == "1":
 				print("mac验证通过 允许连接")
 				ml = "0"
 				send = ztm + "." + time + "." + ml + "." + x
 				cli.sendall(send.encode())
+				#日志写入
+				yj = "mac验证通过 允许连接"
+				mods.rzzl(mac, addr, show_time, time, x, yj)
 			if ztm == "2":
 				print("mac不存在 拒绝连接")
 				ml = "0"
 				send = ztm + "." + time + "." + ml + "." + x
 				cli.sendall(send.encode())
+				#日志写入
+				yj = "mac不存在 拒绝连接"
+				mods.rzzl(mac, addr, show_time, time, x, yj)
 			if ztm == "3":
 				print("时间过期 拒绝连接")
 				ml = "0"
 				send = ztm + "." + time + "." + ml + "." + x
 				cli.sendall(send.encode())
+				#日志写入
+				yj = "时间过期 拒绝连接"
+				mods.rzzl(mac, addr, show_time, time, x, yj)
 		#mod2
 		if mod == "key":
 			print("mod_key start!")
@@ -77,11 +89,19 @@ while True:
 					ml = "0"
 					send = fhz + "." + time + "." + ml
 					cli.sendall(send.encode())
+					#日志写入
+					x = "0"
+					yj = "延长成功 允许连接"
+					mods.rzzl(mac, addr, show_time, time, x, yj)
 				if fhz == "2":
 					print("密钥不存在 拒绝连接")
 					ml = "0"
 					send = fhz + "." + time + "." + ml
 					cli.sendall(send.encode())
+					#日志写入
+					x = "0"
+					yj = "密钥不存在 拒绝连接"
+					mods.rzzl(mac, addr, show_time, time, x, yj)
 			else:
 				fhz, time = mods.yzkey_keyk(key)
 				if fhz == "1":
@@ -91,11 +111,19 @@ while True:
 					ml = "0"
 					send = fhz + "." + time + "." + ml
 					cli.sendall(send.encode())
+					#日志写入
+					x = "0"
+					yj = "创建mac 允许连接"
+					mods.rzzl(mac, addr, show_time, time, x, yj)
 				if fhz == "2":
 					print("密钥不存在 拒绝连接")
 					ml = "0"
 					send = fhz + "." + time + "." + ml
 					cli.sendall(send.encode())
+					#日志写入
+					x = "0"
+					yj = "密钥不存在 拒绝连接"
+					mods.rzzl(mac, addr, show_time, time, x, yj)
 		#mod3
 		#if mod == "X":
 			#print("附加模式检测")
