@@ -166,9 +166,11 @@ def kmsc_bt():
 
 #---------------------------------------------------------------------------------------
 
-def userk_x_pl():
+#使用mac查询用户信息
+def userk_c_mac():
 	#用户信息库
 	userklj = "userk.json"
+	a = input("mac：")
 	#打开用户信息文件
 	with open(userklj) as zx_1:
 		userk = json.load(zx_1)
@@ -178,6 +180,38 @@ def userk_x_pl():
 		time = value[1]
 		root = value[2]
 		x = value[3]
+		try:
+			bjname = value[4]
+		except:
+			bjname = "no_name"
+		if key == a:
+			print("密钥：" + keyy)
+			print("时间：" + time)
+			if root == True:
+				rootx = "True"
+			else:
+				rootx = "False"
+			print("等级：" + rootx)
+			print("指令：" + x)
+			print("名称：" + bjname)
+
+
+#---------------------------------------------------------------------------------------
+
+#用于统一修改用户特殊指令的函数
+def userk_x_pl():
+	#用户信息库
+	userklj = "userk.json"
+	a = input("数值：")
+	#打开用户信息文件
+	with open(userklj) as zx_1:
+		userk = json.load(zx_1)
+	#读取详细信息
+	for key, value in userk.items():
+		value[3] = a
+
+	with open(userklj,'w') as ojbk_1:
+		json.dump(userk,ojbk_1)
 
 
 
@@ -484,6 +518,7 @@ def help():
 	print("")
 	print("ukl--------列出userk所有用户信息")
 	print("uklb-------列出userk所有标记用户的信息")
+	print("umac-------mac查询userk用户的信息")
 	print("")
 	print("mc---------使用密钥查找userk用户")
 	print("nc---------使用名称查找userk用户")
@@ -491,6 +526,7 @@ def help():
 	print("ur---------使用mac修改userk用户等级")
 	print("un---------使用mac写入userk用户名称标记")
 	print("ux---------使用mac写入userk用户操作命令")
+	print("ng---------统一修改所有userk用户操作命令")
 	print("")
 	print("--------------卡密操作---------------")
 	print("")
@@ -604,6 +640,18 @@ def core():
 			put_userk_json()
 		except:
 			print("错误！函数ssh_user_rm_userk")
+
+	if core_ml == "ng":
+		try:
+			userk_x_pl()
+		except:
+			print("错误！函数userk_x_pl")
+
+	if core_ml == "umac":
+		try:
+			userk_c_mac()
+		except:
+			print("错误！函数userk_c_mac")
 
 
 	if core_ml == "q!":
