@@ -4,6 +4,36 @@ import paramiko
 import re
 
 #---------------------------------------------------------------------------------------
+
+def remove_rz():
+	#删除rz.txt的函数
+	ps = input("server_password：")
+	client = paramiko.SSHClient()
+
+	client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+	client.connect('60.205.221.103', username='root', password=ps, timeout=5)
+
+	client.exec_command('rm /zzz/rz.txt')
+
+#---------------------------------------------------------------------------------------
+
+def get_rz_txt():
+	#下载日志文件模块
+	#用于获取rz.txt的函数
+	ps = input("server_password：")
+	transport = paramiko.Transport(('60.205.221.103', 22))
+	transport.connect(username='root', password=ps)
+	
+	sftp = paramiko.SFTPClient.from_transport(transport)
+	
+	sftp.get('/zzz/rz.txt', 'rz.txt')
+	
+	transport.close()
+
+
+
+#---------------------------------------------------------------------------------------
 #卡密生成模块
 
 def mod_1():
@@ -167,8 +197,8 @@ def kmsc_bt():
 
 #---------------------------------------------------------------------------------------
 
-#分析日志内容
 def rz_fx():
+	#分析日志内容
 	gl = False
 	a = input("是否过滤无标记用户？[y/n]：")
 
@@ -611,6 +641,8 @@ def help():
 	print("")
 	print("------------日志文件操作-------------")
 	print("")
+	print("grz--------下载日志文件")
+	print("rmrz-------删除服务器日志文件")
 	print("rzfx-------分析日志文件")
 	print("")
 
@@ -724,10 +756,22 @@ def core():
 			print("错误！函数userk_c_mac")
 
 	if core_ml == "rzfx":
-	#try:
-		rz_fx()
-	#except:
-		#print("错误！函数rz_fx")
+		try:
+			rz_fx()
+		except:
+			print("错误！函数rz_fx")
+
+	if core_ml == "grz":
+		try:
+			get_rz_txt()
+		except:
+			print("错误！函数get_rz_txt")
+
+	if core_ml == "rmrz":
+		try:
+			remove_rz()
+		except:
+			print("错误！函数get_rz_txt")
 
 
 	if core_ml == "q!":
