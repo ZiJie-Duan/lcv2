@@ -1,6 +1,7 @@
 # -- coding:utf-8--
 import json
 import paramiko
+import re
 
 #---------------------------------------------------------------------------------------
 #卡密生成模块
@@ -166,11 +167,76 @@ def kmsc_bt():
 
 #---------------------------------------------------------------------------------------
 
+#分析日志内容
+def rz_fx():
+	gl = False
+	a = input("是否过滤无标记用户？[y/n]：")
+
+	if a == "y":
+		gl = True
+	if a == "n":
+		gl = False
+
+	#日志
+	user_rz = "rz.txt"
+	#逐行读取文件
+	with open(user_rz, encoding='UTF-8') as xxx:
+		for hii in xxx:
+			time = re.match(r'.{4}(-..){5}', hii)
+			if time:
+				time_now = hii.strip("\n")
+
+			mac = re.match(r'(..:){5}..', hii)
+			if mac:
+				userklj = "userk.json"
+				hii = hii.strip("\n")
+				#打开用户信息文件
+				with open(userklj) as zx_1:
+					userk = json.load(zx_1)
+				#读取详细信息
+				for key, value in userk.items():
+					keyy = value[0]
+					time = value[1]
+					root = value[2]
+					x = value[3]
+					try:
+						bjname = value[4]
+					except:
+						bjname = "no_name"
+					if key == hii:
+						if gl == True:
+							if bjname != "no_name":
+								print("\n\n" + time_now)
+								print("名称：" + bjname)
+								print("密钥：" + keyy)
+								print("时间：" + time)
+								if root == True:
+									rootx = "True"
+								else:
+									rootx = "False"
+								print("等级：" + rootx)
+								print("指令：" + x)
+						else:
+							print("\n\n" + time_now)
+							print("名称：" + bjname)
+							print("密钥：" + keyy)
+							print("时间：" + time)
+							if root == True:
+								rootx = "True"
+							else:
+								rootx = "False"
+							print("等级：" + rootx)
+							print("指令：" + x)
+							
+							
+
+#---------------------------------------------------------------------------------------
+
 #使用mac查询用户信息
 def userk_c_mac():
 	#用户信息库
 	userklj = "userk.json"
-	a = input("mac：")
+	mac = input("mac：")
 	#打开用户信息文件
 	with open(userklj) as zx_1:
 		userk = json.load(zx_1)
@@ -184,7 +250,7 @@ def userk_c_mac():
 			bjname = value[4]
 		except:
 			bjname = "no_name"
-		if key == a:
+		if key == mac:
 			print("密钥：" + keyy)
 			print("时间：" + time)
 			if root == True:
@@ -543,6 +609,10 @@ def help():
 	print("rmkey------删除server中的key.json")
 	print("rmuserk----删除server中的userk.json")
 	print("")
+	print("------------日志文件操作-------------")
+	print("")
+	print("rzfx-------分析日志文件")
+	print("")
 
 #---------------------------------------------------------------------------------------
 
@@ -652,6 +722,12 @@ def core():
 			userk_c_mac()
 		except:
 			print("错误！函数userk_c_mac")
+
+	if core_ml == "rzfx":
+	#try:
+		rz_fx()
+	#except:
+		#print("错误！函数rz_fx")
 
 
 	if core_ml == "q!":
