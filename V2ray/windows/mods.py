@@ -73,7 +73,7 @@ def jc_update():
 	request.urlretrieve(update_json_url, up_json_lj)
 	with open(up_json_lj) as zx_1:
 		edition = json.load(zx_1)
-	if edition == 7 :
+	if edition == 8 :
 		jg = False
 	else:
 		jg = True
