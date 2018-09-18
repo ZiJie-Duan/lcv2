@@ -11,14 +11,16 @@ import json
 import sys
 import socket
 import uuid
+import ssl 
 
+ssl._create_default_https_context = ssl._create_unverified_context
 #工作路径
 gzlj = os.getcwd()
 mblj_1 = os.path.join(gzlj, "pythonz4")
 
 def go():
 
-	print('\nV2ray 启动器V4.5')
+	print('\nV2ray 启动器V4.6')
 
 	if os.path.exists(mblj_1):
 		#检查更新的函数
