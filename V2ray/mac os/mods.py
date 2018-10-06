@@ -11,6 +11,7 @@ import sys
 import socket
 import uuid
 
+
 #工作路径
 gzlj = os.getcwd()
 #old路径
@@ -51,6 +52,11 @@ v2ray_server_rar_lj = "http://60.205.221.103/v2ray/v2rayMac.zip"
 
 #v2ray本地压缩包
 v2ray_rar_lj = os.path.join(gzlj, "pythonz4", "sun36x64", "V.zip")
+
+#权限修改
+jyhlj = os.path.join(gzlj, "pythonz4", "sun36x64", "v2ray")
+qx = "chmod 777 " + jyhlj + "/v2ray"
+qx2 = "chmod 777 " + jyhlj + "/v2ctl"
 
 
 
@@ -141,9 +147,12 @@ def get_v2ray():
 	#下载压缩包
 	request.urlretrieve(v2ray_server_rar_lj, v2ray_rar_lj)
 	print("已下载完成压缩包")
+	time.sleep(1)
 	zlzlzlzl = "unzip -n " + v2ray_rar_lj + " -d " + mblj_1
 	#解压到原始目录
 	os.system(zlzlzlzl)
+	os.system(qx)
+	os.system(qx2)
 	print("已解压完成")
 	input("按下回车继续！")
 
