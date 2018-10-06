@@ -235,7 +235,7 @@ def install():
 
 	print("安装成功！\n")
 	print("正在重新启动程序！\n")
-	go()
+	core()
 
 
 def get_dtml_dzb():
