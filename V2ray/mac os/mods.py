@@ -17,7 +17,7 @@ gzlj = os.getcwd()
 old_python_1 = os.path.join(gzlj, "pythonX")
 old_python_2 = os.path.join(gzlj, "pythonz")
 #是否有更新验证文件位置
-update_json_url = "http://lucyx.cn/zzz/v2ray/update.json"
+update_json_url = "http://60.205.221.103/zzz/v2ray/update.json"
 #服务器更新文件位置
 update_exe_url = "http://60.205.221.103/v2ray/v2rayMacX.zip"
 #更新验证文件位置
@@ -30,7 +30,7 @@ mblj_1 = os.path.join(gzlj, "pythonz4", "sun36x64")
 mblj_2 = os.path.join(gzlj, "pythonz4", "unsers")
   
 #动态命令对照文件服务器位置
-dtml_dz_ml = "http://lucyx.cn/zzz/v2ray/dtml.json"
+dtml_dz_ml = "http://60.205.221.103/zzz/v2ray/dtml.json"
 #动态命令对照文件本地位置
 dtml_dz_ml_bd = os.path.join(gzlj, "pythonz4", "unsers", "dtml.json")
 #动态命令正文本地位置
@@ -39,7 +39,7 @@ dtml_dz_ml_bd_zw = os.path.join(gzlj, "pythonz4", "unsers", "dtmlzw.txt")
 #v2ray本体路径
 v2ray_start_lj = os.path.join(gzlj, "pythonz4", "sun36x64", "v2ray", "v2ray")
 #v2ray json文件服务器位置
-v2ray_server_json_lj = "http://lucyx.cn/zzz/v2ray/v2_config_1.json"
+v2ray_server_json_lj = "http://60.205.221.103/zzz/v2ray/v2_config_1.json"
 #v2ray 本地json文件位置
 v2ray_json_lj = os.path.join(gzlj,"pythonz4", "sun36x64", "v2ray", "config.json")
 

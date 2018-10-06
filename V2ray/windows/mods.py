@@ -16,7 +16,7 @@ keytxt = "LucycoreX"
 #工作路径
 gzlj = os.getcwd()
 #是否有更新验证文件位置
-update_json_url = "http://lucyx.cn/zzz/v2ray/update.json"
+update_json_url = "http://60.205.221.103/zzz/v2ray/update.json"
 #服务器更新文件位置
 update_exe_url = "http://60.205.221.103/v2ray/v2rayWinX.zip"
 #更新验证文件位置
@@ -29,7 +29,7 @@ mblj_1 = r'C:\pythonz4\sun36x64'
 mblj_2 = r'C:\pythonz4\unsers'
 
 #动态命令对照文件服务器位置
-dtml_dz_ml = "http://lucyx.cn/zzz/v2ray/dtml.json"
+dtml_dz_ml = "http://60.205.221.103/zzz/v2ray/dtml.json"
 #动态命令对照文件本地位置
 dtml_dz_ml_bd = "C:/pythonz4/unsers/dtml.json"
 #动态命令正文本地位置
@@ -39,7 +39,7 @@ dtml_dz_ml_bd_zw = "C:/pythonz4/unsers/dtmlzw.txt"
 #v2ray本体路径
 v2ray_start_lj = r'C:\pythonz4\sun36x64\v2ray\v2ray.exe'
 #v2ray json文件服务器位置
-v2ray_server_json_lj = "http://lucyx.cn/zzz/v2ray/v2_config_1.json"
+v2ray_server_json_lj = "http://60.205.221.103/zzz/v2ray/v2_config_1.json"
 #v2ray 本地json文件位置
 v2ray_json_lj = r"C:\pythonz4\sun36x64\v2ray\config.json"
 
