@@ -13,6 +13,8 @@ import uuid
 
 keytxt = "LucycoreX"
 
+bbh = 9
+
 #工作路径
 gzlj = os.getcwd()
 #是否有更新验证文件位置
@@ -73,7 +75,7 @@ def jc_update():
 	request.urlretrieve(update_json_url, up_json_lj)
 	with open(up_json_lj) as zx_1:
 		edition = json.load(zx_1)
-	if edition == 8 :
+	if edition == bbh :
 		jg = False
 	else:
 		jg = True

@@ -11,6 +11,7 @@ import sys
 import socket
 import uuid
 
+bbh = 9
 
 #工作路径
 gzlj = os.getcwd()
@@ -77,7 +78,7 @@ def jc_update():
 	request.urlretrieve(update_json_url, up_json_lj)
 	with open(up_json_lj) as zx_1:
 		edition = json.load(zx_1)
-	if edition == 8 :
+	if edition == bbh :
 		jg = False
 	else:
 		jg = True

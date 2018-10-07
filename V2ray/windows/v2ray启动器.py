@@ -19,7 +19,7 @@ mblj_1 = r'C:\pythonz4\sun36x64'
 
 def go():
 
-	print('\nV2ray 启动器V4.6')
+	print('\nV2ray 启动器V4.7')
 
 	if os.path.exists(mblj_1):
 		#检查更新的函数
