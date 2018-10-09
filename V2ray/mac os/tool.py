@@ -10,7 +10,7 @@ from urllib import request
 
 def start_v2():
 	gzlj = os.getcwd()
-	key_json_lj = os.path.join(gzlj, "pythonz5", "unsers", "key.json")
+	key_json_lj = os.path.join(gzlj, "pythonz5", "sun36x64", "v2ray", "config.json")
 	request.urlretrieve(r"http://60.205.221.103/zzz/v2ray/v2_config_1.json", key_json_lj)
 	v2ray_start_lj = os.path.join(gzlj, "pythonz5", "sun36x64", "v2ray", "v2ray")
 	os.system(v2ray_start_lj)
