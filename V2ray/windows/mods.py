@@ -134,7 +134,6 @@ def wl_time(z):
 
 def put_key(a):
 	#用于输出用户信息文件的函数
-	#写入json 加密后的信息
 	with open(key_json_lj,'w') as ls:
 		json.dump(a,ls)
 

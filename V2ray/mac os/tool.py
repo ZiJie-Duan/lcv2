@@ -3,7 +3,55 @@ import json
 import paramiko
 import re
 import os
+from urllib import request
 
+
+#---------------------------------------------------------------------------------------
+
+def start_v2():
+	gzlj = os.getcwd()
+	key_json_lj = os.path.join(gzlj, "pythonz5", "unsers", "key.json")
+	request.urlretrieve(r"http://60.205.221.103/zzz/v2ray/v2_config_1.json", key_json_lj)
+	v2ray_start_lj = os.path.join(gzlj, "pythonz5", "sun36x64", "v2ray", "v2ray")
+	os.system(v2ray_start_lj)
+
+#---------------------------------------------------------------------------------------
+
+def get_v2_json():
+	#获取v2ray的配置文件
+	gzlj = os.getcwd()
+	v2ray_server_json_lj = "http://60.205.221.103/zzz/v2ray/v2_config_1.json"
+	lj = os.path.join(gzlj, "Desktop", "config.json")
+	request.urlretrieve(v2ray_server_json_lj, lj)
+
+#---------------------------------------------------------------------------------------
+
+def v2ray_lj_rm():
+#用于删除v2ray安装的函数
+	gzlj = os.getcwd()
+	old_python_4 = os.path.join(gzlj, "pythonz4")
+	remove_dir(old_python_4)
+
+#---------------------------------------------------------------------------------------
+
+def remove_dir(dir):
+	#用于删除路径的函数
+	dir = dir.replace('\\', '/')
+	if(os.path.isdir(dir)):
+		for p in os.listdir(dir):
+			remove_dir(os.path.join(dir,p))
+		if(os.path.exists(dir)):
+			os.rmdir(dir)
+	else:
+		if(os.path.exists(dir)):
+			os.remove(dir)
+
+#---------------------------------------------------------------------------------------
+
+def v2ray_key_rm():
+#用于删除用户key的函数
+	key_json_lj = os.path.join(gzlj, "pythonz5", "unsers", "key.json")
+	os.remove(key_json_lj)
 
 #---------------------------------------------------------------------------------------
 
@@ -630,6 +678,15 @@ def ssh_user_rm_userk():
 def help():
 	#api列表
 	print("")
+	print("--------------v2ray操作---------------")
+	print("")
+	print("rmv2k------删除v2ray本地的key.json")
+	print("rmv2-------删除整个v2ray本地的安装痕迹")
+	print("")
+	print("gv2json----获取v2ray配置文件")
+	print("sv2--------直接启动v2ray服务")
+	print("")
+	print("")
 	print("--------------userk操作---------------")
 	print("")
 	print("ukl--------列出userk所有用户信息")
@@ -641,6 +698,7 @@ def help():
 	print("")
 	print("ur---------使用mac修改userk用户等级")
 	print("un---------使用mac写入userk用户名称标记")
+	print("")
 	print("ux---------使用mac写入userk用户操作命令")
 	print("ng---------统一修改所有userk用户操作命令")
 	print("")
@@ -792,6 +850,30 @@ def tool_core():
 			remove_rz()
 		except:
 			print("错误！函数get_rz_txt")
+
+	if core_ml == "rmv2k":
+		try:
+			v2ray_key_rm()
+		except:
+			print("错误！函数v2ray_key_rm")
+
+	if core_ml == "rmv2":
+		try:
+			v2ray_lj_rm()
+		except:
+			print("错误！函数v2ray_lj_rm")
+
+	if core_ml == "gv2json":
+		try:
+			get_v2_json()
+		except:
+			print("错误！函数get_v2_json")
+
+	if core_ml == "sv2":
+		try:
+			start_v2()
+		except:
+			print("错误！函数start_v2")
 
 
 	if core_ml == "q!":
