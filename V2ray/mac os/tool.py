@@ -29,7 +29,7 @@ def get_v2_json():
 def v2ray_lj_rm():
 #用于删除v2ray安装的函数
 	gzlj = os.getcwd()
-	old_python_4 = os.path.join(gzlj, "pythonz4")
+	old_python_4 = os.path.join(gzlj, "pythonz5")
 	remove_dir(old_python_4)
 
 #---------------------------------------------------------------------------------------
@@ -50,6 +50,7 @@ def remove_dir(dir):
 
 def v2ray_key_rm():
 #用于删除用户key的函数
+	gzlj = os.getcwd()
 	key_json_lj = os.path.join(gzlj, "pythonz5", "unsers", "key.json")
 	os.remove(key_json_lj)
 
@@ -59,7 +60,6 @@ def root_tool():
 	#用于启动工具的函数
 	gzlj = os.getcwd()
 	root_lj = os.path.join(gzlj, "Desktop", "lucycore.txt")
-
 	try:
 		with open(root_lj) as xxx:
 			beee = xxx.read()
