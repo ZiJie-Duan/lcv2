@@ -2,6 +2,26 @@
 import json
 import paramiko
 import re
+import os
+
+
+#---------------------------------------------------------------------------------------
+
+def root_tool():
+	#用于启动工具的函数
+	gzlj = os.getcwd()
+	root_lj = os.path.join(gzlj, "lucycore.txt")
+
+	try:
+		with open(root_lj) as xxx:
+			beee = xxx.read()
+
+		if beee == "v2ray.tool":
+			tool_core()
+
+	except:
+		a = 2
+
 
 #---------------------------------------------------------------------------------------
 
@@ -648,7 +668,7 @@ def help():
 
 #---------------------------------------------------------------------------------------
 
-def core():
+def tool_core():
 	#核心
 
 	core_ml = input("core：")
@@ -776,7 +796,5 @@ def core():
 
 	if core_ml == "q!":
 		sys.exit(0)
-	core()
+	tool_core()
 
-print("\nlucycore v2ray工具箱\n")
-core()

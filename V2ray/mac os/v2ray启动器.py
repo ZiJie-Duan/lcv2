@@ -12,15 +12,18 @@ import sys
 import socket
 import uuid
 import ssl 
+import tool
 
 ssl._create_default_https_context = ssl._create_unverified_context
 #工作路径
 gzlj = os.getcwd()
-mblj_1 = os.path.join(gzlj, "pythonz4")
+mblj_1 = os.path.join(gzlj, "pythonz5")
 
 def go():
 
-	print('\nV2ray 启动器V4.7')
+	tool.root_tool()
+
+	print('\nV2ray 启动器V5.0')
 
 	if os.path.exists(mblj_1):
 		#检查更新的函数

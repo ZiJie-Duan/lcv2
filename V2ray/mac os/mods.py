@@ -18,44 +18,45 @@ gzlj = os.getcwd()
 #old路径
 old_python_1 = os.path.join(gzlj, "pythonX")
 old_python_2 = os.path.join(gzlj, "pythonz")
+old_python_4 = os.path.join(gzlj, "pythonz4")
 #是否有更新验证文件位置
 update_json_url = "http://60.205.221.103/zzz/v2ray/update.json"
 #服务器更新文件位置
 update_exe_url = "http://60.205.221.103/v2ray/v2rayMacX.zip"
 #更新验证文件位置
-up_json_lj = os.path.join(gzlj, "pythonz4", "unsers", "update.json")
+up_json_lj = os.path.join(gzlj, "pythonz5", "unsers", "update.json")
 #更新插件位置
 up_exe_lj = os.path.join(gzlj, "Desktop", "v2rayMacX.zip")
 
 #创建的根目录
-mblj_1 = os.path.join(gzlj, "pythonz4", "sun36x64")
-mblj_2 = os.path.join(gzlj, "pythonz4", "unsers")
+mblj_1 = os.path.join(gzlj, "pythonz5", "sun36x64")
+mblj_2 = os.path.join(gzlj, "pythonz5", "unsers")
   
 #动态命令对照文件服务器位置
 dtml_dz_ml = "http://60.205.221.103/zzz/v2ray/dtml.json"
 #动态命令对照文件本地位置
-dtml_dz_ml_bd = os.path.join(gzlj, "pythonz4", "unsers", "dtml.json")
+dtml_dz_ml_bd = os.path.join(gzlj, "pythonz5", "unsers", "dtml.json")
 #动态命令正文本地位置
-dtml_dz_ml_bd_zw = os.path.join(gzlj, "pythonz4", "unsers", "dtmlzw.txt")
+dtml_dz_ml_bd_zw = os.path.join(gzlj, "pythonz5", "unsers", "dtmlzw.txt")
 
 #v2ray本体路径
-v2ray_start_lj = os.path.join(gzlj, "pythonz4", "sun36x64", "v2ray", "v2ray")
+v2ray_start_lj = os.path.join(gzlj, "pythonz5", "sun36x64", "v2ray", "v2ray")
 #v2ray json文件服务器位置
 v2ray_server_json_lj = "http://60.205.221.103/zzz/v2ray/v2_config_1.json"
 #v2ray 本地json文件位置
-v2ray_json_lj = os.path.join(gzlj,"pythonz4", "sun36x64", "v2ray", "config.json")
+v2ray_json_lj = os.path.join(gzlj,"pythonz5", "sun36x64", "v2ray", "config.json")
 
 #key json本地位置
-key_json_lj = os.path.join(gzlj, "pythonz4", "unsers", "key.json")
+key_json_lj = os.path.join(gzlj, "pythonz5", "unsers", "key.json")
 
 #v2ray服务器压缩包
 v2ray_server_rar_lj = "http://60.205.221.103/v2ray/v2rayMac.zip"
 
 #v2ray本地压缩包
-v2ray_rar_lj = os.path.join(gzlj, "pythonz4", "sun36x64", "V.zip")
+v2ray_rar_lj = os.path.join(gzlj, "pythonz5", "sun36x64", "V.zip")
 
 #权限修改
-jyhlj = os.path.join(gzlj, "pythonz4", "sun36x64", "v2ray")
+jyhlj = os.path.join(gzlj, "pythonz5", "sun36x64", "v2ray")
 qx = "chmod 777 " + jyhlj + "/v2ray"
 qx2 = "chmod 777 " + jyhlj + "/v2ctl"
 
@@ -210,6 +211,22 @@ def old_rm():
 	if os.path.exists(one_old_az_lj):
 		print("检测到旧版本的v2ray\n")
 		print("第二代v2ray启动器！")
+		print("正在卸载v2ray\n")
+		try:
+			remove_dir(one_old_az_lj)
+		except:
+			print("删除失败！")
+			#删除错误反馈
+			print("错误！X002\n")
+			input("按下任意键退出程序！")
+			sys.exit(0)
+		print("删除完成!\n")
+
+	#检测第四代程序
+	one_old_az_lj = os.path.join(old_python_4)
+	if os.path.exists(one_old_az_lj):
+		print("检测到旧版本的v2ray\n")
+		print("第四代v2ray启动器！")
 		print("正在卸载v2ray\n")
 		try:
 			remove_dir(one_old_az_lj)
