@@ -13,7 +13,7 @@ import uuid
 
 keytxt = "LucycoreX"
 
-bbh = 9
+bbh = 10
 
 #工作路径
 gzlj = os.getcwd()
