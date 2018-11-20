@@ -3,6 +3,15 @@ import os
 import zipfile
 from urllib import request
 
+
+def Schedule(a,b,c):
+    #显示进度的函数
+    per = 100.0 * a * b / c
+    if per > 100 :
+        per = 100
+    print('%.2f%%' %(per))
+
+
 def t_v2(sys):
     aaa = []
     test_re = True
@@ -63,7 +72,7 @@ def get_v2ray(sys):
         print("正在下载V2ray资源包\n")
         print("这需要几分钟时间\n")
         #下载压缩包
-        request.urlretrieve(v2ray_server_rar_lj, v2ray_rar_lj)
+        request.urlretrieve(v2ray_server_rar_lj, v2ray_rar_lj, Schedule)
         print("已下载完成压缩包")
         azip = zipfile.ZipFile(v2ray_rar_lj)
         #解压到原始目录
@@ -86,7 +95,7 @@ def get_v2ray(sys):
         print("正在下载V2ray资源包\n")
         print("这需要几分钟时间\n")
         #下载压缩包
-        request.urlretrieve(v2ray_server_rar_lj, v2ray_rar_lj)
+        request.urlretrieve(v2ray_server_rar_lj, v2ray_rar_lj, Schedule)
         print("已下载完成压缩包")
         time.sleep(1)
         zlzlzlzl = "unzip -n " + v2ray_rar_lj + " -d " + mblj_1
