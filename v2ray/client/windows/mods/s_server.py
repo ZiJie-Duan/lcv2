@@ -71,7 +71,6 @@ def mod_2(user_id):
 	if server_s == "True":
 		print("激活成功！")
 		print("正在重启程序！")
-		start()
 	else:
 		print("激活失败！")
 		print("请重新输入密钥！")
@@ -105,4 +104,5 @@ def mod_3(user_id):
 	
 	if sr_re == "True":
 		print("注册成功！")
-		print("正在重启程序！")
+	else:
+		mod_3(user_id)

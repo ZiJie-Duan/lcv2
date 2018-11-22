@@ -36,11 +36,13 @@ def strat():
 			else:
 				#延长时间模式
 				s_server.mod_2(user_id)
+				strat()
 		else:
 			#生成uuid并写入
 			user.write_user_id()
 			#进行注册
 			s_server.mod_3(user_id)
+			strat()
 			
 	else:
 		print("您没有安装或没有正确安装v2ray!")
