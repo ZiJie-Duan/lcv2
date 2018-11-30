@@ -1,0 +1,15 @@
+digraph startgame {
+
+	mods -> mod_1:Ordinary_connection
+	mods -> mod_2:add_key
+	mods -> mod_3:add_uuid
+
+	userk_json -> {hi:[x]}
+	{hi:[x]} -> key:uuid
+	{hi:[x]} -> time
+	{hi:[x]} -> root
+	{hi:[x]} -> (yl)
+	{hi:[x]} -> (yl)
+	{hi:[x]} -> x
+
+}
