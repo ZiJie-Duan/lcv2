@@ -5,6 +5,15 @@ import datetime
 import json
 import os
 
+def timeyz(tiz):
+	yzjg = False
+	timex = now_time()
+	if tiz > timex:
+		yzjg = True
+	else:
+		yzjg = False
+	return yzjg
+
 
 def now_time():
 	#用于获取当前时间的函数
@@ -33,7 +42,7 @@ def wl_time(z):
 def yzkey_keyk(key):
 	#验证密钥库
 	keyklj = "key.json"
-	fhz = 0
+	fhz = ""
 
 	#打开密钥库
 	with open(keyklj) as zx:
@@ -50,13 +59,14 @@ def yzkey_keyk(key):
 		#写入到json文件中
 		with open(keyklj,'w') as ojbk_1:
 			json.dump(keyk,ojbk_1)
-		fhz = "1"
+		fhz = "True"
 		usertime = wl_time_sr
 	else:
-		fhz = "2"
+		fhz = "False"
 		usertime = "0000-00-00-00-00"
 
 	return fhz, usertime
+
 
 
 def yzkey_userk(uuid):
@@ -66,13 +76,18 @@ def yzkey_userk(uuid):
 	#打开用户信息文件
 	with open(userklj) as zx_1:
 		userk = json.load(zx_1)
-	#验证uuid是否存在
+	#验证key是否存在
 	if uuid in userk.keys():
-		user_xx = userk[uuid]
+		user_xx = userk[mac]
 		#取得用户预存密钥
 		time = user_xx[0]
 		root = user_xx[1]
 		x = user_xx[4]
+		#查看时间是否有效
+		if timeyz(time):
+			ztm = "1"
+		else:
+			ztm = "3"
 	else:
 		ztm = "2"
 		time = "0000-00-00-00-00"

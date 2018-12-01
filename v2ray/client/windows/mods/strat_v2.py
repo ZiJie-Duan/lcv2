@@ -5,7 +5,7 @@ import time
 v2ray_json_lj = r"C:\pythonz5\sun36x64\v2ray\config.json"
 
 def wirte_json(server_json):
-	json_lb = server_s.split('!')
+	json_lb = server_json.split('!')
 	ip = json_lb[0]
 	port = json_lb[1]
 	uid = json_lb[2]

@@ -1,6 +1,28 @@
 import json
 import os
 
+def read_gg():
+
+	lj = "gg.json"
+
+	with open(lj) as zx:
+		gg = json.load(zx)
+
+	return gg
+
+
+
+def read_v2_json():
+
+	jsonlj = "config.json"
+
+	with open(jsonlj) as zx:
+		jsonwj = json.load(zx)
+
+	return jsonwj
+
+
+
 def userk_xr(uuid):
 	#用于添加用户的函数
 	root = False
