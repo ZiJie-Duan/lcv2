@@ -14,7 +14,7 @@ def mod_1(user_id):
 	'''
 	#开始创建socks
 	sock = socket.socket()
-	HOST = '60.205.221.103'
+	HOST = "192.168.1.104"
 	PORT = 2233
 	sock.connect((HOST, PORT))
 	#发送模式
@@ -27,11 +27,11 @@ def mod_1(user_id):
 	sock.close()
 	#服务器命令分割
 	sr_lb = server_s.split('.')
-	sr_re = server_lb[0]
-	sr_time = server_lb[1]
-	sr_json = server_lb[2]
-	sr_gg = server_lb[3]
-	sr_x = server_lb[4]
+	sr_re = sr_lb[0]
+	sr_time = sr_lb[1]
+	sr_json = sr_lb[2]
+	sr_gg = sr_lb[3]
+	sr_x = sr_lb[4]
 
 	return sr_re,sr_time,sr_json,sr_gg,sr_x
 
@@ -53,7 +53,7 @@ def mod_2(user_id):
 
 	#开始创建socks
 	sock = socket.socket()
-	HOST = '60.205.221.103'
+	HOST = "192.168.1.104"
 	PORT = 2233
 	sock.connect((HOST, PORT))
 	#发送模式
@@ -88,7 +88,7 @@ def mod_3(user_id):
 	'''
 	#开始创建socks
 	sock = socket.socket()
-	HOST = '60.205.221.103'
+	HOST = "192.168.1.104"
 	PORT = 2233
 	sock.connect((HOST, PORT))
 	#发送模式
