@@ -44,15 +44,15 @@ while True:
 		if r == 0:
 			if ztm == "1":
 				#允许登陆状态
-				send = ztm + time + c_json.read_v2_json() + c_json.read_gg() + x
+				send = ztm + "." + time + "." +  c_json.read_v2_json() + "." +  c_json.read_gg() + "." +  x
 				cli.sendall(send.encode())
 			if ztm == "2":
 				#时间到期的处理方式
-				send = ztm + time + c_json.read_v2_json() + c_json.read_gg() + x
+				send = ztm + "." +  time + "." +  c_json.read_v2_json() + "." +  c_json.read_gg() + "." +  x
 				cli.sendall(send.encode())
 			if ztm == "3":
 				#uuid严重错误！
-				send = ztm + time + c_json.read_v2_json() + c_json.read_gg() + x
+				send = ztm + "." +  time + "." +  c_json.read_v2_json() + "." +  c_json.read_gg() + "." +  x
 				cli.sendall(send.encode())
 		else:
 			r == 0
@@ -92,6 +92,7 @@ while True:
 	cli.close()
 	print("over\n\n")
 	'''
+	
 	except:
 		show_time = core.now_time_show()
 		print("\n错误！")
