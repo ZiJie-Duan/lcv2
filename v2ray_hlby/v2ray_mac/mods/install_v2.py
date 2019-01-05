@@ -41,7 +41,7 @@ def t_v2():
     for x_b, _c, files in os.walk(file_dir):
         for x in files:
             aaa.append(x)
-    bbb = ['V.zip']
+    bbb = ['V.zip','v2ray','v2ray.sig']
     for x in bbb:
         if x in aaa:
             test_re = True
@@ -75,6 +75,7 @@ def get_v2ray():
     qx2 = "chmod 777 " + jyhlj + "/v2ctl"
     zlzlzlzl = "unzip -n " + v2ray_rar_lj + " -d " + mblj_1
 
+    input("按下回车开始下载！")
     print("正在下载V2ray资源包\n")
     print("这需要几分钟时间\n")
     #下载压缩包
