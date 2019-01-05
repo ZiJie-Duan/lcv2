@@ -21,6 +21,7 @@ def strat():
 			install_v2.addlj()
 			#安装v2的函数
 			install_v2.get_v2ray()
+			print("sb")
 			strat()
 		except:
 			print("正在安装v2\n")

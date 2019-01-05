@@ -2,7 +2,8 @@
 import os
 import zipfile
 from urllib import request
-
+#工作路径
+gzlj = os.getcwd()
 
 def remove_dir(dir):
     #用于删除路径的函数
@@ -17,8 +18,7 @@ def remove_dir(dir):
             os.remove(dir)
 
 def d_v2_s():
-    #工作路径
-    gzlj = os.getcwd()
+
     lj = os.path.join(gzlj, "pythonz5")
     remove_dir(lj)
 
@@ -41,7 +41,7 @@ def t_v2():
     for x_b, _c, files in os.walk(file_dir):
         for x in files:
             aaa.append(x)
-    bbb = ['V.zip', 'geoip.dat', 'geosite.dat', 'readme.md', 'v2ctl.exe', 'v2ctl.exe.sig', 'v2ray.exe', 'v2ray.exe.sig', 'wv2ray.exe', 'wv2ray.exe.sig']
+    bbb = ['V.zip']
     for x in bbb:
         if x in aaa:
             test_re = True
@@ -63,17 +63,18 @@ def addlj():
 
 
 def get_v2ray():
+    mblj_1 = os.path.join(gzlj, "pythonz5","sun36x64")
+    #v2ray服务器压缩包
+    v2ray_server_rar_lj = "http://60.205.221.103/v2ray/v2rayMac.zip"
+    #v2ray本地压缩包
+    v2ray_rar_lj = os.path.join(gzlj, "pythonz5","sun36x64","V.zip")
+    v2ray_rar_jy_lj = os.path.join(gzlj, "pythonz5","unsers")
     #权限修改
     jyhlj = os.path.join(gzlj, "pythonz5", "sun36x64", "v2ray")
     qx = "chmod 777 " + jyhlj + "/v2ray"
     qx2 = "chmod 777 " + jyhlj + "/v2ctl"
     zlzlzlzl = "unzip -n " + v2ray_rar_lj + " -d " + mblj_1
 
-    #v2ray服务器压缩包
-    v2ray_server_rar_lj = "http://60.205.221.103/v2ray/v2rayWin.zip"
-    #v2ray本地压缩包
-    v2ray_rar_lj = r"C:\pythonz5\sun36x64\V.zip"
-    v2ray_rar_jy_lj = r"C:\pythonz5\sun36x64"
     print("正在下载V2ray资源包\n")
     print("这需要几分钟时间\n")
     #下载压缩包
