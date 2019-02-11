@@ -65,7 +65,7 @@ def get_v2ray():
     v2ray_server_rar_lj = "http://www.lucycore.top/v2ray/v2rayWin.zip"
     #v2ray本地压缩包
     v2ray_rar_lj = r"C:\pythonz5\sun36x64\V.zip"
-    v2ray_rar_jy_lj = r"C:\pythonz5\sun36x64"
+    v2ray_rar_jy_lj = r"C:\pythonz5\sun36x64\v2ray"
     print("正在下载V2ray资源包\n")
     print("这需要几分钟时间\n")
     #下载压缩包

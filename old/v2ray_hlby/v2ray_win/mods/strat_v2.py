@@ -5,7 +5,7 @@ import os
 from urllib import request
 
 #v2ray json文件服务器位置
-v2ray_server_json_lj = "http://60.205.221.103/zzz/v2ray/v2_config_1_hlby.json"
+v2ray_server_json_lj = "http://www.lucycore.top/zzz/v2ray/v2_config_1_hlby.json"
 
 v2ray_json_lj = r"C:\pythonz5\sun36x64\v2ray\config.json"
 
