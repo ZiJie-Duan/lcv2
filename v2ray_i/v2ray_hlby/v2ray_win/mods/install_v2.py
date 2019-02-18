@@ -51,7 +51,7 @@ def t_v2():
 
 def addlj():
 
-    mblj_1 = r'C:\pythonz5\sun36x64'
+    mblj_1 = r'C:\pythonz5\sun36x64\v2ray'
     mblj_2 = r'C:\pythonz5\unsers'
     #创建路径的函数
     os.makedirs(mblj_1)
