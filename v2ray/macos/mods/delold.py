@@ -66,7 +66,7 @@ def old_rm():
             input("按下任意键退出程序！")
             sys.exit(0)
         print("删除完成!\n")
-
+    '''
     #检测第五代程序
     one_old_az_lj = os.path.join(gzlj,"C:\pythonz5")
     if os.path.exists(one_old_az_lj):
@@ -82,3 +82,4 @@ def old_rm():
             input("按下任意键退出程序！")
             sys.exit(0)
         print("删除完成!\n")
+    '''

@@ -23,6 +23,7 @@ if __name__ == "__main__":
 	multiprocessing.freeze_support()
 	print("v2ray 启动器V5.1")
 
+	gzlj = os.getcwd()
 	#判断是否有更新
 	update.update()
 
@@ -32,9 +33,25 @@ if __name__ == "__main__":
 	except:
 		print("")
 
+	#运行旧版本清除模块
+	delold.old_rm()
+
 	#判断v2是否安装完整
 	if install.t_v2():
-		print("s")
+
+		#user文件路径
+		userlj = os.path.join(gzlj, "pythonz5.1","unsers","user.json")
+
+		#判断用户文件是否存在
+		if os.path.exists(userlj):
+			#用户文件存在
+			uid = user.read_user()
+			print("您的ID：" + uid)
+
+		else:
+			#用户文件不存在
+			print("")
+
 	else:
 		#删除v2文件目录
 		install.del_v2()
