@@ -8,7 +8,7 @@ from urllib import request
 gzlj = os.getcwd()
 
 #v2ray json文件服务器位置
-v2ray_server_json_lj = "http://www.lucycore.top/zzz/v2ray/v2_config_1_hlby.json"
+v2ray_server_json_lj = "http://www.lucycore.top/zzz/v2ray/v2_config_hlby.json"
 
 v2ray_json_lj = os.path.join(gzlj,"pythonz5","sun36x64","v2ray","config.json")
 #v2ray本体路径

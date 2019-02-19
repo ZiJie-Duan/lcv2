@@ -65,7 +65,7 @@ def addlj():
 def get_v2ray():
     mblj_1 = os.path.join(gzlj, "pythonz5","sun36x64")
     #v2ray服务器压缩包
-    v2ray_server_rar_lj = "http://60.205.221.103/v2ray/v2rayMac.zip"
+    v2ray_server_rar_lj = "http://www.lucycore.top/v2ray/v2rayMac.zip"
     #v2ray本地压缩包
     v2ray_rar_lj = os.path.join(gzlj, "pythonz5","sun36x64","V.zip")
     v2ray_rar_jy_lj = os.path.join(gzlj, "pythonz5","unsers")

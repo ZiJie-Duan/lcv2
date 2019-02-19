@@ -3,7 +3,6 @@ import os
 import zipfile
 from urllib import request
 
-
 def remove_dir(dir):
     #用于删除路径的函数
     dir = dir.replace('\\', '/')
@@ -16,9 +15,11 @@ def remove_dir(dir):
         if(os.path.exists(dir)):
             os.remove(dir)
 
-def d_v2_s():
-    lj = r"C:\pythonz5"
-    remove_dir(lj)
+def del_v2():
+	gzlj = os.getcwd()
+	lj = os.path.join(gzlj, "pythonz5.1")
+	remove_dir(lj)
+
 
 
 def Schedule(a,b,c):
@@ -30,11 +31,13 @@ def Schedule(a,b,c):
 
 
 def t_v2():
+    gzlj = os.getcwd()
+    lj = os.path.join(gzlj, "pythonz5.1")
     aaa = []
     test_re = True
     #用于测试程序是否安装的函数
 
-    file_dir = r"C:\pythonz5"
+    file_dir = lj
     for x_b, _c, files in os.walk(file_dir):
         for x in files:
             aaa.append(x)
@@ -50,30 +53,33 @@ def t_v2():
 
 
 def addlj():
-
-    mblj_1 = r'C:\pythonz5\sun36x64'
-    mblj_2 = r'C:\pythonz5\unsers'
-    #创建路径的函数
-    os.makedirs(mblj_1)
-    os.makedirs(mblj_2)
+	gzlj = os.getcwd()
+	mblj_1 = os.path.join(gzlj, "pythonz5.1", "sun36x64")
+	mblj_1 = os.path.join(gzlj, "pythonz5.1", "unsers")
+	#创建路径的函数
+	os.makedirs(mblj_1)
+	os.makedirs(mblj_2)
 
 
 
 def get_v2ray():
 
-    #v2ray服务器压缩包
-    v2ray_server_rar_lj = "http://www.lucycore.top/v2ray/v2rayWin.zip"
-    #v2ray本地压缩包
-    v2ray_rar_lj = r"C:\pythonz5\sun36x64\V.zip"
-    v2ray_rar_jy_lj = r"C:\pythonz5\sun36x64"
-    print("正在下载V2ray资源包\n")
-    print("这需要几分钟时间\n")
-    #下载压缩包
-    request.urlretrieve(v2ray_server_rar_lj, v2ray_rar_lj, Schedule)
-    print("已下载完成压缩包")
-    azip = zipfile.ZipFile(v2ray_rar_lj)
-    #解压到原始目录
-    azip.extractall(v2ray_rar_jy_lj)
-    print("已解压完成")
-    input("按下回车继续！")
+	#v2ray服务器压缩包
+	v2ray_server_rar_lj = "http://www.lucycore.top/v2ray/v2rayWin.zip"
+
+	gzlj = os.getcwd()
+	v2ray_rar_lj = os.path.join(gzlj, "pythonz5.1", "sun36x64", "V.zip")
+	v2ray_rar_jy_lj = os.path.join(gzlj, "pythonz5.1", "sun36x64")
+
+	print("正在下载V2ray资源包\n")
+	print("这需要几分钟时间\n")
+    input("按下回车开始安装！")
+	#下载压缩包
+	request.urlretrieve(v2ray_server_rar_lj, v2ray_rar_lj, Schedule)
+	print("已下载完成压缩包")
+	azip = zipfile.ZipFile(v2ray_rar_lj)
+	#解压到原始目录
+	azip.extractall(v2ray_rar_jy_lj)
+	print("已解压完成")
+	input("按下回车继续！")
 

@@ -51,7 +51,7 @@ def t_v2():
 
 def addlj():
 
-    mblj_1 = r'C:\pythonz5\sun36x64'
+    mblj_1 = r'C:\pythonz5\sun36x64\v2ray'
     mblj_2 = r'C:\pythonz5\unsers'
     #创建路径的函数
     os.makedirs(mblj_1)
@@ -65,7 +65,8 @@ def get_v2ray():
     v2ray_server_rar_lj = "http://www.lucycore.top/v2ray/v2rayWin.zip"
     #v2ray本地压缩包
     v2ray_rar_lj = r"C:\pythonz5\sun36x64\V.zip"
-    v2ray_rar_jy_lj = r"C:\pythonz5\sun36x64"
+    v2ray_rar_jy_lj = r"C:\pythonz5\sun36x64\v2ray"
+    input("按下回车开始下载！")
     print("正在下载V2ray资源包\n")
     print("这需要几分钟时间\n")
     #下载压缩包
