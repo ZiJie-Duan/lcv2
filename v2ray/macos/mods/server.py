@@ -14,7 +14,7 @@ def mod_2(uuid):
 
 	#开始创建socks
 	sock = socket.socket()
-	HOST = "www.lucycore.top"
+	HOST = '10.10.1.58'
 	PORT = 2233
 	sock.connect((HOST, PORT))
 	#发送模式
@@ -38,7 +38,7 @@ def mod_2(uuid):
 
 	
 
-def mod_1(uuid,key):
+def mod_1(uuidx,key):
 	'''
 	注册模式
 	需要的数据：
@@ -48,14 +48,14 @@ def mod_1(uuid,key):
 	'''
 	#开始创建socks
 	sock = socket.socket()
-	HOST = "www.lucycore.top"
+	HOST = '10.10.1.58'
 	PORT = 2233
 	sock.connect((HOST, PORT))
 	#发送模式
 	sock.sendall("mod_1".encode())
 	server_myd = sock.recv(1024).decode()
 	#发送uuid
-	sock.sendall(uuid.encode())
+	sock.sendall(str(uuidx).encode())
 	server_myd = sock.recv(1024).decode()
 	#发送key
 	sock.sendall(key.encode())

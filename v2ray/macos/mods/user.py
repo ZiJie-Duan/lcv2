@@ -1,7 +1,8 @@
 import json
 import uuid
-import aess
+from mods import aess
 import os
+import sys
 
 def w_id(uuid):
 	#生成uuid
@@ -44,7 +45,7 @@ def read_user():
 	#循环解密用户uuid
 	for x in userlb:
 		mw = aess.jm("lucycore",x)
-		mwlb.appedn(mw)
+		mwlb.append(mw)
 
 	mwzfc = ''.join(mwlb)
 	return mwzfc
