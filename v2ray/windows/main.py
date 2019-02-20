@@ -41,3 +41,4 @@ if __name__ == "__main__":
 		install.get_v2ray()
 		print("安装完成\n请再次启动\n回车以退出程序")
 		sys.exit()
+                                                                                                                                                                       
