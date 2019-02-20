@@ -47,10 +47,50 @@ if __name__ == "__main__":
 			#用户文件存在
 			uid = user.read_user()
 			print("您的ID：" + uid)
+			#连接服务器获取服务器返回值
+			ztm, js = server.mod_2(uid)
+
+			#判断服务器是否允许连接
+			if ztm == "T":
+				#写入json并启动
+				start.start_v2(js)
+
+			else:
+				user.d_id()
+				print("您的账户已过期！正在移除您的账户！")
+				print("请您重启此程序！")
+				input("按下回车后退出程序！")
+				sys.exit()
 
 		else:
+
 			#用户文件不存在
-			print("")
+			#生成uuid
+			uuid = user.b_id()
+			#id格式化
+			uuidx = user.uid_cl(uuid)
+
+			print("您的ID：" + uuidx)
+			key = input("请输入您的密钥：")
+
+			print("正在验证您的密钥")
+			#发送uuid和key至服务器
+			ztm, js = server.mod_1(uuid,key)
+
+			#判断服务器是否允许连接
+			if ztm == "T":
+				print("您的密钥验证通过！")
+				#写入用户文件
+				user.w_id(uuid)
+				#写入配置文件并启动运行
+				start.start_v2(js)
+			else:
+				#验证失败 错误反馈
+				print("您的密钥验证失败！")
+				print("密钥不存在！")
+				print("请您重启此程序！并重新输入！")
+				input("按下回车后 关闭程序！")
+				sys.exit()
 
 	else:
 		#删除v2文件目录

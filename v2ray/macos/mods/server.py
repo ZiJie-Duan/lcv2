@@ -32,8 +32,9 @@ def mod_2(uuid):
 		sock.close()
 		return "T", server_json
 	else:
-		return "F", "00*00*00"
 		sock.close()
+		return "F", "00*00*00"
+		
 
 	
 
