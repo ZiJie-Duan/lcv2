@@ -44,7 +44,7 @@ def read_user():
 	#循环解密用户uuid
 	for x in userlb:
 		mw = aess.jm("lucycore",x)
-		mwlb.appedn(mw)
+		mwlb.append(mw)
 
 	mwzfc = ''.join(mwlb)
 	return mwzfc

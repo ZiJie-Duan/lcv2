@@ -72,8 +72,7 @@ def get_v2ray():
 	v2ray_rar_jy_lj = os.path.join(gzlj, "pythonz5.1", "sun36x64")
 
 	print("正在下载V2ray资源包\n")
-	print("这需要几分钟时间\n")
-    input("按下回车开始安装！")
+	input("这需要几分钟时间\n按下回车开始安装")
 	#下载压缩包
 	request.urlretrieve(v2ray_server_rar_lj, v2ray_rar_lj, Schedule)
 	print("已下载完成压缩包")

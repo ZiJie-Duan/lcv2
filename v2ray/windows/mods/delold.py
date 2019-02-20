@@ -64,13 +64,12 @@ def old_rm():
             input("按下任意键退出程序！")
             sys.exit(0)
         print("删除完成!\n")
-
-
+    '''
     #检测第五代程序
-    one_old_az_lj = r"C:\pythonz5"
+    one_old_az_lj = os.path.join(gzlj,"C:\pythonz5")
     if os.path.exists(one_old_az_lj):
         print("检测到旧版本的v2ray\n")
-        print("第五代v2ray启动器！")
+        print("5.0版本 v2ray启动器！")
         print("正在卸载v2ray\n")
         try:
             remove_dir(one_old_az_lj)
@@ -81,3 +80,4 @@ def old_rm():
             input("按下任意键退出程序！")
             sys.exit(0)
         print("删除完成!\n")
+    '''
