@@ -90,3 +90,4 @@ def get_v2ray():
     print("已解压完成")
     input("按下回车继续！")
 
+
