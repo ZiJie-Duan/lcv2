@@ -1,7 +1,8 @@
 import json
 import uuid
-import aess
+from mods import aess
 import os
+import sys
 
 def w_id(uuid):
 	#生成uuid

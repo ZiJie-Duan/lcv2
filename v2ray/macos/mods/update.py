@@ -26,7 +26,7 @@ def update():
     update_bb = "5.1"
     #用于检查是否需要更新的函数
     sock = socket.socket()
-    HOST = "www.lucycore.top"
+    HOST = '10.10.1.58'
     PORT = 2233
     sock.connect((HOST, PORT))
     #发送模式
