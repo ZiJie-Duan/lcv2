@@ -7,10 +7,10 @@ from urllib import request
 #v2ray json文件服务器位置
 v2ray_server_json_lj = "http://www.lucycore.top/zzz/v2ray/v2_config_hlby.json"
 
-v2ray_json_lj = r"C:\pythonz5\sun36x64\v2ray\config.json"
+v2ray_json_lj = r"C:\pythonz5\sun36x64\v2ray\v2rayWac\config.json"
 
 #v2ray本体路径
-v2ray_start_lj = r'C:\pythonz5\sun36x64\v2ray\v2ray.exe'
+v2ray_start_lj = r'C:\pythonz5\sun36x64\v2ray\v2rayWac\v2ray.exe'
 
 def getv2json():
 	request.urlretrieve(v2ray_server_json_lj, v2ray_json_lj)

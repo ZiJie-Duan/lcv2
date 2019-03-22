@@ -34,5 +34,5 @@ def strat():
 if __name__ == "__main__":
 	#防止程序打包无限循环
 	multiprocessing.freeze_support()
-	print("v2ray_内部版本 V2.0\n")
+	print("v2ray_内部版本 V2.1\n")
 	strat()

@@ -10,9 +10,9 @@ gzlj = os.getcwd()
 #v2ray json文件服务器位置
 v2ray_server_json_lj = "http://www.lucycore.top/zzz/v2ray/v2_sn_1.json"
 
-v2ray_json_lj = os.path.join(gzlj,"pythonz5","sun36x64","v2ray","config.json")
+v2ray_json_lj = os.path.join(gzlj,"pythonz5","sun36x64","v2ray","v2rayMac","config.json")
 #v2ray本体路径
-v2ray_start_lj = os.path.join(gzlj,"pythonz5","sun36x64","v2ray","v2ray")
+v2ray_start_lj = os.path.join(gzlj,"pythonz5","sun36x64","v2ray","v2rayMac","v2ray")
 
 def getv2json():
 	request.urlretrieve(v2ray_server_json_lj, v2ray_json_lj)
