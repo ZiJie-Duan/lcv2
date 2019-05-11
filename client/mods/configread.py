@@ -20,19 +20,22 @@ def return_config():
 		r"C:\pythonz6\sun36x64\V.zip",
 
 		"v2ray_zip_jy_road" : \
-		r"C:\pythonz6\sun36x64",
+		r"C:\pythonz6\sun36x64\v2ray",
 
-		"v2ray_json_url" : \
-		"http://www.lucycore.top/config/pc1.json",
+		"v2rayN_json_url" : \
+		"http://www.lucycore.top/config/v2n_1.json",
 
-		"v2ray_json_bd_lj" : \
-		r"C:\pythonz6\sun36x64\v2ray\config.json",
+		"v2rayN_json_bd_lj" : \
+		r"C:\pythonz6\sun36x64\v2ray\guiNConfig.json",
 
 		"v2ray_exe_strat_lj" : \
-		r'C:\pythonz6\sun36x64\v2ray\v2ray.exe',
+		r'C:\pythonz6\sun36x64\v2ray\v2rayN.exe',
 
-		"lcv2_update_url" : \
+		"lcv2_server_url" : \
 		'127.0.0.1',
+
+		"server_port" : \
+		2233,
 
 		"lcv2_zip_bd_lj" : \
 		r'C:\pythonz6\lcv2.zip',
@@ -43,8 +46,11 @@ def return_config():
 		"v2ray_rm_all" : \
 		r'C:\pythonz6',
 
+		"lcv2_user_json" : \
+		r'C:\pythonz6\unsers\user.json',
+
 		"sys" : \
-		r'windows',
+		r'windows'
 
 	}
 

@@ -12,7 +12,7 @@ import socket
 import uuid
 import ssl 
 
-from mods import selfprotect,configread,v2raydo
+from mods import selfprotect,configread,v2raydo,user,server
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
@@ -24,8 +24,9 @@ def main() :
 	zbl = configread.return_config()
 
 	#验证是否有更新
-	host = zbl["lcv2_update_url"]
-	if selfprotect.check_self_update(host):
+	host = zbl["lcv2_server_url"]
+	port = zbl["server_port"]
+	if selfprotect.check_self_update(host,port):
 
 		print("已检测到更新！")
 		url = zbl["lcv2_server_install_url"]
@@ -57,9 +58,101 @@ def main() :
 			zt = 0
 
 
-
 		if zt == 2:
-			print("ok")
+			
+			lj = zbl["lcv2_user_json"]
+			if os.path.exists(lj):
+
+				lj = zbl["lcv2_user_json"]
+				try:
+					userid = user.read_user(lj)
+				except:
+					print("程序错误！读取用户ID错误！")
+					input("按下回车后退出程序！")
+					sys.exit(0)
+
+				url = zbl["lcv2_server_url"]
+				port = zbl["server_port"]
+
+				if server.login(url,port,userid):
+					print("登入成功！")
+
+					url = zbl["v2rayN_json_url"]
+					lj = zbl["v2rayN_json_bd_lj"]
+					v2lj = zbl["v2ray_exe_strat_lj"]
+
+					try:
+						print("正在开启v2rayN")
+						v2raydo.start_V2ray(nurl,nlj,v2lj)
+					except:
+						print("程序错误！启动v2ray未知错误！")
+						input("按下回车后退出程序！")
+						sys.exit(0)
+
+					print("程序执行完成！")
+					input("按下回车后退出程序！")
+					sys.exit(0)
+
+				else:
+					print("登入错误！您的密钥不存在或已过期！")
+					try:
+						print("正在移除卡密")
+						rm_lj = zbl["lcv2_user_json"]
+						v2raydo.remove_dir(rm_lj)
+					except:
+						print("程序错误！移除卡密错误！")
+						input("按下回车后退出程序！")
+						sys.exit(0)
+					
+					print("若要重新输入请重启程序！")
+					input("按下回车后退出程序！")
+					sys.exit(0)
+
+
+			else:
+				print("您没有激活程序或程序已过期")
+				print("请重新输入密钥！")
+
+				key = input("密钥：")
+
+				url = zbl["lcv2_server_url"]
+				port = zbl["server_port"]
+				if server.logon(url,port,key):
+					print("激活成功！")
+
+					lj = zbl["lcv2_user_json"]
+
+					try:
+						user.write_user(lj,key)
+					except:
+						print("程序错误！写入卡密错误！")
+						input("按下回车后退出程序！")
+						sys.exit(0)
+
+
+					url = zbl["v2rayN_json_url"]
+					lj = zbl["v2rayN_json_bd_lj"]
+					v2lj = zbl["v2ray_exe_strat_lj"]
+
+					try:
+						print("正在开启v2rayN")
+						v2raydo.start_V2ray(nurl,nlj,v2lj)
+					except:
+						print("程序错误！启动v2ray未知错误！")
+						input("按下回车后退出程序！")
+						sys.exit(0)
+
+					print("程序执行完成！")
+					input("按下回车后退出程序！")
+					sys.exit(0)
+
+				else:
+					print("激活错误！请您检查您的密钥！")
+					print("若要重新输入请重启程序！")
+					input("按下回车后退出程序！")
+					sys.exit(0)
+
+
 		
 		elif zt == 1:
 			print("检测到您的v2ray文件不完整！")
@@ -76,36 +169,43 @@ def main() :
 				input("按下回车后退出程序！")
 				sys.exit(0)
 
-			sys = zbl["sys"]
+			syss = zbl["sys"]
 			url = zbl["v2ray_server_install_url"]
 			ziplj = zbl["v2ray_zip_road"]
 			jylj = zbl["v2ray_zip_jy_road"]
 
 			try:
-				get_v2ray(sys,url,ziplj,jylj)
+				get_v2ray(syss,url,ziplj,jylj)
 			except:
 				print("程序错误！下载v2ray本体错误！")
 				input("按下回车后退出程序！")
 				sys.exit(0)
+
+			print("程序准备就绪！")
+			print("请手动重启程序！")
+			input("按下回车后退出程序！")
+			sys.exit(0)
 
 
 		elif zt == 0:
 
 			print("您没有安装v2ray！")
-			sys = zbl["sys"]
+			syss = zbl["sys"]
 			url = zbl["v2ray_server_install_url"]
 			ziplj = zbl["v2ray_zip_road"]
 			jylj = zbl["v2ray_zip_jy_road"]
 
 			try:
-				get_v2ray(sys,url,ziplj,jylj)
+				get_v2ray(syss,url,ziplj,jylj)
 			except:
 				print("程序错误！下载v2ray本体错误！")
 				input("按下回车后退出程序！")
 				sys.exit(0)
 
-		
-
+			print("程序准备就绪！")
+			print("请手动重启程序！")
+			input("按下回车后退出程序！")
+			sys.exit(0)
 
 main()
 

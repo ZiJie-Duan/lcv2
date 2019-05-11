@@ -107,9 +107,9 @@ def get_v2ray(sys,url,ziplj,jylj):
 		input("按下回车继续！")
 
 
-def start_V2ray(url,lj,v2lj):
+def start_V2ray(nurl,nlj,v2lj):
 
-	request.urlretrieve(url, lj, Schedule)
+	request.urlretrieve(nurl, nlj, Schedule)
 
 	os.system(v2lj)
 
