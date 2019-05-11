@@ -24,6 +24,22 @@ while True:
 	cli, addr = sock.accept()
 
 	mod = cli.recv(2048).decode()
-	cli.sendall("2.0".encode())
+
+	if mod == "update":
+		cli.sendall("6.0".encode())
+
+	elif mod == "login":
+
+		cli.sendall("my".encode())
+		userid = cli.recv(2048).decode()
+		cli.sendall("F".encode())
+
+
+	elif mod == "logon":
+
+		cli.sendall("my".encode())
+		key = cli.recv(2048).decode()
+		cli.sendall("F".encode())
+
 
 	cli.close()

@@ -83,7 +83,7 @@ def main() :
 
 					try:
 						print("正在开启v2rayN")
-						v2raydo.start_V2ray(nurl,nlj,v2lj)
+						v2raydo.start_V2ray(url,lj,v2lj)
 					except:
 						print("程序错误！启动v2ray未知错误！")
 						input("按下回车后退出程序！")
@@ -136,7 +136,7 @@ def main() :
 
 					try:
 						print("正在开启v2rayN")
-						v2raydo.start_V2ray(nurl,nlj,v2lj)
+						v2raydo.start_V2ray(url,lj,v2lj)
 					except:
 						print("程序错误！启动v2ray未知错误！")
 						input("按下回车后退出程序！")
@@ -175,7 +175,16 @@ def main() :
 			jylj = zbl["v2ray_zip_jy_road"]
 
 			try:
-				get_v2ray(syss,url,ziplj,jylj)
+				lj1 = zbl["mkdir_v2ray_lj_1"]
+				lj2 = zbl["mkdir_v2ray_lj_2"]
+				v2raydo.mkdir_v2lj(lj1,lj2)
+			except:
+				print("程序错误！创建路径错误！")
+				input("按下回车后退出程序！")
+				sys.exit(0)
+
+			try:
+				v2raydo.get_v2ray(syss,url,ziplj,jylj)
 			except:
 				print("程序错误！下载v2ray本体错误！")
 				input("按下回车后退出程序！")
@@ -196,7 +205,16 @@ def main() :
 			jylj = zbl["v2ray_zip_jy_road"]
 
 			try:
-				get_v2ray(syss,url,ziplj,jylj)
+				lj1 = zbl["mkdir_v2ray_lj_1"]
+				lj2 = zbl["mkdir_v2ray_lj_2"]
+				v2raydo.mkdir_v2lj(lj1,lj2)
+			except:
+				print("程序错误！创建路径错误！")
+				input("按下回车后退出程序！")
+				sys.exit(0)
+
+			try:
+				v2raydo.get_v2ray(syss,url,ziplj,jylj)
 			except:
 				print("程序错误！下载v2ray本体错误！")
 				input("按下回车后退出程序！")
@@ -208,5 +226,4 @@ def main() :
 			sys.exit(0)
 
 main()
-
 
