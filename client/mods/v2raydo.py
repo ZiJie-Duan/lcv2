@@ -17,6 +17,7 @@ def remove_dir(dir):
 			os.remove(dir)
 
 
+
 def Schedule(a,b,c):
 	#显示进度的函数
 	per = 100.0 * a * b / c

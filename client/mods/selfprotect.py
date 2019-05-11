@@ -15,6 +15,7 @@ def Schedule(a,b,c):
 def check_self_update(host):
 	#返回true or false
 	#用于检查是否需要更新的函数
+	update_bb = "6.0"
 	sock = socket.socket()
 	HOST = host
 	PORT = 2233
@@ -34,6 +35,5 @@ def check_self_update(host):
 def get_update(url,lj):
 	#用于获取更新的函数
 	request.urlretrieve(url, lj, Schedule)
-
 
 
