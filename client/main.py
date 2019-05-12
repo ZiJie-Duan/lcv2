@@ -81,16 +81,16 @@ def main() :
 					lj = zbl["v2rayN_json_bd_lj"]
 					v2lj = zbl["v2ray_exe_strat_lj"]
 
-					try:
-						print("正在开启v2rayN")
-						v2raydo.start_V2ray(url,lj,v2lj)
-					except:
-						print("程序错误！启动v2ray未知错误！")
-						input("按下回车后退出程序！")
-						sys.exit(0)
+				#try:
+					print("正在开启v2rayN")
+					v2raydo.start_V2ray(url,lj,v2lj)
+				#except:
+					#print("程序错误！启动v2ray未知错误！")
+					#input("按下回车后退出程序！")
+					#sys.exit(0)
 
 					print("程序执行完成！")
-					input("按下回车后退出程序！")
+					input("请手动关闭此程序！")
 					sys.exit(0)
 
 				else:
@@ -143,7 +143,7 @@ def main() :
 						sys.exit(0)
 
 					print("程序执行完成！")
-					input("按下回车后退出程序！")
+					input("请手动关闭此程序！")
 					sys.exit(0)
 
 				else:

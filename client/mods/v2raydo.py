@@ -111,12 +111,7 @@ def start_V2ray(nurl,nlj,v2lj):
 
 	request.urlretrieve(nurl, nlj, Schedule)
 
-	os.system(v2lj)
-
-
-
-
-
+	os.popen(v2lj)
 
 
 
