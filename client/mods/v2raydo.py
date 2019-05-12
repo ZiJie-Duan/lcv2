@@ -109,8 +109,6 @@ def get_v2ray(sys,url,ziplj,jylj):
 
 def start_V2ray(nurl,nlj,v2lj):
 
-	print(nurl)
-	print(nlj)
 	#assert 'SYSTEMROOT' in os.environ
 	request.urlretrieve(nurl, nlj)
 
