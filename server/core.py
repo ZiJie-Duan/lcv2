@@ -33,4 +33,3 @@ def yz_time(fu):
 	else:
 		return False
 
-
