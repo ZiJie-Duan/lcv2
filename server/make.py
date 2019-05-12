@@ -45,16 +45,15 @@ DBSession = sessionmaker(bind=engine)
 
 #创建表
 Base.metadata.create_all(engine)
-'''
+
 
 # 创建session对象:
 session = DBSession()
 # 创建新User对象:
-new_user = User()
+new_user = Key_data(keyname = "qaz",keytime = "30")
 # 添加到session:
 session.add(new_user)
 # 提交即保存到数据库:
 session.commit()
 # 关闭session:
 session.close()
-'''

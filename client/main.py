@@ -225,5 +225,10 @@ def main() :
 			input("按下回车后退出程序！")
 			sys.exit(0)
 
-main()
+
+if __name__ == "__main__":
+	#防止程序打包无限循环
+	multiprocessing.freeze_support()
+	print("lcv2 V6.0")
+	main()
 
