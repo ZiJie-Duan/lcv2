@@ -131,7 +131,7 @@ def server():
 			#模式为验证更新
 			if mod == "update":
 				#发送程序版本
-				cli.sendall("6.0".encode())
+				cli.sendall("6.1".encode())
 
 
 			#模式为登陆模式

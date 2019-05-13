@@ -41,7 +41,8 @@ def return_config():
 		r'C:\pythonz6\lcv2.zip',
 		
 		"v2ray_bt_yz_list" : \
-		["v2ray.exe"],
+		["v2ray.exe","v2rayN.exe","v2ctl.exe","geoip.dat",\
+		"geosite.dat","v2ctl.exe.sig","v2ray.exe.sig","wv2ray.exe"],
 
 		"v2ray_rm_all" : \
 		r'C:\pythonz6',
@@ -93,7 +94,8 @@ def return_config():
 		r'C:\pythonz6\lcv2.zip',
 		
 		"v2ray_bt_yz_list" : \
-		["v2ray.exe","v2rayN.exe","v2ctl.exe"],
+		["v2ray.exe","v2rayN.exe","v2ctl.exe","geoip.dat",\
+		"geosite.dat","v2ctl.exe.sig","v2ray.exe.sig","wv2ray.exe"],
 
 		"v2ray_rm_all" : \
 		r'C:\pythonz6',

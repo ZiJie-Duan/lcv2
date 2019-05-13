@@ -28,15 +28,21 @@ def main() :
 	port = zbl["server_port"]
 	if selfprotect.check_self_update(host,port):
 
-		print("已检测到更新！")
-		url = zbl["lcv2_server_install_url"]
-		lj = zbl["lcv2_zip_bd_lj"]
+		if zbl["sys"] == "windows":
 
-		input("按下回车开始下载更新")
-		#下载更新
-		selfprotect.get_update(url,lj)
-		print("完成下载更新！")
-		print("请手动解压‘’")
+			gzlj = os.getcwd()
+			uplj = os.path.join(gzlj, "lcv2.zip")
+
+			print("已检测到更新！")
+			url = zbl["lcv2_server_install_url"]
+			lj = uplj
+
+			input("按下回车开始下载（如速度慢，请重启此程序）")
+			#下载更新
+			selfprotect.get_update(url,lj)
+			print("完成下载更新！")
+			print("请手动解压并运行此程序目录下的‘lcv2.zip’")
+
 
 	else:
 		zt = 0 
@@ -184,6 +190,7 @@ def main() :
 				sys.exit(0)
 
 			try:
+				input("按下回车开始下载（如速度慢，请重启此程序）")
 				v2raydo.get_v2ray(syss,url,ziplj,jylj)
 			except:
 				print("程序错误！下载v2ray本体错误！")
@@ -214,6 +221,7 @@ def main() :
 				sys.exit(0)
 
 			try:
+				input("按下回车开始下载（如速度慢，请重启此程序）")
 				v2raydo.get_v2ray(syss,url,ziplj,jylj)
 			except:
 				print("程序错误！下载v2ray本体错误！")
@@ -229,6 +237,6 @@ def main() :
 if __name__ == "__main__":
 	#防止程序打包无限循环
 	multiprocessing.freeze_support()
-	print("lcv2 V6.0")
+	print("lcv2 V6.1")
 	main()
 
