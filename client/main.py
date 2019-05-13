@@ -12,7 +12,7 @@ import socket
 import uuid
 import ssl 
 
-from mods import selfprotect,configread,v2raydo,user,server
+from mods import selfprotect,configread,v2raydo,user,server,delold
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
@@ -45,6 +45,9 @@ def main() :
 
 
 	else:
+
+		delold.old_rm(zbl["sys"])
+
 		zt = 0 
 		#zt=0 代表从未安装v2 zt=1安装却不完整
 		#zt=2 安装完整
