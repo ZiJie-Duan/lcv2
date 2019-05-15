@@ -52,3 +52,7 @@ def logon(url,port,user_id):
 		return False
 	elif server_s == "T":
 		return True
+
+
+#def get_config(url):
+
