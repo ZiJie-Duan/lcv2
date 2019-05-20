@@ -93,6 +93,7 @@ def get_config():
 	aa = session.query(Config_data).all()
 	#删除原有卡密
 	aa = str(aa)
+	aa = aa.strip('[]')
 	return aa
 
 
