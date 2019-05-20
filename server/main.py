@@ -90,7 +90,7 @@ def get_config():
 	session.add(a)
 	session.commit()
 	#获取ip的函数
-	aa = session.query(Key_data).all()
+	aa = session.query(Config_data).all()
 	#删除原有卡密
 	aa = str(aa)
 	return aa
