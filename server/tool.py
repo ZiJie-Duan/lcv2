@@ -7,6 +7,7 @@ import uuid
 Base = declarative_base()
 
 
+
 # 定义Key对象:
 class Key_data(Base):
     # 表的名字:
@@ -36,6 +37,22 @@ class User_data(Base):
 
         return "{userid}!{due}!{otime}".format(userid=self.userid\
             ,due=self.due,otime=self.otime)
+
+
+# 定义User对象:
+class Config_data(Base):
+    # 表的名字:
+    __tablename__ = 'config'
+
+    # 表的结构:
+    ip = Column(String(50),unique=True,primary_key=True)
+    uuid = Column(String(20))
+    port = Column(String(20))
+
+    def __repr__(self):
+
+        return "{ip}!{uuid}!{port}".format(ip=self.ip\
+            ,uuid=self.uuid,port=self.port)
 
 
 

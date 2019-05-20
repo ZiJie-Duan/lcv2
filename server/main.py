@@ -43,6 +43,23 @@ class User_data(Base):
             ,due=self.due,otime=self.otime)
 
 
+# 定义User对象:
+class Config_data(Base):
+    # 表的名字:
+    __tablename__ = 'config'
+
+    # 表的结构:
+    ip = Column(String(50),unique=True,primary_key=True)
+    uuid = Column(String(20))
+    port = Column(String(20))
+
+    def __repr__(self):
+
+        return "{ip}!{uuid}!{port}".format(ip=self.ip\
+            ,uuid=self.uuid,port=self.port)
+
+
+
 # 初始化数据库连接:
 engine = create_engine('sqlite:///test.db')
 # 创建DBSession类型:
@@ -52,10 +69,37 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
+
+def write_config(ip,uuid,port):
+	#写入config的函数
+	pz = Config_data(ip=ip,uuid=uuid,port=port)
+	session.add(pz)
+	session.commit()
+
+def del_config(ip):
+	#获取ip的函数
+	aa = session.query(Config_data)\
+	.filter_by(ip=ip).first()
+	#删除原有卡密
+	session.delete(aa)
+	session.commit()
+
+#////////////////////////////////////////////
+def get_config():
+	a = Config_data(ip="111",uuid="qwsazx",port="2202")
+	session.add(a)
+	session.commit()
+	#获取ip的函数
+	aa = session.query(Key_data).all()
+	#删除原有卡密
+	aa = str(aa)
+	return aa
+
+
 def test_key(key):
 	#验证卡密是否存在的函数
-	a = session.query(Key_data)\
-	.filter_by(keyname=key).first()
+	a = session.query(Key_data).first()
+	a = str(a)
 
 	if a is not None:
 		return True
@@ -163,11 +207,14 @@ def server():
 				else:
 					cli.sendall("F".encode())
 
+
+
 		except:
 			print("e")
 
 if __name__ == "__main__":
-	server()
+	#server()
+	print(get_config())
 
 
 
