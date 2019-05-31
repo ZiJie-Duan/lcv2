@@ -1,4 +1,5 @@
 # -- coding:utf-8--
+#this file set place in main server
 import socket
 import time
 import datetime
@@ -80,24 +81,22 @@ def del_config():
 	#获取ip的函数
 	aa = session.query(Config_data).all()
 	aa = aa[0]
-	#删除原有卡密
+	#删除原有配置 
 	session.delete(aa)
 	session.commit()
 
 def get_config():
 	#获取ip的函数
 	aa = session.query(Config_data).all()
-	#删除原有卡密
+
 	aa = str(aa)
 	aa = aa.strip('[]')
 
 	return aa
 
-
-def test_key(key):
-	#验证卡密是否存在的函数
-	a = session.query(Key_data).first()
-	a = str(a)
+def test_config():
+	#验证配置文件是否存在的函数
+	a = session.query(Config_data).first()
 
 	if a is not None:
 		return True
@@ -195,14 +194,13 @@ def server():
 				cli.sendall("my".encode())
 				#接收密钥
 				key = cli.recv(2048).decode()
-				#测试密钥是否存在
-				if test_key(key):
+				#尝试从服务器中获取key
+				try:
 					#获取密钥时间并转换
 					ft = get_key(key)
 					write_userid(key,ft,"0000")
 					cli.sendall("T".encode())
-					
-				else:
+				except:
 					cli.sendall("F".encode())
 
 
@@ -215,16 +213,28 @@ def server():
 
 			#更新配置文件
 			elif mod == "upconfig":
-				del_config()
-				#发送占位符
-				cli.sendall("my".encode())
-				aaa = cli.recv(2048).decode()
-				aaa.split('!')
-				#(ip,uuid,port)
 
-				write_config(aaa[0],aaa[1],aaa[2])
-				cli.sendall("my".encode())
+				if test_config():			
 
+					del_config()
+					#发送占位符
+					cli.sendall("my".encode())
+					aaa = cli.recv(2048).decode()
+					aaa.split('!')
+					#(ip,uuid,port)
+
+					write_config(aaa[0],aaa[1],aaa[2])
+					cli.sendall("ok".encode())
+
+				else:
+					#发送占位符
+					cli.sendall("my".encode())
+					aaa = cli.recv(2048).decode()
+					aaa.split('!')
+					#(ip,uuid,port)
+
+					write_config(aaa[0],aaa[1],aaa[2])
+					cli.sendall("ok".encode())
 
 		except:
 			print("e")
