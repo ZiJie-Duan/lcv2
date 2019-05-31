@@ -76,24 +76,21 @@ def write_config(ip,uuid,port):
 	session.add(pz)
 	session.commit()
 
-def del_config(ip):
+def del_config():
 	#获取ip的函数
-	aa = session.query(Config_data)\
-	.filter_by(ip=ip).first()
+	aa = session.query(Config_data).all()
+	aa = aa[0]
 	#删除原有卡密
 	session.delete(aa)
 	session.commit()
 
-#////////////////////////////////////////////
 def get_config():
-	a = Config_data(ip="111",uuid="qwsazx",port="2202")
-	session.add(a)
-	session.commit()
 	#获取ip的函数
 	aa = session.query(Config_data).all()
 	#删除原有卡密
 	aa = str(aa)
 	aa = aa.strip('[]')
+
 	return aa
 
 
@@ -208,6 +205,25 @@ def server():
 				else:
 					cli.sendall("F".encode())
 
+
+			#获取配置文件
+			elif mod == "config":
+				#发送占位符
+				pz = get_config()
+				cli.sendall(pz.encode())
+
+
+			#更新配置文件
+			elif mod == "upconfig":
+				del_config()
+				#发送占位符
+				cli.sendall("my".encode())
+				aaa = cli.recv(2048).decode()
+				aaa.split('!')
+				#(ip,uuid,port)
+
+				write_config(aaa[0],aaa[1],aaa[2])
+				cli.sendall("my".encode())
 
 
 		except:
