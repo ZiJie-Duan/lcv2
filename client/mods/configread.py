@@ -112,10 +112,10 @@ def return_config():
 	test_mac = {
 
 		"lcv2_server_install_url" : \
-		"http://www.lucycore.top/v2ray/lcv2Min.zip",
+		"http://www.lucycore.top/v2ray/lcv2Mac.zip",
 		
 		"v2ray_server_install_url" : \
-		"http://www.lucycore.top/v2ray/v2rayMin.zip",
+		"http://www.lucycore.top/v2ray/v2rayMac.zip",
 		
 		"mkdir_v2ray_lj_1" : \
 		"./pythonz6/sun36x64",

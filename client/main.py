@@ -1,6 +1,5 @@
 # -- coding:utf-8--
 import multiprocessing
-from urllib import request
 import os
 import shutil
 import zipfile
@@ -9,7 +8,6 @@ import datetime
 import json
 import sys
 import socket
-import uuid
 import ssl 
 
 from mods import selfprotect,configread,v2raydo,user,server,delold

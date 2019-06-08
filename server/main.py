@@ -220,7 +220,7 @@ def server():
 					#发送占位符
 					cli.sendall("my".encode())
 					aaa = cli.recv(2048).decode()
-					aaa.split('!')
+					aaa = aaa.split('!')
 					#(ip,uuid,port)
 
 					write_config(aaa[0],aaa[1],aaa[2])
@@ -230,7 +230,7 @@ def server():
 					#发送占位符
 					cli.sendall("my".encode())
 					aaa = cli.recv(2048).decode()
-					aaa.split('!')
+					aaa = aaa.split('!')
 					#(ip,uuid,port)
 
 					write_config(aaa[0],aaa[1],aaa[2])
@@ -240,8 +240,8 @@ def server():
 			print("e")
 
 if __name__ == "__main__":
-	#server()
-	print(get_config())
+	server()
+	
 
 
 
