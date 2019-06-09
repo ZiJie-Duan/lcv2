@@ -35,7 +35,7 @@ def change_uuid():
 
 
 
-def send_server(ccss):
+def send_server(ip,ccss):
 
 	sock = socket.socket()
 	#HOST = "www.lucycore.top"
@@ -46,7 +46,7 @@ def send_server(ccss):
 	sock.sendall("upconfig".encode())
 	server_myd = sock.recv(1024).decode()
 
-	ccss = "12121212" + "!" + ccss + "!" + "5000"
+	ccss = "000000000" + "!" + ccss + "!" + "5000"
 	#发送config
 	sock.sendall(ccss.encode())
 	#接受服务器的状态码
@@ -54,6 +54,9 @@ def send_server(ccss):
 	sock.close()
 
 def main():
+	ip = input("ip:")
+	print("开启守护程序！")
+
 	js = 200000
 	while True:
 		if js < 1440:
@@ -65,5 +68,5 @@ def main():
 
 			uid = change_uuid()
 
-			send_server(uid)
+			send_server(ip,uid)
 main()
