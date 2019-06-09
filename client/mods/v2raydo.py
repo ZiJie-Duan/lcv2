@@ -107,12 +107,15 @@ def get_v2ray(sys,url,ziplj,jylj):
 		input("按下回车继续！")
 
 
-def start_V2ray(nurl,nlj,v2lj):
+def write_config(ip,uid,port,lj):
+	
 
-	#assert 'SYSTEMROOT' in os.environ
-	request.urlretrieve(nurl, nlj)
+
+
+
+def start_V2ray(ip,uid,port,Nlj,v2lj):
+
+	write_config(ip,uid,port,Nlj)
 
 	os.popen(v2lj)
-
-
 

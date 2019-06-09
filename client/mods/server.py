@@ -54,5 +54,23 @@ def logon(url,port,user_id):
 		return True
 
 
-#def get_config(url):
+def get_config(url,port):
+
+	#开始创建socks
+	sock = socket.socket()
+	HOST = url
+	PORT = port
+	sock.connect((HOST, PORT))
+	#发送模式
+	sock.sendall("config".encode())
+	#接受服务器配置返回值
+	server_s = sock.recv(1024).decode()
+	sock.close()
+
+	server_s = server_s.split('!')
+
+
+	return server_s[0],server_s[1],server_s[2]
+
+
 

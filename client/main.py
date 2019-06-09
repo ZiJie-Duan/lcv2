@@ -84,13 +84,16 @@ def main() :
 				if server.login(url,port,userid):
 					print("登入成功！")
 
-					url = zbl["v2rayN_json_url"]
+					url = zbl["lcv2_server_url"]
 					lj = zbl["v2rayN_json_bd_lj"]
 					v2lj = zbl["v2ray_exe_strat_lj"]
+					port = zbl["server_port"]
 
 					try:
+						#尝试获取配置
+						ipn,uidn,portn = get_config(url,port)
 						print("正在开启v2rayN")
-						v2raydo.start_V2ray(url,lj,v2lj)
+						v2raydo.start_V2ray(ipn,uidn,portn,lj,v2lj)
 					except:
 						print("程序错误！启动v2ray未知错误！")
 						input("按下回车后退出程序！")
@@ -137,13 +140,16 @@ def main() :
 						sys.exit(0)
 
 
-					url = zbl["v2rayN_json_url"]
+					url = zbl["lcv2_server_url"]
 					lj = zbl["v2rayN_json_bd_lj"]
 					v2lj = zbl["v2ray_exe_strat_lj"]
+					port = zbl["server_port"]
 
 					try:
+						#尝试获取配置
+						ipn,uidn,portn = get_config(url,port)
 						print("正在开启v2rayN")
-						v2raydo.start_V2ray(url,lj,v2lj)
+						v2raydo.start_V2ray(ipn,uidn,portn,lj,v2lj)
 					except:
 						print("程序错误！启动v2ray未知错误！")
 						input("按下回车后退出程序！")
