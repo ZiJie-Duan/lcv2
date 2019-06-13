@@ -77,7 +77,6 @@ def write_config(ip,uuid,port):
 	session.add(pz)
 	session.commit()
 
-	aa = aa[0]
 
 def test_config(ip):
 	#验证用户是否可用的函数
