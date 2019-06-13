@@ -77,31 +77,33 @@ def write_config(ip,uuid,port):
 	session.add(pz)
 	session.commit()
 
-def del_config():
-	#获取ip的函数
-	aa = session.query(Config_data).all()
 	aa = aa[0]
-	#删除原有配置 
-	session.delete(aa)
-	session.commit()
+
+def test_config(ip):
+	#验证用户是否可用的函数
+	aa = session.query(User_data)\
+	.filter_by(ip=ip).first()
+
+	if aa is not None:
+
+		session.delete(aa)
+		session.commit()
+		return True
+
+	else:
+		return False
+
 
 def get_config():
 	#获取ip的函数
 	aa = session.query(Config_data).all()
 
+	aa = aa[0]
 	aa = str(aa)
-	aa = aa.strip('[]')
+	#此时aa是一个列表，可以直接使用len函数获取该列表长度
+	#然后使用随机函数调用ip用于给予客户端随机的返回
 
 	return aa
-
-def test_config():
-	#验证配置文件是否存在的函数
-	a = session.query(Config_data).first()
-
-	if a is not None:
-		return True
-	else:
-		return False
 
 
 def get_key(key):
@@ -128,7 +130,7 @@ def write_userid(userid,due,otime):
 
 def yz_userid(userid):
 	#验证用户是否可用的函数
-	aa = session.query(User_data)\
+	aa = session.query(Config_data)\
 	.filter_by(userid=userid).first()
 
 	if aa is not None:
@@ -214,27 +216,20 @@ def server():
 			#更新配置文件
 			elif mod == "upconfig":
 
-				if test_config():			
+				#发送占位符
+				cli.sendall("my".encode())
+				configs = cli.recv(2048).decode()
+				cli.sendall("ok".encode())
+				configs = configs.split('!')
+				#(ip,uuid,port)
 
-					del_config()
-					#发送占位符
-					cli.sendall("my".encode())
-					aaa = cli.recv(2048).decode()
-					aaa = aaa.split('!')
-					#(ip,uuid,port)
+				if test_config(configs[0]):
 
-					write_config(aaa[0],aaa[1],aaa[2])
-					cli.sendall("ok".encode())
+					write_config(configs[0],configs[1],configs[2])
 
 				else:
-					#发送占位符
-					cli.sendall("my".encode())
-					aaa = cli.recv(2048).decode()
-					aaa = aaa.split('!')
-					#(ip,uuid,port)
 
-					write_config(aaa[0],aaa[1],aaa[2])
-					cli.sendall("ok".encode())
+					write_config(configs[0],configs[1],configs[2])
 
 		except:
 			print("e")
