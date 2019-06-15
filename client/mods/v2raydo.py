@@ -129,5 +129,5 @@ def start_V2ray(ip,uid,port,Nlj,v2lj):
 	write_config(ip,uid,port,Nlj)
 	time.sleep(2)
 
-	#os.popen(v2lj)
+	os.popen(v2lj)
 
