@@ -8,8 +8,8 @@ import time
 
 def change_uuid():
 
-	#c_file = "/etc/v2ray/config.json"
-	cc_file = r"C:\Users\lucycore\Desktop\config.json"
+	cc_file = "/etc/v2ray/config.json"
+	#cc_file = r"C:\Users\lucycore\Desktop\config.json"
 
 	with open(cc_file,encoding='UTF-8') as zx:
 		pzz = json.load(zx)
@@ -55,18 +55,25 @@ def send_server(ip,ccss):
 
 def main():
 	ip = input("ip:")
-	print("开启守护程序！")
+	print("已开启守护程序！")
 
-	js = 200000
+	js = 0
 	while True:
-		if js < 1440:
+		if js < 1:
 			time.sleep(60)
 			js += 1
 
 		else:
 			js = 0
 
+			os.system("service v2ray stop")
+			time.sleep(3)
+
 			uid = change_uuid()
 
-			send_server(ip,uid)
+			#send_server(ip,uid)
+			time.sleep(3)
+
+			os.system("service v2ray stop")
+			print("已结束进入循环")
 main()
