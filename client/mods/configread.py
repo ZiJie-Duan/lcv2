@@ -33,6 +33,7 @@ def return_config():
 
 		"lcv2_server_url" : \
 		'35.229.171.103',
+		#'192.168.0.11',
 
 		"server_port" : \
 		2233,

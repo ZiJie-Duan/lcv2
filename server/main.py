@@ -134,7 +134,7 @@ def write_userid(userid,due,otime):
 
 def yz_userid(userid):
 	#验证用户是否可用的函数
-	aa = session.query(Config_data)\
+	aa = session.query(User_data)\
 	.filter_by(userid=userid).first()
 
 	if aa is not None:
@@ -168,34 +168,41 @@ def server():
 	print("v2ray server start！")
 
 	while True:
-		try:
+		#try:
 			#堵塞连接
 			cli, addr = sock.accept()
+			print("\n\n客户端接入！")
+			print(addr)
 
 			#接收模式识别
 			mod = cli.recv(2048).decode()
 
 			#模式为验证更新
 			if mod == "update":
+				print("验证更新！")
 				#发送程序版本
 				cli.sendall("6.2".encode())
 
 
 			#模式为登陆模式
 			elif mod == "login":
+				print("登陆验证！")
 				#发送占位
 				cli.sendall("my".encode())
 				#接收用户id
 				userid = cli.recv(2048).decode()
 				#验证用户时间是否合法
 				if yz_userid(userid):
+					print("验证通过！")
 					cli.sendall("T".encode())
 				else:
+					print("验证拒绝！")
 					cli.sendall("F".encode())
 
 
 			#模式为注册模式
 			elif mod == "logon":
+				print("注册验证！")
 				#发送占位符
 				cli.sendall("my".encode())
 				#接收密钥
@@ -206,12 +213,15 @@ def server():
 					ft = get_key(key)
 					write_userid(key,ft,"0000")
 					cli.sendall("T".encode())
+					print("验证通过！")
 				except:
+					print("验证拒绝！")
 					cli.sendall("F".encode())
 
 
 			#获取配置文件
 			elif mod == "config":
+				print("配置发送")
 				#发送占位符
 				pz = get_config()
 				cli.sendall(pz.encode())
@@ -219,7 +229,7 @@ def server():
 
 			#更新配置文件
 			elif mod == "upconfig":
-
+				print("配置更新！")
 				#发送占位符
 				cli.sendall("my".encode())
 				configs = cli.recv(2048).decode()
@@ -235,8 +245,8 @@ def server():
 
 					write_config(configs[0],configs[1],configs[2])
 
-		except:
-			print("e")
+		#except:
+			#print("e")
 
 if __name__ == "__main__":
 	server()
