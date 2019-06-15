@@ -59,7 +59,7 @@ def main():
 
 	js = 0
 	while True:
-		if js < 1:
+		if js < 1440:
 			time.sleep(60)
 			js += 1
 
