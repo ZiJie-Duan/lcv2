@@ -39,7 +39,7 @@ def send_server(ip,ccss):
 
 	sock = socket.socket()
 	#HOST = "www.lucycore.top"
-	HOST = "192.168.0.11"
+	HOST = "35.229.171.103"
 	PORT = 2233
 	sock.connect((HOST, PORT))
 	#发送模式
@@ -71,9 +71,9 @@ def main():
 
 			uid = change_uuid()
 
-			#send_server(ip,uid)
+			send_server(ip,uid)
 			time.sleep(3)
 
-			os.system("service v2ray stop")
+			os.system("service v2ray start")
 			print("已结束进入循环")
 main()

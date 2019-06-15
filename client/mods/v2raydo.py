@@ -2,6 +2,7 @@
 import os
 import zipfile
 from urllib import request
+import time
 
 
 def remove_dir(dir):
@@ -108,14 +109,24 @@ def get_v2ray(sys,url,ziplj,jylj):
 
 
 def write_config(ip,uid,port,lj):
+
+	with open(lj,encoding='UTF-8') as zx:
+		pzz = json.load(zx)
+
+	pzz["vmess"][0]["address"] = ip
+	pzz["vmess"][0]["port"] = port
+	pzz["vmess"][0]["id"] = uid
+
+
+	with open(lj,'w') as ojbk:
+		json.dump(pzz,ojbk)
 	
-
-
 
 
 def start_V2ray(ip,uid,port,Nlj,v2lj):
 
 	write_config(ip,uid,port,Nlj)
+	time.sleep(2)
 
 	os.popen(v2lj)
 

@@ -9,6 +9,7 @@ import core
 from sqlalchemy import Column, String, create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+import random
 
 # 创建对象的基类:
 Base = declarative_base()
@@ -97,7 +98,11 @@ def get_config():
 	#获取ip的函数
 	aa = session.query(Config_data).all()
 
-	aa = aa[0]
+	size = len(aa) - 1
+	#尝试随机获取ip
+	ys = random.randint(0, size)
+
+	aa = aa[ys]
 	aa = str(aa)
 	#此时aa是一个列表，可以直接使用len函数获取该列表长度
 	#然后使用随机函数调用ip用于给予客户端随机的返回
@@ -173,7 +178,7 @@ def server():
 			#模式为验证更新
 			if mod == "update":
 				#发送程序版本
-				cli.sendall("6.1".encode())
+				cli.sendall("6.2".encode())
 
 
 			#模式为登陆模式
