@@ -80,8 +80,8 @@ def write_config(ip,uuid,port):
 
 
 def test_config(ip):
-	#验证用户是否可用的函数
-	aa = session.query(User_data)\
+	#验证config是否存在相同ip的项目
+	aa = session.query(Config_data)\
 	.filter_by(ip=ip).first()
 
 	if aa is not None:
