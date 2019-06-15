@@ -40,7 +40,7 @@ def main() :
 			selfprotect.get_update(url,lj)
 			print("完成下载更新！")
 			print("请手动解压并运行此程序目录下的‘lcv2.zip’")
-
+			input("按下回车退出！")
 
 	else:
 
