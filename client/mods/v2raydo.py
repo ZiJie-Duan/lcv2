@@ -3,6 +3,7 @@ import os
 import zipfile
 from urllib import request
 import time
+import json
 
 
 def remove_dir(dir):

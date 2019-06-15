@@ -46,7 +46,7 @@ def send_server(ip,ccss):
 	sock.sendall("upconfig".encode())
 	server_myd = sock.recv(1024).decode()
 
-	ccss = "000000000" + "!" + ccss + "!" + "5000"
+	ccss = ip + "!" + ccss + "!" + "5000"
 	#发送config
 	sock.sendall(ccss.encode())
 	#接受服务器的状态码

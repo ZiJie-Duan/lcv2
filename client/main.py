@@ -89,15 +89,15 @@ def main() :
 					v2lj = zbl["v2ray_exe_strat_lj"]
 					port = zbl["server_port"]
 
-					try:
-						#尝试获取配置
-						ipn,uidn,portn = get_config(url,port)
-						print("正在开启v2rayN")
-						v2raydo.start_V2ray(ipn,uidn,portn,lj,v2lj)
-					except:
-						print("程序错误！启动v2ray未知错误！")
-						input("按下回车后退出程序！")
-						sys.exit(0)
+				#try:
+					#尝试获取配置
+					ipn,uidn,portn = server.get_config(url,port)
+					print("正在开启v2rayN")
+					v2raydo.start_V2ray(ipn,uidn,portn,lj,v2lj)
+				#except:
+					print("程序错误！启动v2ray未知错误！")
+					input("按下回车后退出程序！")
+					sys.exit(0)
 
 					print("程序执行完成！")
 					input("请手动关闭此程序！")
@@ -147,7 +147,7 @@ def main() :
 
 					try:
 						#尝试获取配置
-						ipn,uidn,portn = get_config(url,port)
+						ipn,uidn,portn = v2raydo.get_config(url,port)
 						print("正在开启v2rayN")
 						v2raydo.start_V2ray(ipn,uidn,portn,lj,v2lj)
 					except:
