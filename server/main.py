@@ -72,6 +72,19 @@ session = DBSession()
 
 
 
+def cheak_user_out():
+	#用于回收数据库无用资源的函数
+	aa = session.query(User_data).all()
+
+	for x in aa:
+		a = str(x).split('!')
+
+		if core.yz_time(a[1]):
+
+			session.delete(x)
+			session.commit()
+
+
 def write_config(ip,uuid,port):
 	#写入config的函数
 	pz = Config_data(ip=ip,uuid=uuid,port=port)
@@ -168,7 +181,7 @@ def server():
 	print("v2ray server start！")
 
 	while True:
-		#try:
+		try:
 			#堵塞连接
 			cli, addr = sock.accept()
 			print("\n\n客户端接入！")
@@ -245,12 +258,14 @@ def server():
 
 					write_config(configs[0],configs[1],configs[2])
 
-		#except:
-			#print("e")
+				cheak_user_out()
+
+		except:
+			print("\n\n发生未知错误！\n\n")
 
 if __name__ == "__main__":
 	server()
-	
+
 
 
 #session.close()
