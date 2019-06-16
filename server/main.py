@@ -79,7 +79,7 @@ def cheak_user_out():
 	for x in aa:
 		a = str(x).split('!')
 
-		if core.yz_time(a[1]):
+		if core.yz_time(a[1]) == False:
 
 			session.delete(x)
 			session.commit()
@@ -265,6 +265,7 @@ def server():
 
 if __name__ == "__main__":
 	server()
+
 
 
 
