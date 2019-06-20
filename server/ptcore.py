@@ -38,8 +38,8 @@ def change_uuid():
 def send_server(ip,ccss):
 
 	sock = socket.socket()
-	#HOST = "www.lucycore.top"
-	HOST = "35.229.171.103"
+	HOST = "www.lucycore.top"
+	#HOST = "35.229.171.103"
 	PORT = 2233
 	sock.connect((HOST, PORT))
 	#发送模式
@@ -57,7 +57,7 @@ def main():
 	ip = input("ip:")
 	print("已开启守护程序！")
 
-	js = 0
+	js = 2000
 	while True:
 		if js < 1440:
 			time.sleep(60)

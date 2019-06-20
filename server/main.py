@@ -260,10 +260,23 @@ def server():
 
 				cheak_user_out()
 
+
+			#管理程序操作模式
+			elif mod == "root":
+				print("管理操作模式")
+				#发送占位符
+				cli.sendall("my".encode())
+				cmod = cli.recv(2048).decode()
+
+				core.root_control(cmod)
+
+
 		except:
 			print("\n\n发生未知错误！\n\n")
 
+
 if __name__ == "__main__":
+	print("lcv2 V6.3")
 	server()
 
 
