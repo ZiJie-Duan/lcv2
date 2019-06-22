@@ -20,8 +20,8 @@ def add_key():
 	send_data = key_name + "!" + time
 
 	sock = socket.socket()
-	#HOST = "www.lucycore.top"
-	HOST = "192.168.0.11"
+	HOST = "www.lucycore.top"
+	#HOST = "192.168.0.11"
 	PORT = 2233
 	sock.connect((HOST, PORT))
 	#发送模式
@@ -45,8 +45,8 @@ def del_key():
 	send_data = key_name
 
 	sock = socket.socket()
-	#HOST = "www.lucycore.top"
-	HOST = "192.168.0.11"
+	HOST = "www.lucycore.top"
+	#HOST = "192.168.0.11"
 	PORT = 2233
 	sock.connect((HOST, PORT))
 	#发送模式
@@ -69,8 +69,8 @@ def skim_key():
 	print("\n卡密查询模式\n")
 
 	sock = socket.socket()
-	#HOST = "www.lucycore.top"
-	HOST = "192.168.0.11"
+	HOST = "www.lucycore.top"
+	#HOST = "192.168.0.11"
 	PORT = 2233
 	sock.connect((HOST, PORT))
 	#发送模式
@@ -92,8 +92,8 @@ def skim_user():
 	print("\n用户查询模式\n")
 
 	sock = socket.socket()
-	#HOST = "www.lucycore.top"
-	HOST = "192.168.0.11"
+	HOST = "www.lucycore.top"
+	#HOST = "192.168.0.11"
 	PORT = 2233
 	sock.connect((HOST, PORT))
 	#发送模式
@@ -115,8 +115,8 @@ def skim_config():
 	print("\n配置查询模式\n")
 
 	sock = socket.socket()
-	#HOST = "www.lucycore.top"
-	HOST = "192.168.0.11"
+	HOST = "www.lucycore.top"
+	#HOST = "192.168.0.11"
 	PORT = 2233
 	sock.connect((HOST, PORT))
 	#发送模式
@@ -140,8 +140,8 @@ def del_user():
 	send_data = key_name
 
 	sock = socket.socket()
-	#HOST = "www.lucycore.top"
-	HOST = "192.168.0.11"
+	HOST = "www.lucycore.top"
+	#HOST = "192.168.0.11"
 	PORT = 2233
 	sock.connect((HOST, PORT))
 	#发送模式
@@ -165,8 +165,8 @@ def del_config():
 	send_data = key_name
 
 	sock = socket.socket()
-	#HOST = "www.lucycore.top"
-	HOST = "192.168.0.11"
+	HOST = "www.lucycore.top"
+	#HOST = "192.168.0.11"
 	PORT = 2233
 	sock.connect((HOST, PORT))
 	#发送模式
