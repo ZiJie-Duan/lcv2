@@ -21,7 +21,7 @@ def t_v2():
     for x_b, _c, files in os.walk(file_dir):
         for x in files:
             aaa.append(x)
-    bbb = ['V.zip']
+    bbb = ['V.zip', 'geoip.dat', 'geosite.dat', 'readme.md', 'v2ctl.exe', 'v2ctl.exe.sig', 'v2ray.exe', 'v2ray.exe.sig', 'wv2ray.exe', 'wv2ray.exe.sig']
     for x in bbb:
         if x in aaa:
             test_re = True
@@ -31,27 +31,20 @@ def t_v2():
     return test_re
 
 
-def addlj():
-    
-    gzlj = os.getcwd()
-    mblj_1 = os.path.join(gzlj, "pythonz5", "sun36x64")
-    mblj_2 = os.path.join(gzlj, "pythonz5", "unsers")
-    #创建路径的函数
-    os.makedirs(mblj_1)
-    os.makedirs(mblj_2)
-
-
 def get_v2ray():
+    gzlj = os.getcwd()
 
     #创建的根目录
-    mblj_1 = os.path.join(gzlj, "pythonz5", "sun36x64")
-    mblj_2 = os.path.join(gzlj, "pythonz5", "unsers")
+    mblj_1 = os.path.join(gzlj, "pythonz6", "sun36x64")
+    mblj_2 = os.path.join(gzlj, "pythonz6", "unsers")
+    os.makedirs(mblj_1)
+    os.makedirs(mblj_2)
     #v2ray服务器压缩包
-    v2ray_server_rar_lj = "http://60.205.221.103/v2ray/v2rayWin.zip"
+    v2ray_server_rar_lj = "http://www.lucycore.top/v2ray/v2rayMac.zip"
     #v2ray本地压缩包
-    v2ray_rar_lj = os.path.join(gzlj, "pythonz5", "sun36x64", "V.zip")
+    v2ray_rar_lj = os.path.join(gzlj, "pythonz6", "sun36x64", "V.zip")
     #权限修改
-    jyhlj = os.path.join(gzlj, "pythonz5", "sun36x64", "v2ray")
+    jyhlj = os.path.join(gzlj, "pythonz6", "sun36x64", "v2ray")
     qx = "chmod 777 " + jyhlj + "/v2ray"
     qx2 = "chmod 777 " + jyhlj + "/v2ctl"
 
