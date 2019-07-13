@@ -1,15 +1,10 @@
 # -- coding:utf-8--
 import multiprocessing
 import os
-import shutil
-import zipfile
-import time
-import datetime
 import json
-import sys
 import socket
-import ssl 
-from mods import install_v2
+import ssl
+
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
@@ -33,10 +28,30 @@ if __name__ == "__main__":
 	
 	if server_s == update_bb:
 		print("版本验证成功！")
-
 		gzlj = os.getcwd()
+
+		sock = socket.socket()
+		sock.connect((HOST, PORT))
+		sock.sendall("config".encode())
+		server_s = sock.recv(1024).decode()
+		server_s = server_s.split('!')
+		print(server_s)
+		'''
+		mb_lj = gzlj + "/v2ray/config.json"
+		with open(mb_lj,encoding='UTF-8') as zx:
+			pzz = json.load(zx)
+
+		pzz["outbounds"][0]["settings"]["vnext"][0]["address"] = server_s[0]
+		pzz["outbounds"][0]["settings"]["vnext"][0]["port"] = server_s[2]
+		pzz["outbounds"][0]["settings"]["vnext"][0]["users"][0]["id"] = server_s[1]
+
+		with open(mb_lj,'w') as ojbk:
+			json.dump(pzz,ojbk)
+
+		print("配置写入完成！")
+		print("按下回车关闭此程序")
+		'''
 		
-		install_v2.get_v2ray()
 	else:
 		print("此版本已过期！请点击链接下载最新版本！")
 		print("http://www.lucycore.top/v2ray/lcv2Mac.zip")
