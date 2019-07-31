@@ -111,24 +111,27 @@ def get_config_list():
 	#获取ip的函数
 	
 	aa = session.query(Config_data).all()
-	aa = str(aa)
+
+	iplist = []
+	for x in aa:
+		x = str(x)
+		x = x.split('!')[0]
+		iplist.append(x)
+
+	ret = "!".join(iplist)
+
 
 	return aa
 
 
 
-def get_config():
+def get_config(z):
 	#获取ip的函数
 	aa = session.query(Config_data).all()
 
-	size = len(aa) - 1
-	#尝试随机获取ip
-	ys = random.randint(0, size)
-
-	aa = aa[ys]
+	aa = aa[z]
 	aa = str(aa)
-	#此时aa是一个列表，可以直接使用len函数获取该列表长度
-	#然后使用随机函数调用ip用于给予客户端随机的返回
+	#此时aa是一个列表
 
 	return aa
 
@@ -394,7 +397,6 @@ def server():
 if __name__ == "__main__":
 	print("lcv2 V6.3")
 	server()
-
 
 
 

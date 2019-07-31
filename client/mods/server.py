@@ -86,9 +86,7 @@ def get_config_list(url,port):
 	#接受服务器配置返回值
 	server_s = sock.recv(1024).decode()
 	sock.close()
-	print(server_s)
-
-	#server_s = server_s.split('!')
+	server_s = server_s.split('!')
 
 
-	#return server_s[0],server_s[1],server_s[2]
+	return server_s

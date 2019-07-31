@@ -32,7 +32,7 @@ def return_config():
 		r'C:\pythonz6\sun36x64\v2ray\v2rayN.exe',
 
 		"lcv2_server_url" : \
-		'192.168.0.11',
+		'34.97.17.8',
 
 		"server_port" : \
 		2233,
@@ -109,6 +109,6 @@ def return_config():
 	}
 
 
-	pz = win
+	pz = test_win
 	return pz
 
