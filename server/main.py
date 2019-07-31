@@ -121,11 +121,12 @@ def get_config_list():
 	ret = "!".join(iplist)
 
 
-	return aa
+	return ret
 
 
 
 def get_config(z):
+	z = int(z) - 1
 	#获取ip的函数
 	aa = session.query(Config_data).all()
 
@@ -207,7 +208,7 @@ def server():
 			if mod == "update":
 				print("验证更新！")
 				#发送程序版本
-				cli.sendall("6.2".encode())
+				cli.sendall("6.3".encode())
 
 
 			#模式为登陆模式
@@ -258,7 +259,11 @@ def server():
 			elif mod == "config":
 				print("配置发送")
 				#发送占位符
-				pz = get_config()
+				cli.sendall("my".encode())
+				#接收用户发送的服务器IP选择
+				ipun = cli.recv(2048).decode()
+				#此处，ipun为字符类型且并非引索，而是从一开始算的客观数字
+				pz = get_config(ipun)
 				cli.sendall(pz.encode())
 
 

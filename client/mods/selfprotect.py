@@ -15,7 +15,7 @@ def Schedule(a,b,c):
 def check_self_update(host,port):
 	#返回true or false
 	#用于检查是否需要更新的函数
-	update_bb = "6.2"
+	update_bb = "6.3"
 	sock = socket.socket()
 	HOST = host
 	PORT = port

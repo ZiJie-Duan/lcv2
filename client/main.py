@@ -90,15 +90,22 @@ def main() :
 					port = zbl["server_port"]
 
 					try:
-						server.get_config_list(url,port)
+						sever_ip_list = server.get_config_list(url,port)
 					except:
 						print("获取服务器列表失败！")
 						input("按下回车后退出程序！")
 						sys.exit(0)
-					input("ok?")
+
+					try:
+						servermu = server.xz_server_ip(sever_ip_list)
+					except:
+						print("选择服务器失败！")
+						input("按下回车后退出程序！")
+						sys.exit(0)
+
 					try:
 						#尝试获取配置
-						ipn,uidn,portn = server.get_config(url,port)
+						ipn,uidn,portn = server.get_config(url,port,servermu)
 						print("正在开启v2rayN")
 						v2raydo.start_V2ray(ipn,uidn,portn,lj,v2lj)
 					except:
