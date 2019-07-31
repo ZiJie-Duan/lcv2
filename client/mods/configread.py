@@ -109,6 +109,6 @@ def return_config():
 	}
 
 
-	pz = test_win
+	pz = win
 	return pz
 

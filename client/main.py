@@ -243,6 +243,6 @@ def main() :
 if __name__ == "__main__":
 	#防止程序打包无限循环
 	multiprocessing.freeze_support()
-	print("lcv2 V6.2")
+	print("lcv2 V6.3")
 	main()
 
