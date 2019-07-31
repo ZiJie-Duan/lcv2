@@ -90,6 +90,13 @@ def main() :
 					port = zbl["server_port"]
 
 					try:
+						server.get_config_list(url,port)
+					except:
+						print("获取服务器列表失败！")
+						input("按下回车后退出程序！")
+						sys.exit(0)
+					input("ok?")
+					try:
 						#尝试获取配置
 						ipn,uidn,portn = server.get_config(url,port)
 						print("正在开启v2rayN")
@@ -140,23 +147,8 @@ def main() :
 						sys.exit(0)
 
 
-					url = zbl["lcv2_server_url"]
-					lj = zbl["v2rayN_json_bd_lj"]
-					v2lj = zbl["v2ray_exe_strat_lj"]
-					port = zbl["server_port"]
-
-					try:
-						#尝试获取配置
-						ipn,uidn,portn = server.get_config(url,port)
-						print("正在开启v2rayN")
-						v2raydo.start_V2ray(ipn,uidn,portn,lj,v2lj)
-					except:
-						print("程序错误！启动v2ray未知错误！")
-						input("按下回车后退出程序！")
-						sys.exit(0)
-
-					print("程序执行完成！")
-					input("请手动关闭此程序！")
+					print("程序激活步骤完成！")
+					input("请手动重启此程序！")
 					sys.exit(0)
 
 				else:

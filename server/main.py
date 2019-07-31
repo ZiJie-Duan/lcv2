@@ -107,6 +107,16 @@ def test_config(ip):
 		return False
 
 
+def get_config_list():
+	#获取ip的函数
+	
+	aa = session.query(Config_data).all()
+	aa = str(aa)
+
+	return aa
+
+
+
 def get_config():
 	#获取ip的函数
 	aa = session.query(Config_data).all()
@@ -230,6 +240,15 @@ def server():
 				except:
 					print("验证拒绝！")
 					cli.sendall("F".encode())
+
+
+			#获取配置文件列表
+			elif mod == "configlist":
+				print("配置列表发送")
+				#发送占位符
+				pz = get_config_list()
+				cli.sendall(pz.encode())
+
 
 
 			#获取配置文件
