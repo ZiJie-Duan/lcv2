@@ -262,15 +262,17 @@ def server():
 				cli.sendall("my".encode())
 				#接收用户发送的服务器IP选择
 				ipun = cli.recv(2048).decode()
-				if ipun == None:
-					#用于处理未知错误发送空字符串的方法
-					pz = get_config("1")
-					cli.sendall(pz.encode())
-					#此处，ipun为字符类型且并非引索，而是从一开始算的客观数字
-				else:
+
+				try:
+					ipun = int(ipun)
 					pz = get_config(ipun)
 					cli.sendall(pz.encode())
 
+				except:
+					#用于处理未知错误发送空字符串的方法
+					pz = get_config("1")
+					cli.sendall(pz.encode())
+			
 
 			#更新配置文件
 			elif mod == "upconfig":
