@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
+#pip install pypiwin32
 import win32api
 import win32con
 
