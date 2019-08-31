@@ -1,16 +1,52 @@
 # -- coding:utf-8--
 #this file set place in main server
 import socket
+import uuid
 
 
 def help():
 	print("-ak -------- 添加卡密")
+	print("-akm ------- 批量添加卡密")
 	print("-dk -------- 删除卡密")
 	print("-lk -------- 浏览卡密")
 	print("-lu -------- 浏览用户")
 	print("-du -------- 删除用户")
 	print("-lc -------- 浏览config")
 	print("-dc -------- 删除config")
+
+
+def add_key_m():
+	print("\n批量卡密添加模式\n")
+	nu = input("添加的数量：")
+	time = input("此批卡密的时间：")
+	uuid_list = []
+	for x in range(int(nu)):
+		uuid_list.append(str(uuid.uuid4()))
+
+	for x in uuid_list:
+		print(x)
+
+	for x in uuid_list:
+		send_data = x + "!" + time
+		sock = socket.socket()
+		HOST = "www.lucycore.top"
+		#HOST = "192.168.0.11"
+		PORT = 2233
+		sock.connect((HOST, PORT))
+		#发送模式
+		sock.sendall("root".encode())
+		server_myd = sock.recv(1024).decode()
+
+		sock.sendall("add-key".encode())
+		server_myd = sock.recv(1024).decode()
+
+		sock.sendall(send_data.encode())
+
+		fk = sock.recv(1024).decode()
+
+		sock.close()
+		print("执行完成，服务器反馈：" + fk)
+
 
 
 def add_key():
@@ -201,6 +237,9 @@ def mod_c(cs):
 		skim_config()
 	if cs == "-dc":
 		del_config()
+	if cs == "-akm":
+		add_key_m()
+
 
 
 def main():
