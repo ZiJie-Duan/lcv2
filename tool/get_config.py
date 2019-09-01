@@ -15,7 +15,7 @@ if __name__ == "__main__":
 	multiprocessing.freeze_support()
 	print("lcv2 MacOS V6.2")
 
-	update_bb = "6.2"
+	update_bb = "6.3"
 	sock = socket.socket()
 	HOST = "www.lucycore.top"
 	PORT = 2233
@@ -24,6 +24,7 @@ if __name__ == "__main__":
 	sock.sendall("update".encode())
 	#接受服务器的状态码
 	server_s = sock.recv(1024).decode()
+	#发送模式
 	sock.close()
 	
 	if server_s == update_bb:
@@ -33,6 +34,9 @@ if __name__ == "__main__":
 		sock = socket.socket()
 		sock.connect((HOST, PORT))
 		sock.sendall("config".encode())
+		server_s = sock.recv(1024).decode()
+		sock.sendall("1".encode())
+		#接受服务器的状态码
 		server_s = sock.recv(1024).decode()
 		server_s = server_s.split('!')
 		print(server_s)
