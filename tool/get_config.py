@@ -13,7 +13,9 @@ ssl._create_default_https_context = ssl._create_unverified_context
 if __name__ == "__main__":
 	#防止程序打包无限循环
 	multiprocessing.freeze_support()
-	print("lcv2 MacOS V6.2")
+	print("\n\nlcv2 MacOS V6.3")
+	print("server 配置获取器")
+	print("此版本为内部测试版本，请勿发送传播！\n")
 
 	update_bb = "6.3"
 	sock = socket.socket()
@@ -28,7 +30,7 @@ if __name__ == "__main__":
 	sock.close()
 	
 	if server_s == update_bb:
-		print("版本验证成功！")
+		print("版本验证成功！\n")
 		gzlj = os.getcwd()
 
 		sock = socket.socket()
@@ -39,7 +41,12 @@ if __name__ == "__main__":
 		#接受服务器的状态码
 		server_s = sock.recv(1024).decode()
 		server_s = server_s.split('!')
-		print(server_s)
+		
+
+		for x in server_s:
+			print(x)
+
+
 		'''
 		mb_lj = gzlj + "/v2ray/config.json"
 		with open(mb_lj,encoding='UTF-8') as zx:
