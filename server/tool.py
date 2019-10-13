@@ -1,4 +1,23 @@
+from sqlalchemy import Column, String, create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+import uuid
 
+# 创建对象的基类:
+Base = declarative_base()
+
+
+
+# 定义Key对象:
+class Key_data(Base):
+    # 表的名字:
+    __tablename__ = 'keys'
+
+    # 表的结构:
+    keyname = Column(String(50),unique=True,primary_key=True)
+    keytime = Column(String(10))
+
+    def __repr__(self):
 
         return "{name}!{time}".format(name=self.keyname\
             ,time=self.keytime)
