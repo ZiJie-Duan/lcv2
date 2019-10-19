@@ -195,215 +195,215 @@ def server():
 	print("v2ray server start！")
 
 	while True:
-		try:
-			#堵塞连接
-			cli, addr = sock.accept()
-			print("\n\n客户端接入！")
-			print(addr)
+	#try:
+		#堵塞连接
+		cli, addr = sock.accept()
+		print("\n\n客户端接入！")
+		print(addr)
 
-			#接收模式识别
-			mod = cli.recv(2048).decode()
+		#接收模式识别
+		mod = cli.recv(2048).decode()
 
-			#模式为验证更新
-			if mod == "update":
-				print("验证更新！")
-				#发送程序版本
-				cli.sendall("6.3".encode())
-
-
-			#模式为登陆模式
-			elif mod == "login":
-				print("登陆验证！")
-				#发送占位
-				cli.sendall("my".encode())
-				#接收用户id
-				userid = cli.recv(2048).decode()
-				#验证用户时间是否合法
-				if yz_userid(userid):
-					print("验证通过！")
-					cli.sendall("T".encode())
-				else:
-					print("验证拒绝！")
-					cli.sendall("F".encode())
+		#模式为验证更新
+		if mod == "update":
+			print("验证更新！")
+			#发送程序版本
+			cli.sendall("6.3".encode())
 
 
-			#模式为注册模式
-			elif mod == "logon":
-				print("注册验证！")
-				#发送占位符
-				cli.sendall("my".encode())
-				#接收密钥
-				key = cli.recv(2048).decode()
-				#尝试从服务器中获取key
-				try:
-					#获取密钥时间并转换
-					ft = get_key(key)
-					write_userid(key,ft,"0000")
-					cli.sendall("T".encode())
-					print("验证通过！")
-				except:
-					print("验证拒绝！")
-					cli.sendall("F".encode())
+		#模式为登陆模式
+		elif mod == "login":
+			print("登陆验证！")
+			#发送占位
+			cli.sendall("my".encode())
+			#接收用户id
+			userid = cli.recv(2048).decode()
+			#验证用户时间是否合法
+			if yz_userid(userid):
+				print("验证通过！")
+				cli.sendall("T".encode())
+			else:
+				print("验证拒绝！")
+				cli.sendall("F".encode())
 
 
-			#获取配置文件列表
-			elif mod == "configlist":
-				print("配置列表发送")
-				#发送占位符
-				pz = get_config_list()
+		#模式为注册模式
+		elif mod == "logon":
+			print("注册验证！")
+			#发送占位符
+			cli.sendall("my".encode())
+			#接收密钥
+			key = cli.recv(2048).decode()
+			#尝试从服务器中获取key
+			try:
+				#获取密钥时间并转换
+				ft = get_key(key)
+				write_userid(key,ft,"0000")
+				cli.sendall("T".encode())
+				print("验证通过！")
+			except:
+				print("验证拒绝！")
+				cli.sendall("F".encode())
+
+
+		#获取配置文件列表
+		elif mod == "configlist":
+			print("配置列表发送")
+			#发送占位符
+			pz = get_config_list()
+			cli.sendall(pz.encode())
+
+
+
+		#获取配置文件
+		elif mod == "config":
+			print("配置发送")
+			#发送占位符
+			cli.sendall("my".encode())
+			#接收用户发送的服务器IP选择
+			ipun = cli.recv(2048).decode()
+
+			try:
+				ipun = int(ipun)
+				pz = get_config(ipun)
 				cli.sendall(pz.encode())
 
+			except:
+				#用于处理未知错误发送空字符串的方法
+				pz = get_config("1")
+				cli.sendall(pz.encode())
+		
+
+		#更新配置文件
+		elif mod == "upconfig":
+			print("配置更新！")
+			#发送占位符
+			cli.sendall("my".encode())
+			configs = cli.recv(2048).decode()
+			cli.sendall("ok".encode())
+			configs = configs.split('!')
+			#(ip,uuid,port)
+
+			if test_config(configs[0]):
+
+				write_config(configs[0],configs[1],configs[2])
+
+			else:
+
+				write_config(configs[0],configs[1],configs[2])
+
+			cheak_user_out()
 
 
-			#获取配置文件
-			elif mod == "config":
-				print("配置发送")
+		#管理程序操作模式
+		elif mod == "root":
+			print("管理操作模式")
+			#发送占位符
+			cli.sendall("my".encode())
+			cmod = cli.recv(2048).decode()
+
+			#用于控制数据库的函数
+			if cmod == "add-key":
 				#发送占位符
 				cli.sendall("my".encode())
-				#接收用户发送的服务器IP选择
-				ipun = cli.recv(2048).decode()
+				#接受客户端信息请求
+				keydata = cli.recv(2048).decode()
+				#进行信息分割
+				keydata = keydata.split('!')
+				#数据结构:key!time
+				new_key = Key_data(keyname = keydata[0],keytime = keydata[1])
+				# 添加到session:
+				session.add(new_key)
+				# 提交即保存到数据库:
+				session.commit()
 
-				try:
-					ipun = int(ipun)
-					pz = get_config(ipun)
-					cli.sendall(pz.encode())
+				cli.sendall("卡密添加完成！".encode())
 
-				except:
-					#用于处理未知错误发送空字符串的方法
-					pz = get_config("1")
-					cli.sendall(pz.encode())
-			
 
-			#更新配置文件
-			elif mod == "upconfig":
-				print("配置更新！")
+			if cmod == "skim-key":
+				#用于发送全部卡密的函数
+				key_all = session.query(Key_data).all()
+
+				str_key_list = []
+				for x in key_all:
+					x = str(x)
+					str_key_list.append(x)
+
+				send_data = ".".join(str_key_list)
+
+				cli.sendall(send_data.encode())
+
+
+			if cmod == "skim-user":
+				#用于发送全部用户的函数
+				user_all = session.query(User_data).all()
+
+				str_user_list = []
+				for x in user_all:
+					x = str(x)
+					str_user_list.append(x)
+
+				send_data = ".".join(str_user_list)
+
+				cli.sendall(send_data.encode())
+
+
+			if cmod == "skim-config":
+				#用于发送全部配置文件的函数
+				config_all = session.query(Config_data).all()
+
+				str_config_list = []
+				for x in config_all:
+					x = str(x)
+					str_config_list.append(x)
+
+				send_data = ".".join(str_config_list)
+
+				cli.sendall(send_data.encode())
+
+
+			if cmod == "del-key":
 				#发送占位符
 				cli.sendall("my".encode())
-				configs = cli.recv(2048).decode()
-				cli.sendall("ok".encode())
-				configs = configs.split('!')
-				#(ip,uuid,port)
+				#接受客户端信息请求
+				dkey = cli.recv(2048).decode()
+				keydata = session.query(Key_data).filter_by(keyname=dkey).first()
 
-				if test_config(configs[0]):
+				#删除原有卡密
+				session.delete(keydata)
+				session.commit()
 
-					write_config(configs[0],configs[1],configs[2])
-
-				else:
-
-					write_config(configs[0],configs[1],configs[2])
-
-				cheak_user_out()
+				cli.sendall("卡密删除完成！".encode())
 
 
-			#管理程序操作模式
-			elif mod == "root":
-				print("管理操作模式")
+			if cmod == "del-user":
 				#发送占位符
 				cli.sendall("my".encode())
-				cmod = cli.recv(2048).decode()
+				#接受客户端信息请求
+				duser = cli.recv(2048).decode()
+				userdata = session.query(User_data).filter_by(userid=duser).first()
 
-				#用于控制数据库的函数
-				if cmod == "add-key":
-					#发送占位符
-					cli.sendall("my".encode())
-					#接受客户端信息请求
-					keydata = cli.recv(2048).decode()
-					#进行信息分割
-					keydata = keydata.split('!')
-					#数据结构:key!time
-					new_key = Key_data(keyname = keydata[0],keytime = keydata[1])
-					# 添加到session:
-					session.add(new_key)
-					# 提交即保存到数据库:
-					session.commit()
-
-					cli.sendall("卡密添加完成！".encode())
+				#删除原有卡密
+				session.delete(userdata)
+				session.commit()
+				cli.sendall("用户删除完成！".encode())
 
 
-				if cmod == "skim-key":
-					#用于发送全部卡密的函数
-					key_all = session.query(Key_data).all()
+			if cmod == "del-config":
+				#发送占位符
+				cli.sendall("my".encode())
+				#接受客户端信息请求
+				dconfig = cli.recv(2048).decode()
+				userdata = session.query(Config_data).filter_by(ip=dconfig).first()
 
-					str_key_list = []
-					for x in key_all:
-						x = str(x)
-						str_key_list.append(x)
-
-					send_data = ".".join(str_key_list)
-
-					cli.sendall(send_data.encode())
-
-
-				if cmod == "skim-user":
-					#用于发送全部用户的函数
-					user_all = session.query(User_data).all()
-
-					str_user_list = []
-					for x in user_all:
-						x = str(x)
-						str_user_list.append(x)
-
-					send_data = ".".join(str_user_list)
-
-					cli.sendall(send_data.encode())
+				#删除原有卡密
+				session.delete(userdata)
+				session.commit()
+				cli.sendall("配置删除完成！".encode())
 
 
-				if cmod == "skim-config":
-					#用于发送全部配置文件的函数
-					config_all = session.query(Config_data).all()
-
-					str_config_list = []
-					for x in config_all:
-						x = str(x)
-						str_config_list.append(x)
-
-					send_data = ".".join(str_config_list)
-
-					cli.sendall(send_data.encode())
-
-
-				if cmod == "del-key":
-					#发送占位符
-					cli.sendall("my".encode())
-					#接受客户端信息请求
-					dkey = cli.recv(2048).decode()
-					keydata = session.query(Key_data).filter_by(keyname=dkey).first()
-
-					#删除原有卡密
-					session.delete(keydata)
-					session.commit()
-
-					cli.sendall("卡密删除完成！".encode())
-
-
-				if cmod == "del-user":
-					#发送占位符
-					cli.sendall("my".encode())
-					#接受客户端信息请求
-					duser = cli.recv(2048).decode()
-					userdata = session.query(User_data).filter_by(userid=duser).first()
-
-					#删除原有卡密
-					session.delete(userdata)
-					session.commit()
-					cli.sendall("用户删除完成！".encode())
-
-
-				if cmod == "del-config":
-					#发送占位符
-					cli.sendall("my".encode())
-					#接受客户端信息请求
-					dconfig = cli.recv(2048).decode()
-					userdata = session.query(Config_data).filter_by(ip=dconfig).first()
-
-					#删除原有卡密
-					session.delete(userdata)
-					session.commit()
-					cli.sendall("配置删除完成！".encode())
-
-
-		except:
-			print("\n\n发生未知错误！\n\n")
+	#except:
+		#print("\n\n发生未知错误！\n\n")
 
 
 if __name__ == "__main__":

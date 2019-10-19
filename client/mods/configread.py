@@ -107,8 +107,8 @@ def return_config():
 		r'windows'
 
 	}
+	pz = test_win
 
-
-	pz = win
+	#pz = win
 	return pz
 
