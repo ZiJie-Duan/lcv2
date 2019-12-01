@@ -1,5 +1,9 @@
 import subprocess
 import uuid
+import socket
+import time
+import re
+
 
 class Lcv2_api_core():
 	"""docstring for Lcv2_api_core
@@ -18,7 +22,7 @@ class Lcv2_api_core():
 		self.api_address = "127.0.0.1"
 		self.api_port = "10085"
 		self.inbound_tag = "main"
-		self.level = "1"
+		self.level = "0"
 		self.alterld = "10"
 
 
@@ -33,12 +37,21 @@ class Lcv2_api_core():
 			stdout=subprocess.PIPE,stderr=\
 			subprocess.PIPE).communicate()
 
+
 		alist = []
 		for x in back:
 			alist.append(x.decode())
 
-		return alist
+		data = alist[1].split(" ")
+		data = data[2]
 
+		if data == "ok:":
+			return "True"
+		else:
+			alist = "*data*".join(alist)
+			return alist
+		#此函数返回值 如果是正确的内容
+		#将返回Ture字符串，否则将返回错误string
 
 	def api_read(self):
 
@@ -51,12 +64,108 @@ class Lcv2_api_core():
 			stdout=subprocess.PIPE,stderr=\
 			subprocess.PIPE).communicate()
 
+
 		alist = []
 		for x in back:
 			alist.append(x.decode())
 
-		return alist
+		try:
 
+			data = alist[0].split("  ")
+			data = data[2]
+			data = re.sub(r"\D", "", data)
+			data = int(data)
+			data = data//1048576
+			#返回值直接换算为mb单位
+			return data
+
+		except:
+
+			alist = "*data*".join(alist)
+			return alist
+		#此函数返回值 如果是正确的内容
+		#将返回int类型的数字，否则将返回错误string
+
+
+def main():
+
+	host = ""
+	port = 2233
+
+	sock = socket.socket()
+
+	sock.bind((host, port))
+
+	sock.listen(5)
+
+	while True:
+
+		cli, addr = sock.accept()
+
+		api = Lcv2_api_core()
+
+		data = cli.recv(1024).decode()
+		#分割服务指令
+		data_list = data.split("*data*")
+
+		if data_list[0] == "add_user":
+			api.email = data_list[1]
+			api.uuid = data_list[2]
+			data = api.api_run()
+
+			if data == "True":
+				cli.sendall(data.encode())
+			else:
+				cli.sendall(data.encode())
+
+
+		elif data_list[0] == "del_user":
+			api.email = data_list[1]
+			api.uuid = data_list[2]
+			data = api.api_run()
+
+			if data == "True":
+				cli.sendall(data.encode())
+			else:
+				cli.sendall(data.encode())
+
+
+		elif data_list[0] == "read_user":
+			api.email = data_list[1]
+			data = api.api_read()
+
+			if type(data) is int :
+				data = str(data)
+				cli.sendall(data.encode())
+			else:
+				cli.sendall(data.encode())
+
+
+		elif data_list[0] == "start_server":
+
+
+
+
+
+
+		#cli.sendall(sen.encode())
+		#cli.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+'''
 
 def main():
 	#mod 参数为 read / del / add
@@ -85,5 +194,6 @@ def main():
 		back = api.api_run()
 		print(back)
 
-		
 main()
+'''
+
