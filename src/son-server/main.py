@@ -108,29 +108,9 @@ def main():
 		#分割服务指令
 		data_list = data.split("*data*")
 
-		if data_list[0] == "add_user":
-			api.email = data_list[1]
-			api.uuid = data_list[2]
-			data = api.api_run()
 
-			if data == "True":
-				cli.sendall(data.encode())
-			else:
-				cli.sendall(data.encode())
-
-
-		elif data_list[0] == "del_user":
-			api.email = data_list[1]
-			api.uuid = data_list[2]
-			data = api.api_run()
-
-			if data == "True":
-				cli.sendall(data.encode())
-			else:
-				cli.sendall(data.encode())
-
-
-		elif data_list[0] == "read_user":
+		if data_list[0] == "read_user":
+			#匹配服务器为测试用户流量是否合法
 			api.email = data_list[1]
 			data = api.api_read()
 
@@ -139,9 +119,30 @@ def main():
 				cli.sendall(data.encode())
 			else:
 				cli.sendall(data.encode())
+				print("\n" + data + "\n")
 
 
 		elif data_list[0] == "start_server":
+			#匹配服务器为启动模式进行用户添加
+			
+
+
+		else:
+			#匹配服务器为增加删除用户模式
+			if data_list[0] == "add_user":
+				api.mod = "add"
+			else:
+				api.mod = "del"
+
+			api.email = data_list[1]
+			api.uuid = data_list[2]
+			data = api.api_run()
+
+			if data == "True":
+				cli.sendall(data.encode())
+			else:
+				cli.sendall(data.encode())
+				print("\n" + data + "\n")
 
 
 
