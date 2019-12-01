@@ -13,13 +13,17 @@
     "policy": {
         "levels": {
             "0": {
-                "connIdle": 300,
-                "downlinkOnly": 30,
-                "handshake": 4,
-                "uplinkOnly": 5,
-                "statsUserDownlink": true,
-                "statsUserUplink": true
+                "statsUserUplink": true,
+                "statsUserDownlink": true
+            },
+            "1": {
+                "statsUserUplink": true,
+                "statsUserDownlink": true
             }
+        },
+        "system": {
+            "statsInboundUplink": true,
+            "statsInboundDownlink": true
         }
     },
 -------------------------------------
