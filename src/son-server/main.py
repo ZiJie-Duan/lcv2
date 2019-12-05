@@ -122,11 +122,6 @@ def main():
 				print("\n" + data + "\n")
 
 
-		elif data_list[0] == "start_server":
-			#匹配服务器为启动模式进行用户添加
-			
-
-
 		else:
 			#匹配服务器为增加删除用户模式
 			if data_list[0] == "add_user":
