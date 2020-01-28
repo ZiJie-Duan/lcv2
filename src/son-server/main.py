@@ -53,6 +53,7 @@ class Lcv2_api_core():
 		#此函数返回值 如果是正确的内容
 		#将返回Ture字符串，否则将返回错误string
 
+
 	def api_read(self):
 
 		command = "/usr/bin/v2ray/v2ctl api --server=" + self.api_address\
@@ -85,6 +86,7 @@ class Lcv2_api_core():
 			return alist
 		#此函数返回值 如果是正确的内容
 		#将返回int类型的数字，否则将返回错误string
+
 
 
 def main():
