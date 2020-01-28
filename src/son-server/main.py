@@ -120,7 +120,7 @@ def main():
 				data = str(data)
 				cli.sendall(data.encode())
 			else:
-				cli.sendall(data.encode())
+				cli.sendall("Flase".encode())
 				print("\n" + data + "\n")
 
 
@@ -136,9 +136,9 @@ def main():
 			data = api.api_run()
 
 			if data == "True":
-				cli.sendall(data.encode())
+				cli.sendall("True".encode())
 			else:
-				cli.sendall(data.encode())
+				cli.sendall("Flase".encode())
 				print("\n" + data + "\n")
 
 

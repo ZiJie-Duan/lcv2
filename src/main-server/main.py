@@ -9,7 +9,7 @@ import os
 class UserData():
 	#用于操作用户数据json的类
 
-	def __init__(self,ip,email,uuid,traffic):
+	def __init__(self,ip="",email="",uuid="",traffic=""):
 		self.path = "userdata.json"
 		self.ip = ip
 		self.email = email
@@ -82,6 +82,52 @@ class UserData():
 			print("删除服务器在用户数据库中失败！\n\n")
 
 
+	def addTraffic(self):
+		#添加流量需要提供ip下用户邮箱以及添加的流量数额
+		try:
+			userlist = self.userdata[self.ip]
+			user_index = 0
+			state = False
+			for one_user in userlist:
+				if one_user[0] == self.email:
+					userlist[user_index][2] = \
+						userlist[user_index][2] + self.traffic
+					state = True
+					break
+			if state:
+				print("\n\nUserData类内部错误！！")
+				print("没有找到要添加流量的用户！\n\n")
+
+		except:
+			print("\n\nUserData类内部错误！！")
+			print("添加流量到用户出错！\n\n")
+
+
+	def delTraffic(self):
+		#删除流量需要提供ip下用户邮箱以及删除的流量数额
+		try:
+			userlist = self.userdata[self.ip]
+			user_index = 0
+			state = False
+
+			for one_user in userlist:
+				if one_user[0] == self.email:
+					traffic = int(userlist[user_index][2])\
+						 - int(self.traffic)
+					userlist[user_index][2] = str(traffic)
+					state = True
+					break
+
+			if state:
+				print("\n\nUserData类内部错误！！")
+				print("没有找到要删除流量的用户！\n\n")
+
+		except:
+			print("\n\nUserData类内部错误！！")
+			print("删除流量到用户出错！\n\n")
+
+
+
 	def getUserDetails(self):
 		try:
 			return self.userdata
@@ -92,7 +138,7 @@ class UserData():
 
 class Lcv2_Socket():
 
-	def __init__(self,ip,email,uuid):
+	def __init__(self,ip="",email="",uuid=""):
 		self.ip = ip
 		self.email = email
 		self.uuid = uuid
@@ -146,35 +192,75 @@ class Lcv2_Socket():
 
 		try:
 			serverRecv = int(serverRecv)
-			return serverRecv
+			return True, serverRecv
 		except:
 
-			return False
+			return False, 0
 
 
 	def closeConnect(self):
 		self.sock.close()
 
 
-def initServer(userdata):
-	#进行子服务器全部初始化
-
-	for server_ip, users in userdata.items():
-		for userOne in users:
-			addLcv2User(server_ip,userOne[0],userOne[1])
-
-
 def mainService():
-	
+	#用于服务器自动化删除流量耗尽用户
+	print("流量消耗更新服务开启")
+
 	data = UserData()
 	data.readUserData()
-	data.getUserDetails()
+	userdata = data.getUserDetails()
 	
 	lcv2Sock = Lcv2_Socket()
-	
-	for server_ip, users in userdata.items():
-		
 
+	for server_ip, users in userdata.items():
+		for one_user in users:
+			print("\n查找用户：" + one_user[0])
+			lcv2Sock.ip = server_ip
+			lcv2Sock.email = one_user[0]
+			lcv2Sock.connectServer()
+			state, traffic = lcv2Sock.readLcv2User()
+
+			if state== True and traffic != "0":
+				data.ip = server_ip
+				data.email = one_user[0]
+				data.traffic = traffic
+				data.delTraffic()
+				print("用户: " + one_user[0] + " 查找成功")
+				print("删除流量：" + traffic)
+			else:
+				print("错误！没有找到用户："+one_user[0])
+	
+	data.writeUserData()
+	print("用户信息更新完成！")
+
+
+def dataControl():
+
+	print("\n\nLcv2 用户信息主控模块启动\n")
+
+	while True:
+		cmd = input(">>")
+		cmd = cmd.split(" ")
+
+		if cmd[0] == "h":
+			print("\nLcv2 信息主控使用帮助（自动保存）")
+			print("au [ip] [email] [traffic] 添加用户到服务器下")
+			print("du [ip] [email] 删除用户在服务器下")
+			print("at [ip] [email] [traffic] 添加用户流量")
+			print("dt [ip] [email] [traffic] 删除用户流量")
+			print("initserver 进行服务器初始化")
+			print("ud 更新用户流量数据 ")
+			print("as 添加服务器")
+			print("ds 删除服务器\n")
+
+		elif cmd[0] == "au":
+		elif cmd[0] == "du":
+		elif cmd[0] == "at":
+		elif cmd[0] == "dt":
+		elif cmd[0] == "initserver":
+		elif cmd[0] == "ud":
+		elif cmd[0] == "as":
+		elif cmd[0] == "ds":
 
 
 
