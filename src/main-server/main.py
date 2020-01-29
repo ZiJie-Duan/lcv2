@@ -5,6 +5,7 @@ import time
 import datetime
 import json
 import os
+import uuid
 
 class UserData():
 	#用于操作用户数据json的类
@@ -250,19 +251,101 @@ def dataControl():
 			print("dt [ip] [email] [traffic] 删除用户流量")
 			print("initserver 进行服务器初始化")
 			print("ud 更新用户流量数据 ")
-			print("as 添加服务器")
-			print("ds 删除服务器\n")
+			print("as [ip] 添加服务器")
+			print("ds [ip] 删除服务器\n")
 
 		elif cmd[0] == "au":
+			print("添加用户模式")
+			uuidd = uuid.uuid4()
+			data = UserData()
+			data.readUserData()
+			data.ip = cmd[1]
+			data.email = cmd[2]
+			data.uuid = uuidd
+			data.traffic = cmd[3]
+			data.addUser()
+			data.writeUserData()
+
+			sock = Lcv2_Socket()
+			sock.ip = cmd[1]
+			sock.email = cmd[2]
+			sock.uuid = uuidd
+			sock.connectServer()
+			sock.addLcv2User()
+			sock.closeConnect()
+			print("完成")
+
 		elif cmd[0] == "du":
+			print("删除用户模式")
+			data = UserData()
+			data.readUserData()
+			data.ip = cmd[1]
+			data.email = cmd[2]
+			data.delUser()
+			data.writeUserData()
+
+			sock = Lcv2_Socket()
+			sock.ip = cmd[1]
+			sock.email = cmd[2]
+			sock.connectServer()
+			sock.delLcv2User()
+			sock.closeConnect()
+			print("完成")
+
 		elif cmd[0] == "at":
+			print("添加用户流量模式")
+			data = UserData()
+			data.readUserData()
+			data.ip = cmd[1]
+			data.email = cmd[2]
+			data.traffic = cmd[3]
+			data.addTraffic()
+			data.writeUserData()
+			print("完成")
+
 		elif cmd[0] == "dt":
+			print("删除用户流量模式")
+			data = UserData()
+			data.readUserData()
+			data.ip = cmd[1]
+			data.email = cmd[2]
+			data.traffic = cmd[3]
+			data.delTraffic()
+			data.writeUserData()
+			print("完成")
+
 		elif cmd[0] == "initserver":
+			data = UserData()
+			data.readUserData()
+			data = data.getUserDetails()
+			for server_ip , userlist in data.items():
+				for one_user in userlist:
+					sock = Lcv2_Socket()
+					sock.ip = server_ip
+					sock.email = one_user[0]
+					sock.uuid = one_user[1]
+					sock.connectServer()
+					sock.addLcv2User()
+					sock.closeConnect()
+
 		elif cmd[0] == "ud":
+			mainService()
+
 		elif cmd[0] == "as":
+			data = UserData()
+			data.readUserData()
+			data.ip = cmd[1]
+			data.addServer()
+			data.writeUserData()
+
 		elif cmd[0] == "ds":
+			data = UserData()
+			data.readUserData()
+			data.ip = cmd[1]
+			data.delServer()
+			data.writeUserData()
 
-
+dataControl()
 
 
 
