@@ -235,6 +235,28 @@ def mainService():
 	data.writeUserData()
 	print("用户信息更新完成！")
 
+	print("正在执行清除流量耗尽用户行为")
+	userdata = data.getUserDetails()
+	lcv2Sock = Lcv2_Socket()
+
+	for server_ip, users in userdata.items():
+		for one_user in users:
+			if int(one_user[2]) == 0 or int(one_user[2]) < 0:
+				print("发现过期用户："+one_user[0])
+				data.ip = server_ip
+				data.email = one_user[0]
+				data.delUser()
+
+				lcv2Sock.ip = server_ip
+				lcv2Sock.email = one_user[0]
+				lcv2Sock.uuid = one_user[1]
+				lcv2Sock.connectServer()
+				lcv2Sock.delLcv2User()
+				lcv2Sock.closeConnect()
+
+	data.writeUserData()
+	print("清除行为完成！")
+
 
 def dataControl():
 
@@ -247,7 +269,7 @@ def dataControl():
 		if cmd[0] == "h":
 			print("\nLcv2 信息主控使用帮助（自动保存）")
 			print("au [ip] [email] [traffic] 添加用户到服务器下")
-			print("du [ip] [email] 删除用户在服务器下")
+			print("du [ip] [email] [uuid] 删除用户在服务器下")
 			print("at [ip] [email] [traffic] 添加用户流量")
 			print("dt [ip] [email] [traffic] 删除用户流量")
 			print("initserver 进行服务器初始化")
@@ -289,6 +311,7 @@ def dataControl():
 			data.readUserData()
 			data.ip = cmd[1]
 			data.email = cmd[2]
+			data.uuid = cmd[3]
 			data.delUser()
 			data.writeUserData()
 

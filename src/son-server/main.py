@@ -102,6 +102,8 @@ def main():
 
 	while True:
 
+		print("开始监听！")
+
 		cli, addr = sock.accept()
 
 		api = Lcv2_api_core()
@@ -140,6 +142,8 @@ def main():
 			else:
 				cli.sendall("Flase".encode())
 				print("\n" + data + "\n")
+
+		print("完成循环！")
 
 main()
 
