@@ -91,11 +91,12 @@ class UserData():
 			state = False
 			for one_user in userlist:
 				if one_user[0] == self.email:
-					userlist[user_index][2] = \
-						userlist[user_index][2] + self.traffic
+					traffic = int(userlist[user_index][2])\
+						 + int(self.traffic)
+					userlist[user_index][2] = str(traffic)
 					state = True
 					break
-			if state:
+			if state == False:
 				print("\n\nUserData类内部错误！！")
 				print("没有找到要添加流量的用户！\n\n")
 
@@ -119,7 +120,7 @@ class UserData():
 					state = True
 					break
 
-			if state:
+			if state == False:
 				print("\n\nUserData类内部错误！！")
 				print("没有找到要删除流量的用户！\n\n")
 
@@ -227,7 +228,7 @@ def mainService():
 				data.traffic = traffic
 				data.delTraffic()
 				print("用户: " + one_user[0] + " 查找成功")
-				print("删除流量：" + traffic)
+				print("删除流量：" + str(traffic))
 			else:
 				print("错误！没有找到用户："+one_user[0])
 	
@@ -253,10 +254,17 @@ def dataControl():
 			print("ud 更新用户流量数据 ")
 			print("as [ip] 添加服务器")
 			print("ds [ip] 删除服务器\n")
+			print("---------信息查找浏览分类---------")
+			print("la 列出所有用户信息")
+			print("ls 列出所有服务器信息")
+			print("lu [ip] 列出指定ip下的所有用户")
+			print("fu [email] 查询指定用户在所有ip下")
+
+
 
 		elif cmd[0] == "au":
 			print("添加用户模式")
-			uuidd = uuid.uuid4()
+			uuidd = str(uuid.uuid4())
 			data = UserData()
 			data.readUserData()
 			data.ip = cmd[1]
@@ -344,6 +352,58 @@ def dataControl():
 			data.ip = cmd[1]
 			data.delServer()
 			data.writeUserData()
+
+		elif cmd[0] == "la":
+			print("\n全部用户信息查询模式")
+			data = UserData()
+			data.readUserData()
+			data = data.getUserDetails()
+			for ip, userlist in data.items():
+				print("\n服务器ip：" + ip)
+				for one_user in userlist:
+					print("\n  用户："+ one_user[0])
+					print("  uuid："+ one_user[1])
+					print("  流量剩余："+ one_user[2])
+
+		elif cmd[0] == "ls":
+			print("\n服务器信息查询模式\n")
+			data = UserData()
+			data.readUserData()
+			data = data.getUserDetails()
+			for ip, userlist in data.items():
+				print("服务器ip：" + ip)
+				
+
+		elif cmd[0] == "lu":
+			print("\n制定服务器下用户信息查询模式")
+			data = UserData()
+			data.readUserData()
+			data = data.getUserDetails()
+			for ip, userlist in data.items():
+				if ip == cmd[1]:
+					for one_user in userlist:
+						print("\n  用户："+ one_user[0])
+						print("  uuid："+ one_user[1])
+						print("  流量剩余："+ one_user[2])
+				else:
+					print("错误！没有找到服务器")
+
+
+		elif cmd[0] == "fu":
+			print("\n指定用户信息查询模式")
+			data = UserData()
+			data.readUserData()
+			data = data.getUserDetails()
+			for ip, userlist in data.items():
+				for one_user in userlist:
+					if one_user[0] == cmd[1]:
+						print("所在ip：" + ip)
+						print("\n  用户："+ one_user[0])
+						print("  uuid："+ one_user[1])
+						print("  流量剩余："+ one_user[2])
+
+			print("全部数据搜索完成")
+
 
 dataControl()
 

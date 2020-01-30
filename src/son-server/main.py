@@ -59,7 +59,7 @@ class Lcv2_api_core():
 		command = "/usr/bin/v2ray/v2ctl api --server=" + self.api_address\
 		+":"+self.api_port+""" StatsService.GetStats 'name: """\
 		+'"user>>>'+self.email+'>>>traffic>>>downlink" '\
-		+""" reset: false'"""
+		+""" reset: true'"""
 		print(command)
 		back = subprocess.Popen(command, shell=True, \
 			stdout=subprocess.PIPE,stderr=\
@@ -141,18 +141,13 @@ def main():
 				cli.sendall("Flase".encode())
 				print("\n" + data + "\n")
 
-
+main()
 
 
 
 
 		#cli.sendall(sen.encode())
 		#cli.close()
-
-
-
-
-
 
 
 
