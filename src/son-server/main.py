@@ -132,7 +132,6 @@ def main():
 				api.mod = "add"
 			else:
 				api.mod = "del"
-
 			api.email = data_list[1]
 			api.uuid = data_list[2]
 			data = api.api_run()

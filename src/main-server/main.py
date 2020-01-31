@@ -170,7 +170,7 @@ class Lcv2_Socket():
 
 	def delLcv2User(self):
 		#用于删除用户的函数
-
+		
 		dataList = ["del_user",self.email,self.uuid]
 		data = '*data*'.join(dataList)
 
@@ -318,6 +318,7 @@ def dataControl():
 			sock = Lcv2_Socket()
 			sock.ip = cmd[1]
 			sock.email = cmd[2]
+			sock.uuid = cmd[3]
 			sock.connectServer()
 			sock.delLcv2User()
 			sock.closeConnect()
