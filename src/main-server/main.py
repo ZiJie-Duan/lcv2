@@ -7,6 +7,12 @@ import json
 import os
 import uuid
 
+def error_print(data):
+	datalist = data.split("*data*")
+	for e in datalist:
+		print(e)
+
+
 class UserData():
 	#用于操作用户数据json的类
 
@@ -165,7 +171,7 @@ class Lcv2_Socket():
 		if serverRecv == "True":
 			return True
 		else:
-			return False
+			return serverRecv
 
 
 	def delLcv2User(self):
@@ -180,7 +186,7 @@ class Lcv2_Socket():
 		if serverRecv == "True":
 			return True
 		else:
-			return False
+			return serverRecv
 
 
 	def readLcv2User(self):
@@ -197,7 +203,7 @@ class Lcv2_Socket():
 			return True, serverRecv
 		except:
 
-			return False, 0
+			return False, serverRecv
 
 
 	def closeConnect(self):
@@ -231,6 +237,8 @@ def mainService():
 				print("删除流量：" + str(traffic))
 			else:
 				print("错误！没有找到用户："+one_user[0])
+				error_print(traffic)
+				print("错误反馈！")
 	
 	data.writeUserData()
 	print("用户信息更新完成！")
@@ -251,187 +259,210 @@ def mainService():
 				lcv2Sock.email = one_user[0]
 				lcv2Sock.uuid = one_user[1]
 				lcv2Sock.connectServer()
-				lcv2Sock.delLcv2User()
+				state = lcv2Sock.delLcv2User()
 				lcv2Sock.closeConnect()
+				if state == "True":
+					print("成功！")
+				else:
+					error_print(state)
+					print("错误！")
 
 	data.writeUserData()
 	print("清除行为完成！")
 
 
-def dataControl():
 
-	print("\n\nLcv2 用户信息主控模块启动\n")
+def dataControl(cmd):
 
-	while True:
-		cmd = input(">>")
-		cmd = cmd.split(" ")
+	feedback = ""
+	'''
+	if cmd[0] == "h":
+		print("\nLcv2 信息主控使用帮助（自动保存）")
+		print("au [ip] [email] [traffic] 添加用户到服务器下")
+		print("du [ip] [email] [uuid] 删除用户在服务器下")
+		print("at [ip] [email] [traffic] 添加用户流量")
+		print("dt [ip] [email] [traffic] 删除用户流量")
+		print("initserver 进行服务器初始化")
+		print("ud 更新用户流量数据 ")
+		print("as [ip] 添加服务器")
+		print("ds [ip] 删除服务器\n")
+		print("---------信息查找浏览分类---------")
+		print("la 列出所有用户信息")
+		print("ls 列出所有服务器信息")
+		print("lu [ip] 列出指定ip下的所有用户")
+		print("fu [email] 查询指定用户在所有ip下")
 
-		if cmd[0] == "h":
-			print("\nLcv2 信息主控使用帮助（自动保存）")
-			print("au [ip] [email] [traffic] 添加用户到服务器下")
-			print("du [ip] [email] [uuid] 删除用户在服务器下")
-			print("at [ip] [email] [traffic] 添加用户流量")
-			print("dt [ip] [email] [traffic] 删除用户流量")
-			print("initserver 进行服务器初始化")
-			print("ud 更新用户流量数据 ")
-			print("as [ip] 添加服务器")
-			print("ds [ip] 删除服务器\n")
-			print("---------信息查找浏览分类---------")
-			print("la 列出所有用户信息")
-			print("ls 列出所有服务器信息")
-			print("lu [ip] 列出指定ip下的所有用户")
-			print("fu [email] 查询指定用户在所有ip下")
+	'''
+
+	if cmd[0] == "au":
+		print("添加用户模式")
+		uuidd = str(uuid.uuid4())
+		data = UserData()
+		data.readUserData()
+		data.ip = cmd[1]
+		data.email = cmd[2]
+		data.uuid = uuidd
+		data.traffic = cmd[3]
+		data.addUser()
+		data.writeUserData()
+
+		sock = Lcv2_Socket()
+		sock.ip = cmd[1]
+		sock.email = cmd[2]
+		sock.uuid = uuidd
+		sock.connectServer()
+		sock.addLcv2User()
+		sock.closeConnect()
+		print("完成")
+		feedback = "finish"
+
+	elif cmd[0] == "du":
+		print("删除用户模式")
+		data = UserData()
+		data.readUserData()
+		data.ip = cmd[1]
+		data.email = cmd[2]
+		data.uuid = cmd[3]
+		data.delUser()
+		data.writeUserData()
+
+		sock = Lcv2_Socket()
+		sock.ip = cmd[1]
+		sock.email = cmd[2]
+		sock.uuid = cmd[3]
+		sock.connectServer()
+		sock.delLcv2User()
+		sock.closeConnect()
+		print("完成")
+		feedback = "finish"
+
+	elif cmd[0] == "at":
+		print("添加用户流量模式")
+		data = UserData()
+		data.readUserData()
+		data.ip = cmd[1]
+		data.email = cmd[2]
+		data.traffic = cmd[3]
+		data.addTraffic()
+		data.writeUserData()
+		print("完成")
+		feedback = "finish"
+
+	elif cmd[0] == "dt":
+		print("删除用户流量模式")
+		data = UserData()
+		data.readUserData()
+		data.ip = cmd[1]
+		data.email = cmd[2]
+		data.traffic = cmd[3]
+		data.delTraffic()
+		data.writeUserData()
+		print("完成")
+		feedback = "finish"
+
+	elif cmd[0] == "initserver":
+		data = UserData()
+		data.readUserData()
+		data = data.getUserDetails()
+		for server_ip , userlist in data.items():
+			for one_user in userlist:
+				sock = Lcv2_Socket()
+				sock.ip = server_ip
+				sock.email = one_user[0]
+				sock.uuid = one_user[1]
+				sock.connectServer()
+				sock.addLcv2User()
+				sock.closeConnect()
+		
+		feedback = "finish"
+
+	elif cmd[0] == "ud":
+		mainService()
+		feedback = "finish"
+
+	elif cmd[0] == "as":
+		data = UserData()
+		data.readUserData()
+		data.ip = cmd[1]
+		data.addServer()
+		data.writeUserData()
+		feedback = "finish"
+
+	elif cmd[0] == "ds":
+		data = UserData()
+		data.readUserData()
+		data.ip = cmd[1]
+		data.delServer()
+		data.writeUserData()
+		feedback = "finish"
 
 
+	elif cmd[0] == "la":
+		print("\n全部用户信息查询模式")
+		data = UserData()
+		data.readUserData()
+		data = data.getUserDetails()
+		for ip, userlist in data.items():
+			print("\n服务器ip：" + ip)
+			for one_user in userlist:
+				print("\n  用户："+ one_user[0])
+				print("  uuid："+ one_user[1])
+				print("  流量剩余："+ one_user[2])
+		feedback = "this api is not finish"
+		
 
-		elif cmd[0] == "au":
-			print("添加用户模式")
-			uuidd = str(uuid.uuid4())
-			data = UserData()
-			data.readUserData()
-			data.ip = cmd[1]
-			data.email = cmd[2]
-			data.uuid = uuidd
-			data.traffic = cmd[3]
-			data.addUser()
-			data.writeUserData()
+	elif cmd[0] == "ls":
+		print("\n服务器信息查询模式\n")
+		data = UserData()
+		data.readUserData()
+		data = data.getUserDetails()
+		for ip, userlist in data.items():
+			print("服务器ip：" + ip)
+		feedback = "this api is not finish"
+			
 
-			sock = Lcv2_Socket()
-			sock.ip = cmd[1]
-			sock.email = cmd[2]
-			sock.uuid = uuidd
-			sock.connectServer()
-			sock.addLcv2User()
-			sock.closeConnect()
-			print("完成")
-
-		elif cmd[0] == "du":
-			print("删除用户模式")
-			data = UserData()
-			data.readUserData()
-			data.ip = cmd[1]
-			data.email = cmd[2]
-			data.uuid = cmd[3]
-			data.delUser()
-			data.writeUserData()
-
-			sock = Lcv2_Socket()
-			sock.ip = cmd[1]
-			sock.email = cmd[2]
-			sock.uuid = cmd[3]
-			sock.connectServer()
-			sock.delLcv2User()
-			sock.closeConnect()
-			print("完成")
-
-		elif cmd[0] == "at":
-			print("添加用户流量模式")
-			data = UserData()
-			data.readUserData()
-			data.ip = cmd[1]
-			data.email = cmd[2]
-			data.traffic = cmd[3]
-			data.addTraffic()
-			data.writeUserData()
-			print("完成")
-
-		elif cmd[0] == "dt":
-			print("删除用户流量模式")
-			data = UserData()
-			data.readUserData()
-			data.ip = cmd[1]
-			data.email = cmd[2]
-			data.traffic = cmd[3]
-			data.delTraffic()
-			data.writeUserData()
-			print("完成")
-
-		elif cmd[0] == "initserver":
-			data = UserData()
-			data.readUserData()
-			data = data.getUserDetails()
-			for server_ip , userlist in data.items():
-				for one_user in userlist:
-					sock = Lcv2_Socket()
-					sock.ip = server_ip
-					sock.email = one_user[0]
-					sock.uuid = one_user[1]
-					sock.connectServer()
-					sock.addLcv2User()
-					sock.closeConnect()
-
-		elif cmd[0] == "ud":
-			mainService()
-
-		elif cmd[0] == "as":
-			data = UserData()
-			data.readUserData()
-			data.ip = cmd[1]
-			data.addServer()
-			data.writeUserData()
-
-		elif cmd[0] == "ds":
-			data = UserData()
-			data.readUserData()
-			data.ip = cmd[1]
-			data.delServer()
-			data.writeUserData()
-
-		elif cmd[0] == "la":
-			print("\n全部用户信息查询模式")
-			data = UserData()
-			data.readUserData()
-			data = data.getUserDetails()
-			for ip, userlist in data.items():
-				print("\n服务器ip：" + ip)
+	elif cmd[0] == "lu":
+		print("\n制定服务器下用户信息查询模式")
+		data = UserData()
+		data.readUserData()
+		data = data.getUserDetails()
+		for ip, userlist in data.items():
+			if ip == cmd[1]:
 				for one_user in userlist:
 					print("\n  用户："+ one_user[0])
 					print("  uuid："+ one_user[1])
 					print("  流量剩余："+ one_user[2])
-
-		elif cmd[0] == "ls":
-			print("\n服务器信息查询模式\n")
-			data = UserData()
-			data.readUserData()
-			data = data.getUserDetails()
-			for ip, userlist in data.items():
-				print("服务器ip：" + ip)
-				
-
-		elif cmd[0] == "lu":
-			print("\n制定服务器下用户信息查询模式")
-			data = UserData()
-			data.readUserData()
-			data = data.getUserDetails()
-			for ip, userlist in data.items():
-				if ip == cmd[1]:
-					for one_user in userlist:
-						print("\n  用户："+ one_user[0])
-						print("  uuid："+ one_user[1])
-						print("  流量剩余："+ one_user[2])
-				else:
-					print("错误！没有找到服务器")
+			else:
+				print("错误！没有找到服务器")
+		feedback = "this api is not finish"
 
 
-		elif cmd[0] == "fu":
-			print("\n指定用户信息查询模式")
-			data = UserData()
-			data.readUserData()
-			data = data.getUserDetails()
-			for ip, userlist in data.items():
-				for one_user in userlist:
-					if one_user[0] == cmd[1]:
-						print("所在ip：" + ip)
-						print("\n  用户："+ one_user[0])
-						print("  uuid："+ one_user[1])
-						print("  流量剩余："+ one_user[2])
+	elif cmd[0] == "fu":
+		print("\n指定用户信息查询模式")
+		data = UserData()
+		data.readUserData()
+		data = data.getUserDetails()
+		for ip, userlist in data.items():
+			for one_user in userlist:
+				if one_user[0] == cmd[1]:
+					print("所在ip：" + ip)
+					print("\n  用户："+ one_user[0])
+					print("  uuid："+ one_user[1])
+					print("  流量剩余："+ one_user[2])
+					feedback = "*data2*".join(one_user[0])
 
-			print("全部数据搜索完成")
+		print("全部数据搜索完成")
+	
+	return feedback
 
+def main():
+	while True:
+		a = input(">>")
+		a = a.split(" ")
 
-dataControl()
-
-
+		a = dataControl(a)
+		print(a)
+main()
 
 
 

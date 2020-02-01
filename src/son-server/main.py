@@ -90,6 +90,7 @@ class Lcv2_api_core():
 
 
 def main():
+	print("声明套接字主机")
 
 	host = ""
 	port = 2233
@@ -102,9 +103,10 @@ def main():
 
 	while True:
 
-		print("开始监听！")
+		print("\n开始监听！")
 
 		cli, addr = sock.accept()
+		print("操作端接入")
 
 		api = Lcv2_api_core()
 
@@ -112,84 +114,64 @@ def main():
 		#分割服务指令
 		data_list = data.split("*data*")
 
-
 		if data_list[0] == "read_user":
 			#匹配服务器为测试用户流量是否合法
+			print("读取用户流量模式")
 			api.email = data_list[1]
 			data = api.api_read()
 
 			if type(data) is int :
 				data = str(data)
 				cli.sendall(data.encode())
+				print("用户流量读取完成！")
+				print("流量：" + data)
 			else:
-				cli.sendall("Flase".encode())
+				cli.sendall(data.encode())
+				print("用户流量读取错误！")
 				print("\n" + data + "\n")
+				print("以上为错误反馈！")
 
 
-		else:
+		elif data_list[0] == "add_user":
 			#匹配服务器为增加删除用户模式
-			if data_list[0] == "add_user":
-				api.mod = "add"
-			else:
-				api.mod = "del"
+			print("添加用户模式")
+			api.mod = "add"
 			api.email = data_list[1]
 			api.uuid = data_list[2]
 			data = api.api_run()
 
 			if data == "True":
 				cli.sendall("True".encode())
+				print("添加用户完成！")
 			else:
-				cli.sendall("Flase".encode())
+				cli.sendall(data.encode())
+				print("添加用户错误！")
 				print("\n" + data + "\n")
-
-		print("完成循环！")
-
-main()
+				print("以上为错误反馈！")
 
 
+		elif data_list[0] == "del_user":
+			#匹配服务器为增加删除用户模式
+			print("删除用户模式")
+			api.mod = "del"
+			api.email = data_list[1]
+			api.uuid = data_list[2]
+			data = api.api_run()
+
+			if data == "True":
+				cli.sendall("True".encode())
+				print("删除用户完成！")
+			else:
+				cli.sendall(data.encode())
+				print("删除用户错误！")
+				print("\n" + data + "\n")
+				print("以上为错误反馈！")
+
+		print("完成一次调用！")
 
 
-		#cli.sendall(sen.encode())
-		#cli.close()
+if __name__=='__main__':
+	print("Lcv2 V7.0 子服务器 启动")
 
-
-
-
-
-
-
-
-
-
-'''
-
-def main():
-	#mod 参数为 read / del / add
-
-	mod = input("mod>>")
-	email = input("email>>")
-	uuidn = str(uuid.uuid4())
-	api = Lcv2_api_core()
-
-	if mod == "read":
-		api.email = email
-		back = api.api_read()
-		print(back)
-
-	elif mod == "del":
-		api.mod = "del"
-		api.uuid = uuidn
-		api.email = email
-		back = api.api_run()
-		print(back)
-
-	elif mod == "add":
-		api.mod = "add"
-		api.uuid = uuidn
-		api.email = email
-		back = api.api_run()
-		print(back)
-
-main()
-'''
+	main()
 
