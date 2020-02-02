@@ -1,11 +1,14 @@
 # -- coding:utf-8--
 #this file set in the main server
+import threading
 import socket
 import time
 import datetime
 import json
 import os
 import uuid
+
+state = 0
 
 def error_print(data):
 	datalist = data.split("*data*")
@@ -290,6 +293,7 @@ def dataControl(cmd):
 		print("ls 列出所有服务器信息")
 		print("lu [ip] 列出指定ip下的所有用户")
 		print("fu [email] 查询指定用户在所有ip下")
+		print("wt 延迟主进程更新时间")
 
 	elif cmd[0] == "au":
 		print("添加用户模式")
@@ -439,16 +443,44 @@ def dataControl(cmd):
 					print("  流量剩余："+ one_user[2])
 
 		print("全部数据搜索完成")
-	
+
+	elif cmd[0] == "wt":
+		global state
+		state = 1
+		print("程序预约延迟已发送")
+
+
+def mainUserUpdate():
+	global state
+	number = 60
+	while True:
+		if number < 1:
+			number = 2
+			mainService()
+		else:
+			if state == 1:
+				state = 0
+				print("监测到主控接入，进行更新延迟 300 秒")
+				time.sleep(300)
+			print("守护更新进程等待：" + str(number))
+			time.sleep(10)
+			number -= 1
+
 
 def main():
 	while True:
-		a = input(">>")
-		a = a.split(" ")
+		cmd = input(">>")
+		cmd = cmd.split(" ")
 
-		dataControl(a)
-main()
-
+		dataControl(cmd)
 
 
-		
+if __name__=='__main__':
+	print("Lcv2 V7.0 主服务器 启动")
+
+	mainUserUpdatet = threading.Thread(target=mainUserUpdate)
+	mainUserUpdatet.setDaemon(True)
+	mainUserUpdatet.start()
+	main()
+
+	

@@ -1,0 +1,169 @@
+{
+	"stats": {},
+    "api": {
+        "services": [
+            "HandlerService",
+            "StatsService"
+        ],
+        "tag": "api"
+    },
+    "policy": {
+        "levels": {
+            "0": {
+                "statsUserUplink": true,
+                "statsUserDownlink": true
+            },
+            "1": {
+                "statsUserUplink": true,
+                "statsUserDownlink": true
+            }
+        },
+        "system": {
+            "statsInboundUplink": true,
+            "statsInboundDownlink": true
+        }
+    },
+
+	"log": {
+		"access": "/var/log/v2ray/access.log",
+		"error": "/var/log/v2ray/error.log",
+		"loglevel": "warning"
+	},
+	"inbounds": [
+		{
+			"tag": "main",
+			"port": 26373,
+			"protocol": "vmess",
+			"settings": {
+				"clients": [
+					{
+						"email": "lucycore@icloud.com",
+						"id": "2422102c-10ed-491f-b6b0-fd4d4d90f010",
+						"level": 1,
+						"alterId": 233
+					}
+				]
+			},
+			"streamSettings": {
+				"network": "tcp",
+				"tcpSettings": {
+					"header": {
+						"type": "http",
+						"response": {
+							"version": "1.1",
+							"status": "200",
+							"reason": "OK",
+							"headers": {
+								"Content-encoding": [
+									"gzip"
+								],
+								"Content-Type": [
+									"text/html; charset=utf-8"
+								],
+								"Cache-Control": [
+									"no-cache"
+								],
+								"Vary": [
+									"Accept-Encoding"
+								],
+								"X-Frame-Options": [
+									"deny"
+								],
+								"X-XSS-Protection": [
+									"1; mode=block"
+								],
+								"X-content-type-options": [
+									"nosniff"
+								]
+							}
+						}
+					}
+				}
+			},
+			"sniffing": {
+				"enabled": true,
+				"destOverride": [
+					"http",
+					"tls"
+				]
+			}
+		}
+		//include_ss
+		//include_socks
+		//include_mtproto
+		//include_in_config
+		//
+	],
+
+	"inboundDetour": [
+        {
+            "listen": "127.0.0.1",
+            "port": 10085,
+            "protocol": "dokodemo-door",
+            "settings": {
+                "address": "127.0.0.1"
+            },
+            "tag": "api"
+        }
+    ],
+
+
+	"outbounds": [
+		{
+			"protocol": "freedom",
+			"settings": {}
+		},
+		{
+			"protocol": "blackhole",
+			"settings": {},
+			"tag": "blocked"
+		},
+		{
+			"protocol": "freedom",
+			"settings": {},
+			"tag": "direct"
+		},
+		{
+			"protocol": "mtproto",
+			"settings": {},
+			"tag": "tg-out"
+		}
+		//include_out_config
+		//
+	],
+	"dns": {
+		"server": [
+			"1.1.1.1",
+			"1.0.0.1",
+			"8.8.8.8",
+			"8.8.4.4",
+			"localhost"
+		]
+	},
+	
+	"routing": {
+        "settings": {
+            "rules": [
+                {
+                    "inboundTag": [
+                        "api"
+                    ],
+                    "outboundTag": "api",
+                    "type": "field"
+                }
+            ]
+        },
+        "strategy": "rules"
+    },
+
+	"transport": {
+		"kcpSettings": {
+            "uplinkCapacity": 100,
+            "downlinkCapacity": 100,
+            "congestion": true
+        },
+		"sockopt": {
+			"tcpFastOpen": true
+		}
+	}
+}
