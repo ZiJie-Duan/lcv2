@@ -166,12 +166,13 @@ class Lcv2_Socket():
 		data = '*data*'.join(dataList)
 
 		self.sock.sendall(data.encode())
-		serverRecv = self.sock.recv(1024).decode()
+		serverRecv = self.sock.recv(10240).decode()
 
 		if serverRecv == "True":
-			return True
+			return "True"
 		else:
-			return serverRecv
+			error_print(serverRecv)
+			return "False"
 
 
 	def delLcv2User(self):
@@ -181,12 +182,13 @@ class Lcv2_Socket():
 		data = '*data*'.join(dataList)
 
 		self.sock.sendall(data.encode())
-		serverRecv = self.sock.recv(1024).decode()
+		serverRecv = self.sock.recv(10240).decode()
 
 		if serverRecv == "True":
-			return True
+			return "True"
 		else:
-			return serverRecv
+			error_print(serverRecv)
+			return "False"
 
 
 	def readLcv2User(self):
@@ -196,14 +198,14 @@ class Lcv2_Socket():
 		data = '*data*'.join(dataList)
 
 		self.sock.sendall(data.encode())
-		serverRecv = self.sock.recv(1024).decode()
+		serverRecv = self.sock.recv(10240).decode()
 
 		try:
 			serverRecv = int(serverRecv)
 			return True, serverRecv
 		except:
-
-			return False, serverRecv
+			error_print(serverRecv)
+			return False, "0"
 
 
 	def closeConnect(self):
@@ -237,8 +239,6 @@ def mainService():
 				print("删除流量：" + str(traffic))
 			else:
 				print("错误！没有找到用户："+one_user[0])
-				error_print(traffic)
-				print("错误反馈！")
 	
 	data.writeUserData()
 	print("用户信息更新完成！")
@@ -274,8 +274,7 @@ def mainService():
 
 def dataControl(cmd):
 
-	feedback = ""
-	'''
+
 	if cmd[0] == "h":
 		print("\nLcv2 信息主控使用帮助（自动保存）")
 		print("au [ip] [email] [traffic] 添加用户到服务器下")
@@ -292,9 +291,7 @@ def dataControl(cmd):
 		print("lu [ip] 列出指定ip下的所有用户")
 		print("fu [email] 查询指定用户在所有ip下")
 
-	'''
-
-	if cmd[0] == "au":
+	elif cmd[0] == "au":
 		print("添加用户模式")
 		uuidd = str(uuid.uuid4())
 		data = UserData()
@@ -314,7 +311,6 @@ def dataControl(cmd):
 		sock.addLcv2User()
 		sock.closeConnect()
 		print("完成")
-		feedback = "finish"
 
 	elif cmd[0] == "du":
 		print("删除用户模式")
@@ -334,7 +330,6 @@ def dataControl(cmd):
 		sock.delLcv2User()
 		sock.closeConnect()
 		print("完成")
-		feedback = "finish"
 
 	elif cmd[0] == "at":
 		print("添加用户流量模式")
@@ -346,7 +341,7 @@ def dataControl(cmd):
 		data.addTraffic()
 		data.writeUserData()
 		print("完成")
-		feedback = "finish"
+		
 
 	elif cmd[0] == "dt":
 		print("删除用户流量模式")
@@ -358,7 +353,6 @@ def dataControl(cmd):
 		data.delTraffic()
 		data.writeUserData()
 		print("完成")
-		feedback = "finish"
 
 	elif cmd[0] == "initserver":
 		data = UserData()
@@ -371,14 +365,12 @@ def dataControl(cmd):
 				sock.email = one_user[0]
 				sock.uuid = one_user[1]
 				sock.connectServer()
-				sock.addLcv2User()
+				sock.addLcv2User()	
 				sock.closeConnect()
 		
-		feedback = "finish"
 
 	elif cmd[0] == "ud":
 		mainService()
-		feedback = "finish"
 
 	elif cmd[0] == "as":
 		data = UserData()
@@ -386,7 +378,6 @@ def dataControl(cmd):
 		data.ip = cmd[1]
 		data.addServer()
 		data.writeUserData()
-		feedback = "finish"
 
 	elif cmd[0] == "ds":
 		data = UserData()
@@ -394,8 +385,6 @@ def dataControl(cmd):
 		data.ip = cmd[1]
 		data.delServer()
 		data.writeUserData()
-		feedback = "finish"
-
 
 	elif cmd[0] == "la":
 		print("\n全部用户信息查询模式")
@@ -408,7 +397,7 @@ def dataControl(cmd):
 				print("\n  用户："+ one_user[0])
 				print("  uuid："+ one_user[1])
 				print("  流量剩余："+ one_user[2])
-		feedback = "this api is not finish"
+		
 		
 
 	elif cmd[0] == "ls":
@@ -418,7 +407,7 @@ def dataControl(cmd):
 		data = data.getUserDetails()
 		for ip, userlist in data.items():
 			print("服务器ip：" + ip)
-		feedback = "this api is not finish"
+		
 			
 
 	elif cmd[0] == "lu":
@@ -434,7 +423,6 @@ def dataControl(cmd):
 					print("  流量剩余："+ one_user[2])
 			else:
 				print("错误！没有找到服务器")
-		feedback = "this api is not finish"
 
 
 	elif cmd[0] == "fu":
@@ -449,19 +437,16 @@ def dataControl(cmd):
 					print("\n  用户："+ one_user[0])
 					print("  uuid："+ one_user[1])
 					print("  流量剩余："+ one_user[2])
-					feedback = "*data2*".join(one_user[0])
 
 		print("全部数据搜索完成")
 	
-	return feedback
 
 def main():
 	while True:
 		a = input(">>")
 		a = a.split(" ")
 
-		a = dataControl(a)
-		print(a)
+		dataControl(a)
 main()
 
 
