@@ -173,5 +173,12 @@ def main():
 if __name__=='__main__':
 	print("Lcv2 V7.0 子服务器 启动")
 
-	main()
+	while True:
+		try:
+			print("主核心启动")
+			main()
+		except:
+			print("\n核心出错！")
+			print("进行全局变量初始化！")
+			print("重启核心！\n")
 

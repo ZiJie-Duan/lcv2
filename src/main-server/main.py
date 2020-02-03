@@ -9,8 +9,10 @@ import os
 import uuid
 
 state = 0
+#用于描述线程状态
 
 def error_print(data):
+	#错误反馈打印函数
 	datalist = data.split("*data*")
 	for e in datalist:
 		print(e)
@@ -61,9 +63,11 @@ class UserData():
 		
 		user_index = 0
 		find_state = False
+		userUuid = ""
 		for one_user_data in sonserver_users:
 			if one_user_data[0] == self.email:
 				find_state = True
+				userUuid = one_user_data[1]
 				break
 			else:
 				user_index += 1
@@ -74,6 +78,8 @@ class UserData():
 		else:
 			print("\n\nUserData类内部错误！！")
 			print("在用户数据库之中没有找到要删除的用户！\n\n")
+
+		return userUuid
 
 
 	def addServer(self):
@@ -138,13 +144,20 @@ class UserData():
 			print("删除流量到用户出错！\n\n")
 
 
-
 	def getUserDetails(self):
 		try:
 			return self.userdata
 		except:
 			print("\n\nUserData类内部错误！！")
 			print("返回用户信息细节失败！\n\n")
+
+
+	def getIp(self):
+		number = 0
+		for ip, _ in self.userdata.items():
+			number += 1
+			if str(number) == self.ip:
+				return ip
 
 
 class Lcv2_Socket():
@@ -276,12 +289,11 @@ def mainService():
 
 
 def dataControl(cmd):
-
-
+	#cmd命令控制程序
 	if cmd[0] == "h":
-		print("\nLcv2 信息主控使用帮助（自动保存）")
+		print("\nLcv2 信息主控使用帮助(ip为服务器编号)（自动保存）")
 		print("au [ip] [email] [traffic] 添加用户到服务器下")
-		print("du [ip] [email] [uuid] 删除用户在服务器下")
+		print("du [ip] [email] 删除用户在服务器下")
 		print("at [ip] [email] [traffic] 添加用户流量")
 		print("dt [ip] [email] [traffic] 删除用户流量")
 		print("initserver 进行服务器初始化")
@@ -301,6 +313,8 @@ def dataControl(cmd):
 		data = UserData()
 		data.readUserData()
 		data.ip = cmd[1]
+		serverip = data.getIp()
+		data.ip = serverip
 		data.email = cmd[2]
 		data.uuid = uuidd
 		data.traffic = cmd[3]
@@ -308,7 +322,7 @@ def dataControl(cmd):
 		data.writeUserData()
 
 		sock = Lcv2_Socket()
-		sock.ip = cmd[1]
+		sock.ip = serverip
 		sock.email = cmd[2]
 		sock.uuid = uuidd
 		sock.connectServer()
@@ -321,15 +335,16 @@ def dataControl(cmd):
 		data = UserData()
 		data.readUserData()
 		data.ip = cmd[1]
+		serverip = data.getIp()
+		data.ip = serverip
 		data.email = cmd[2]
-		data.uuid = cmd[3]
-		data.delUser()
+		userUid = data.delUser()
 		data.writeUserData()
 
 		sock = Lcv2_Socket()
-		sock.ip = cmd[1]
+		sock.ip = serverip
 		sock.email = cmd[2]
-		sock.uuid = cmd[3]
+		sock.uuid = userUid
 		sock.connectServer()
 		sock.delLcv2User()
 		sock.closeConnect()
@@ -340,6 +355,8 @@ def dataControl(cmd):
 		data = UserData()
 		data.readUserData()
 		data.ip = cmd[1]
+		serverip = data.getIp()
+		data.ip = serverip
 		data.email = cmd[2]
 		data.traffic = cmd[3]
 		data.addTraffic()
@@ -352,6 +369,8 @@ def dataControl(cmd):
 		data = UserData()
 		data.readUserData()
 		data.ip = cmd[1]
+		serverip = data.getIp()
+		data.ip = serverip
 		data.email = cmd[2]
 		data.traffic = cmd[3]
 		data.delTraffic()
@@ -387,6 +406,8 @@ def dataControl(cmd):
 		data = UserData()
 		data.readUserData()
 		data.ip = cmd[1]
+		serverip = data.getIp()
+		data.ip = serverip
 		data.delServer()
 		data.writeUserData()
 
@@ -395,13 +416,14 @@ def dataControl(cmd):
 		data = UserData()
 		data.readUserData()
 		data = data.getUserDetails()
+		number = 0
 		for ip, userlist in data.items():
-			print("\n服务器ip：" + ip)
+			number += 1
+			print("编号：" + str(number) + "  服务器ip：" + ip)
 			for one_user in userlist:
 				print("\n  用户："+ one_user[0])
 				print("  uuid："+ one_user[1])
 				print("  流量剩余："+ one_user[2])
-		
 		
 
 	elif cmd[0] == "ls":
@@ -409,10 +431,11 @@ def dataControl(cmd):
 		data = UserData()
 		data.readUserData()
 		data = data.getUserDetails()
+		number = 0
 		for ip, userlist in data.items():
-			print("服务器ip：" + ip)
+			number += 1
+			print("编号：" + str(number) + "  服务器ip：" + ip)
 		
-			
 
 	elif cmd[0] == "lu":
 		print("\n制定服务器下用户信息查询模式")
@@ -451,6 +474,8 @@ def dataControl(cmd):
 
 
 def mainUserUpdate():
+	#一个守护进程，用于自动化更新用户的数据
+	#并自动化进行移除过期用户
 	global state
 	number = 60
 	while True:
@@ -468,6 +493,7 @@ def mainUserUpdate():
 
 
 def main():
+	#用于给控制者提供控制端，端口的主函数
 	while True:
 		cmd = input(">>")
 		cmd = cmd.split(" ")
@@ -478,9 +504,19 @@ def main():
 if __name__=='__main__':
 	print("Lcv2 V7.0 主服务器 启动")
 
+	print("申请自主用户更新线程")
 	mainUserUpdatet = threading.Thread(target=mainUserUpdate)
 	mainUserUpdatet.setDaemon(True)
+	print("线程启动！")
 	mainUserUpdatet.start()
-	main()
+
+	while True:
+		try:
+			print("主核心启动")
+			main()
+		except:
+			print("\n核心出错！")
+			print("进行全局变量初始化！")
+			print("重启核心！\n")
 
 	
