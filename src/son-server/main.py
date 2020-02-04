@@ -4,7 +4,6 @@ import socket
 import time
 import re
 
-
 class Lcv2_api_core():
 	"""docstring for Lcv2_api_core
 	用于操作v2ray api工具的子服务器控制模块
@@ -88,6 +87,41 @@ class Lcv2_api_core():
 		#将返回int类型的数字，否则将返回错误string
 
 
+def getVmessUrl(idd):
+	f = open("/etc/v2ray/233blog_v2ray_backup.conf","r")
+	datalist = []
+	for x in f:
+		x = x.split("=")
+		if x[0] == "v2ray_id":
+			x[1] = idd
+		x = "=".join(x)
+		datalist.append(x)
+	f.close()
+
+	file_write_obj = open("/etc/v2ray/233blog_v2ray_backup.conf", 'w')
+	for var in datalist:
+		file_write_obj.writelines(var)
+		file_write_obj.write('\n')
+	file_write_obj.close()
+
+	command = "v2ray url"
+
+	back = subprocess.Popen(command, shell=True, \
+			stdout=subprocess.PIPE,stderr=\
+			subprocess.PIPE).communicate()
+
+	alist = []
+	for x in back:
+		alist.append(x.decode())
+
+	alist = alist[0]
+	alist = repr(alist)
+	alist = alist[99:-12]
+
+
+	return alist
+
+
 
 def main():
 	print("声明套接字主机")
@@ -166,6 +200,13 @@ def main():
 				print("删除用户错误！")
 				print("\n" + data + "\n")
 				print("以上为错误反馈！")
+
+		#此位置没有错误反馈
+		elif data_list[0] == "get_vmess":
+			#用于获取用户vmess链接的函数
+			print("获取用户vmess信息")
+			vmess = getVmessUrl(data_list[1])
+			cli.sendall(vmess.encode())
 
 		print("完成一次调用！")
 

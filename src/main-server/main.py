@@ -224,6 +224,19 @@ class Lcv2_Socket():
 			return False, "0"
 
 
+	def getVmess(self):
+		#获取用户vmess链接的服务器函数
+		#此函数没有错误处理
+
+		dataList = ["get_vmess",self.uuid]
+		data = '*data*'.join(dataList)
+
+		self.sock.sendall(data.encode())
+		serverRecv = self.sock.recv(1024).decode()
+
+		return serverRecv
+
+
 	def closeConnect(self):
 		self.sock.close()
 
@@ -300,6 +313,7 @@ def dataControl(cmd):
 		print("ud 更新用户流量数据 ")
 		print("as [ip] 添加服务器")
 		print("ds [ip] 删除服务器\n")
+		print("gvm [ip] [email] 获取用户vmess链接")
 		print("---------信息查找浏览分类---------")
 		print("la 列出所有用户信息")
 		print("ls 列出所有服务器信息")
@@ -466,6 +480,32 @@ def dataControl(cmd):
 					print("  流量剩余："+ one_user[2])
 
 		print("全部数据搜索完成")
+
+
+	elif cmd[0] == "gvm":
+		print("正在获取用户vmess")
+		data = UserData()
+		data.readUserData()
+		data.ip = cmd[1]
+		serverip = data.getIp()
+		userdata = data.getUserDetails()
+		uuidd = ""
+		for ip, userlist in userdata.items():
+			if serverip == ip:
+				for one_user in userlist:
+					if one_user[0] == cmd[2]:
+						uuidd = one_user[1]
+
+		sock = Lcv2_Socket()
+		sock.ip = serverip
+		sock.uuid = uuidd
+		sock.connectServer()
+		vmess = sock.getVmess()
+		sock.closeConnect()
+		print(vmess)
+		print("完成")
+
+
 
 	elif cmd[0] == "wt":
 		global state
