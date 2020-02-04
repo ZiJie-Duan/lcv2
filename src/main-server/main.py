@@ -517,10 +517,10 @@ def mainUserUpdate():
 	#一个守护进程，用于自动化更新用户的数据
 	#并自动化进行移除过期用户
 	global state
-	number = 60
+	number = 0
 	while True:
 		if number < 1:
-			number = 2
+			number = 60
 			mainService()
 		else:
 			if state == 1:
