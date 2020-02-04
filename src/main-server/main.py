@@ -111,6 +111,7 @@ class UserData():
 					userlist[user_index][2] = str(traffic)
 					state = True
 					break
+				user_index += 1
 			if state == False:
 				print("\n\nUserData类内部错误！！")
 				print("没有找到要添加流量的用户！\n\n")
@@ -134,7 +135,7 @@ class UserData():
 					userlist[user_index][2] = str(traffic)
 					state = True
 					break
-
+				user_index += 1
 			if state == False:
 				print("\n\nUserData类内部错误！！")
 				print("没有找到要删除流量的用户！\n\n")
@@ -248,11 +249,10 @@ def mainService():
 	data = UserData()
 	data.readUserData()
 	userdata = data.getUserDetails()
-	
-	lcv2Sock = Lcv2_Socket()
 
 	for server_ip, users in userdata.items():
 		for one_user in users:
+			lcv2Sock = Lcv2_Socket()
 			print("\n查找用户：" + one_user[0])
 			lcv2Sock.ip = server_ip
 			lcv2Sock.email = one_user[0]
@@ -268,6 +268,7 @@ def mainService():
 				print("删除流量：" + str(traffic))
 			else:
 				print("错误！没有找到用户："+one_user[0])
+			lcv2Sock.closeConnect()
 	
 	data.writeUserData()
 	print("用户信息更新完成！")
