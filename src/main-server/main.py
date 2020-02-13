@@ -432,11 +432,14 @@ def dataControl(cmd):
 		data.readUserData()
 		data = data.getUserDetails()
 		number = 0
+		number2 = 0 
 		for ip, userlist in data.items():
 			number += 1
 			print("编号：" + str(number) + "  服务器ip：" + ip)
 			for one_user in userlist:
-				print("\n  用户："+ one_user[0])
+				number2 += 1
+				print("\n  编号：" + str(number2))
+				print("  用户："+ one_user[0])
 				print("  uuid："+ one_user[1])
 				print("  流量剩余："+ one_user[2])
 		
@@ -459,7 +462,10 @@ def dataControl(cmd):
 		data = data.getUserDetails()
 		for ip, userlist in data.items():
 			if ip == cmd[1]:
+				number2 = 0
 				for one_user in userlist:
+					number2 += 1
+					print("\n  编号：" + str(number2))
 					print("\n  用户："+ one_user[0])
 					print("  uuid："+ one_user[1])
 					print("  流量剩余："+ one_user[2])
@@ -568,4 +574,4 @@ if __name__=='__main__':
 			print("进行全局变量初始化！")
 			print("重启核心！\n")
 
-	
+		
