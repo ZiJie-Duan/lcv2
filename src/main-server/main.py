@@ -517,20 +517,28 @@ def dataControl(cmd):
 def mainUserUpdate():
 	#一个守护进程，用于自动化更新用户的数据
 	#并自动化进行移除过期用户
-	global state
-	number = 0
 	while True:
-		if number < 1:
-			number = 60
-			mainService()
-		else:
-			if state == 1:
-				state = 0
-				print("监测到主控接入，进行更新延迟 300 秒")
-				time.sleep(300)
-			print("守护更新进程等待：" + str(number))
-			time.sleep(10)
-			number -= 1
+		try:
+			print("守护线程启动")
+			
+			global state
+			number = 0
+			while True:
+				if number < 1:
+					number = 60
+					mainService()
+				else:
+					if state == 1:
+						state = 0
+						print("监测到主控接入，进行更新延迟 300 秒")
+						time.sleep(300)
+					print("守护更新进程等待：" + str(number))
+					time.sleep(10)
+					number -= 1
+
+		except:
+			print("\n守护线程出错！")
+			print("重启线程！\n")
 
 
 def main():
