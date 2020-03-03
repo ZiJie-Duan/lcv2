@@ -8,8 +8,39 @@ import json
 import os
 import uuid
 
+this_program_use_to_sell = True
+this_program_ID = "lucycore"
+certificate_state = False
+
 state = 0
 #用于描述线程状态
+
+def send_traffic_to_S_control(trafficG):
+	#此函数在程序为出售时被激活
+	#用于发送用户流量添加情况
+	HOST = "127.0.0.1"
+	PORT = 5897
+	sock = socket.socket()
+	sock.connect((HOST, PORT))
+	data = this_program_ID + "*data*" + trafficG
+	sock.sendall(data.encode())
+	my = sock.recv(10240).decode()
+
+def test_program_certificate():
+	#此函数在程序为出售时被激活
+	#用于验证此程序的运行是否合法
+	HOST = "127.0.0.1"
+	PORT = 5896
+	sock = socket.socket()
+	sock.connect((HOST, PORT))
+	sock.sendall(this_program_ID.encode())
+	certificate = sock.recv(10240).decode()
+	if certificate == "True":
+		return True
+	else:
+		return False
+
+
 
 def error_print(data):
 	#错误反馈打印函数
@@ -245,61 +276,91 @@ class Lcv2_Socket():
 def mainService():
 	#用于服务器自动化删除流量耗尽用户
 	print("流量消耗更新服务开启")
+	global certificate_state
 
-	data = UserData()
-	data.readUserData()
-	userdata = data.getUserDetails()
+	if certificate_state == True:
 
-	for server_ip, users in userdata.items():
-		for one_user in users:
-			lcv2Sock = Lcv2_Socket()
-			print("\n查找用户：" + one_user[0])
-			lcv2Sock.ip = server_ip
-			lcv2Sock.email = one_user[0]
-			lcv2Sock.connectServer()
-			state, traffic = lcv2Sock.readLcv2User()
+		data = UserData()
+		data.readUserData()
+		userdata = data.getUserDetails()
 
-			if state== True and traffic != "0":
-				data.ip = server_ip
-				data.email = one_user[0]
-				data.traffic = traffic
-				data.delTraffic()
-				print("用户: " + one_user[0] + " 查找成功")
-				print("删除流量：" + str(traffic))
-			else:
-				print("错误！没有找到用户："+one_user[0])
-			lcv2Sock.closeConnect()
-	
-	data.writeUserData()
-	print("用户信息更新完成！")
-
-	print("正在执行清除流量耗尽用户行为")
-	userdata = data.getUserDetails()
-	lcv2Sock = Lcv2_Socket()
-
-	for server_ip, users in userdata.items():
-		for one_user in users:
-			if int(one_user[2]) == 0 or int(one_user[2]) < 0:
-				print("发现过期用户："+one_user[0])
-				data.ip = server_ip
-				data.email = one_user[0]
-				data.delUser()
-
+		for server_ip, users in userdata.items():
+			for one_user in users:
+				lcv2Sock = Lcv2_Socket()
+				print("\n查找用户：" + one_user[0])
 				lcv2Sock.ip = server_ip
 				lcv2Sock.email = one_user[0]
-				lcv2Sock.uuid = one_user[1]
 				lcv2Sock.connectServer()
-				state = lcv2Sock.delLcv2User()
-				lcv2Sock.closeConnect()
-				if state == "True":
-					print("成功！")
+				state, traffic = lcv2Sock.readLcv2User()
+
+				if state== True and traffic != "0":
+					data.ip = server_ip
+					data.email = one_user[0]
+					data.traffic = traffic
+					data.delTraffic()
+					print("用户: " + one_user[0] + " 查找成功")
+					print("删除流量：" + str(traffic))
 				else:
-					error_print(state)
-					print("错误！")
+					print("错误！没有找到用户："+one_user[0])
+				lcv2Sock.closeConnect()
+		
+		data.writeUserData()
+		print("用户信息更新完成！")
 
-	data.writeUserData()
-	print("清除行为完成！")
+		print("正在执行清除流量耗尽用户行为")
+		userdata = data.getUserDetails()
+		lcv2Sock = Lcv2_Socket()
 
+		for server_ip, users in userdata.items():
+			for one_user in users:
+				if int(one_user[2]) == 0 or int(one_user[2]) < 0:
+					print("发现过期用户："+one_user[0])
+					data.ip = server_ip
+					data.email = one_user[0]
+					data.delUser()
+
+					lcv2Sock.ip = server_ip
+					lcv2Sock.email = one_user[0]
+					lcv2Sock.uuid = one_user[1]
+					lcv2Sock.connectServer()
+					state = lcv2Sock.delLcv2User()
+					lcv2Sock.closeConnect()
+					if state == "True":
+						print("成功！")
+					else:
+						error_print(state)
+						print("错误！")
+
+		data.writeUserData()
+		print("清除行为完成！")
+
+	if this_program_use_to_sell:
+		print("正在验证程序证书")
+		print("\n\nLcv2 程序证书验证")
+		if test_program_certificate():
+			print("您的证书有效！")
+			print("您的程序ID：" + this_program_ID)
+			certificate_state = True
+		else:
+			print("您的证书已失效！")
+			print("您的程序ID：" + this_program_ID)
+			print("请立即联系您的程序管理员！")
+			print("20秒之后您的所有子服务器将会关闭！")
+			print("如需恢复子服务器，请初始化子服务器！")
+			certificate_state = False
+
+			data = UserData()
+			data.readUserData()
+			data = data.getUserDetails()
+			for server_ip , userlist in data.items():
+				for one_user in userlist:
+					sock = Lcv2_Socket()
+					sock.ip = server_ip
+					sock.email = one_user[0]
+					sock.uuid = one_user[1]
+					sock.connectServer()
+					sock.delLcv2User()	
+					sock.closeConnect()
 
 
 def dataControl(cmd):
@@ -343,6 +404,7 @@ def dataControl(cmd):
 		sock.connectServer()
 		sock.addLcv2User()
 		sock.closeConnect()
+		send_traffic_to_S_control(cmd[3])
 		print("完成")
 
 	elif cmd[0] == "du":
@@ -376,6 +438,7 @@ def dataControl(cmd):
 		data.traffic = cmd[3]
 		data.addTraffic()
 		data.writeUserData()
+		send_traffic_to_S_control(cmd[3])
 		print("完成")
 		
 
@@ -452,7 +515,8 @@ def dataControl(cmd):
 		number = 0
 		for ip, userlist in data.items():
 			number += 1
-			print("编号：" + str(number) + "  服务器ip：" + ip)
+			print("编号：" + str(number) + "  服务器ip：" + ip\
+				+ " 用户数量：" + str(len(userlist)))
 		
 
 	elif cmd[0] == "lu":
