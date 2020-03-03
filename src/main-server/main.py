@@ -8,9 +8,9 @@ import json
 import os
 import uuid
 
-this_program_use_to_sell = True
+this_program_use_to_sell = False
 this_program_ID = "lucycore"
-certificate_state = False
+certificate_state = True
 
 state = 0
 #用于描述线程状态
