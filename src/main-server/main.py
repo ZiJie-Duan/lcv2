@@ -404,7 +404,8 @@ def dataControl(cmd):
 		sock.connectServer()
 		sock.addLcv2User()
 		sock.closeConnect()
-		send_traffic_to_S_control(cmd[3])
+		if this_program_use_to_sell:
+			send_traffic_to_S_control(cmd[3])
 		print("完成")
 
 	elif cmd[0] == "du":
@@ -438,7 +439,8 @@ def dataControl(cmd):
 		data.traffic = cmd[3]
 		data.addTraffic()
 		data.writeUserData()
-		send_traffic_to_S_control(cmd[3])
+		if this_program_use_to_sell:
+			send_traffic_to_S_control(cmd[3])
 		print("完成")
 		
 
