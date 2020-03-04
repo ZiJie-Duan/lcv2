@@ -7,10 +7,14 @@ import datetime
 import json
 import os
 import uuid
-
+'''
 this_program_use_to_sell = False
 this_program_ID = "lucycore"
 certificate_state = True
+'''
+this_program_use_to_sell = True
+this_program_ID = "lucycore"
+certificate_state = False
 
 state = 0
 #用于描述线程状态
@@ -18,7 +22,7 @@ state = 0
 def send_traffic_to_S_control(trafficG):
 	#此函数在程序为出售时被激活
 	#用于发送用户流量添加情况
-	HOST = "127.0.0.1"
+	HOST = "ahhhhhh.top"
 	PORT = 5897
 	sock = socket.socket()
 	sock.connect((HOST, PORT))
@@ -29,7 +33,7 @@ def send_traffic_to_S_control(trafficG):
 def test_program_certificate():
 	#此函数在程序为出售时被激活
 	#用于验证此程序的运行是否合法
-	HOST = "127.0.0.1"
+	HOST = "ahhhhhh.top"
 	PORT = 5896
 	sock = socket.socket()
 	sock.connect((HOST, PORT))
@@ -525,9 +529,11 @@ def dataControl(cmd):
 		print("\n制定服务器下用户信息查询模式")
 		data = UserData()
 		data.readUserData()
+		data.ip = cmd[1]
+		serverip = data.getIp()
 		data = data.getUserDetails()
 		for ip, userlist in data.items():
-			if ip == cmd[1]:
+			if ip == serverip:
 				number2 = 0
 				for one_user in userlist:
 					number2 += 1
@@ -535,8 +541,7 @@ def dataControl(cmd):
 					print("\n  用户："+ one_user[0])
 					print("  uuid："+ one_user[1])
 					print("  流量剩余："+ one_user[2])
-			else:
-				print("错误！没有找到服务器")
+
 
 
 	elif cmd[0] == "fu":
