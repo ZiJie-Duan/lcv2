@@ -7,17 +7,20 @@ import datetime
 import json
 import os
 import uuid
-'''
-this_program_use_to_sell = False
-this_program_ID = "lucycore"
-certificate_state = True
-'''
+
 this_program_use_to_sell = True
-this_program_ID = "lucycore"
+this_program_ID = ""
 certificate_state = False
 
 state = 0
 #用于描述线程状态
+
+def get_Lcv2_config():
+	global this_program_ID
+	print("\n启动之前，需要您提供您的程序ID")
+	print("用于标记，记录您的程序流量费用")
+	print("为了避免错误，请不要使用汉字\n")
+	this_program_ID = input("Program_ID：")
 
 def send_traffic_to_S_control(trafficG):
 	#此函数在程序为出售时被激活
@@ -631,6 +634,7 @@ def main():
 
 if __name__=='__main__':
 	print("Lcv2 V7.0 主服务器 启动")
+	get_Lcv2_config()
 
 	print("申请自主用户更新线程")
 	mainUserUpdatet = threading.Thread(target=mainUserUpdate)
