@@ -7,6 +7,7 @@ import datetime
 import json
 import os
 import uuid
+import sys
 
 this_program_use_to_sell = True
 this_program_ID = ""
@@ -73,7 +74,8 @@ class UserData():
 			with open(self.path) as zx:
 				userdata = json.load(zx)
 				self.userdata = userdata
-		except:
+		except Exception as e:
+			print(e)
 			print("\n\nUserData类内部错误！！")
 			print("读取用户数据库失败！\n\n")
 
@@ -82,7 +84,8 @@ class UserData():
 		try:
 			with open(self.path,'w') as ojbk:
 				json.dump(self.userdata,ojbk)
-		except:
+		except Exception as e:
+			print(e)
 			print("\n\nUserData类内部错误！！")
 			print("写入用户数据库失败！\n\n")
 
@@ -91,7 +94,8 @@ class UserData():
 		try:
 			one_user_data_list = [self.email,self.uuid,self.traffic]
 			self.userdata[self.ip].append(one_user_data_list)
-		except:
+		except Exception as e:
+			print(e)
 			print("\n\nUserData类内部错误！！")
 			print("添加用户到指定的ip下失败！\n\n")
 
@@ -123,7 +127,8 @@ class UserData():
 	def addServer(self):
 		try:
 			self.userdata[self.ip] = []
-		except:
+		except Exception as e:
+			print(e)
 			print("\n\nUserData类内部错误！！")
 			print("添加服务器到用户数据库失败！\n\n")
 
@@ -131,7 +136,8 @@ class UserData():
 	def delServer(self):
 		try:
 			del self.userdata[self.ip]
-		except:
+		except Exception as e:
+			print(e)
 			print("\n\nUserData类内部错误！！")
 			print("删除服务器在用户数据库中失败！\n\n")
 
@@ -154,7 +160,8 @@ class UserData():
 				print("\n\nUserData类内部错误！！")
 				print("没有找到要添加流量的用户！\n\n")
 
-		except:
+		except Exception as e:
+			print(e)
 			print("\n\nUserData类内部错误！！")
 			print("添加流量到用户出错！\n\n")
 
@@ -178,7 +185,8 @@ class UserData():
 				print("\n\nUserData类内部错误！！")
 				print("没有找到要删除流量的用户！\n\n")
 
-		except:
+		except Exception as e:
+			print(e)
 			print("\n\nUserData类内部错误！！")
 			print("删除流量到用户出错！\n\n")
 
@@ -186,7 +194,8 @@ class UserData():
 	def getUserDetails(self):
 		try:
 			return self.userdata
-		except:
+		except Exception as e:
+			print(e)
 			print("\n\nUserData类内部错误！！")
 			print("返回用户信息细节失败！\n\n")
 
@@ -206,6 +215,7 @@ class Lcv2_Socket():
 		self.email = email
 		self.uuid = uuid
 		self.sock = socket.socket()
+		self.sock.settimeout(10)
 
 
 	def connectServer(self):
@@ -258,7 +268,8 @@ class Lcv2_Socket():
 		try:
 			serverRecv = int(serverRecv)
 			return True, serverRecv
-		except:
+		except Exception as e:
+			print(e)
 			error_print(serverRecv)
 			return False, "0"
 
@@ -376,19 +387,84 @@ def dataControl(cmd):
 		print("\nLcv2 信息主控使用帮助(ip为服务器编号)（自动保存）")
 		print("au [ip] [email] [traffic] 添加用户到服务器下")
 		print("du [ip] [email] 删除用户在服务器下")
+		print("tu [ip] [email] [newIp] 转移用户到新的服务器")
+		print("ptu [ip] [newIp] 转移所有指定用户到新的服务器")#
 		print("at [ip] [email] [traffic] 添加用户流量")
 		print("dt [ip] [email] [traffic] 删除用户流量")
+		print("initusdata 初始化用户信息文件")#
 		print("initserver 进行服务器初始化")
 		print("ud 更新用户流量数据 ")
 		print("as [ip] 添加服务器")
 		print("ds [ip] 删除服务器")
 		print("gvm [ip] [email] 获取用户vmess链接\n")
+		print("q  强制退出程序")
+		print("lst  列出所有子进程")
 		print("---------信息查找浏览分类---------")
 		print("la 列出所有用户信息")
 		print("ls 列出所有服务器信息")
 		print("lu [ip] 列出指定ip下的所有用户")
 		print("fu [email] 查询指定用户在所有ip下")
 		print("wt 延迟主进程更新时间")
+
+	elif cmd[0] == "tu":
+		print("用户转移模式")
+		userOneData = []
+		data = UserData()
+		data.readUserData()
+		data.ip = cmd[1]
+		serverip = data.getIp()
+		data = data.getUserDetails()
+		#获取用户信息
+		for userOneLine in data[serverip]:
+			if userOneLine[0] == cmd[2]:
+				userOneData = userOneLine[:]
+		print("用户信息")
+		print(userOneData)
+		#加入到新的数据结构
+		data = UserData()
+		data.readUserData()
+		data.ip = cmd[3]
+		nserverip = data.getIp()
+		data.ip = nserverip
+		data.email = userOneData[0]
+		data.uuid = userOneData[1]
+		data.traffic = userOneData[2]
+		data.addUser()
+		data.writeUserData()
+		print("新服务器数据库加入完成")
+		#删除用户在旧的数据
+		data = UserData()
+		data.readUserData()
+		data.ip = serverip
+		data.email = userOneData[0]
+		_ = data.delUser()
+		data.writeUserData()
+		print("旧数据删除完成")
+		#加入到新的子服务器
+		sock = Lcv2_Socket()
+		sock.ip = nserverip
+		sock.email = userOneData[0]
+		sock.uuid = userOneData[1]
+		sock.connectServer()
+		sock.addLcv2User()
+		sock.closeConnect()
+		print("加入新子服务器完成")
+
+		#删除用户在久的子服务器
+		try:
+			sock = Lcv2_Socket()
+			sock.ip = serverip
+			sock.email = userOneData[0]
+			sock.uuid = userOneData[1]
+			sock.connectServer()
+			sock.delLcv2User()
+			sock.closeConnect()
+		except Exception as e:
+			print(e)
+		print("移除旧子服务器完成")
+
+		print("完成")
+
 
 	elif cmd[0] == "au":
 		print("添加用户模式")
@@ -585,6 +661,7 @@ def dataControl(cmd):
 		sock.connectServer()
 		vmess = sock.getVmess()
 		sock.closeConnect()
+		print("\n信息码：")
 		print(vmess)
 		print("完成")
 
@@ -618,9 +695,11 @@ def mainUserUpdate():
 					time.sleep(10)
 					number -= 1
 
-		except:
+		except Exception as e:
+			print(e)
 			print("\n守护线程出错！")
 			print("重启线程！\n")
+			time.sleep(5)
 
 
 def main():
@@ -629,8 +708,16 @@ def main():
 		cmd = input(">>")
 		cmd = cmd.split(" ")
 
-		dataControl(cmd)
-
+		if cmd[0] == "q":
+			print("\n退出程序！强制关闭所有守护进程！\n")
+			sys.exit()
+		elif cmd[0] == "lst":
+			print("\n列出所有子进程（守护进程）\n")
+			print(threading.enumerate())
+		
+		mainUserUpdatet = threading.Thread(target=dataControl,args=(cmd,))
+		mainUserUpdatet.setDaemon(True)
+		mainUserUpdatet.start()
 
 if __name__=='__main__':
 	print("Lcv2 V7.0 主服务器 启动")
@@ -646,9 +733,13 @@ if __name__=='__main__':
 		try:
 			print("主核心启动")
 			main()
-		except:
+		except Exception as e:
+			print(e)
 			print("\n核心出错！")
 			print("进行全局变量初始化！")
 			print("重启核心！\n")
+			time.sleep(3)
+
+
 
 		
