@@ -59,10 +59,16 @@ def certificate_test():
 				else:
 					print("证书未找到！发送拒绝请求！")
 					cli.sendall("False".encode())
+				cli.close()
 
 		except Exception as e:
 			print(e)
+			try:
+				cli.close()
+			except Exception as e:
+				print(e)
 			print("证书服务出错！")
+			time.sleep(3)
 
 	
 def addtra():
@@ -96,11 +102,17 @@ def addtra():
 						user_data[x] = y + int(data_list[1])
 				
 				cli.sendall("Finish".encode())
+				cli.close()
 
 		except Exception as e:
 			print(e)
+			try:
+				cli.close()
+			except Exception as e:
+				print(e)
 			print("流量结算服务出错！")
 			print("正在重启线程")
+			time.sleep(3)
 
 def main():
 	global user_data
@@ -152,9 +164,14 @@ if __name__=='__main__':
 			main()
 		except Exception as e:
 			print(e)
+			try:
+				cli.close()
+			except Exception as e:
+				print(e)
 			print("\n核心出错！")
 			print("进行全局变量初始化！")
 			print("重启核心！\n")
+			time.sleep(3)
 
 
 		
