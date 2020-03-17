@@ -8,6 +8,7 @@ import json
 import os
 import uuid
 import sys
+import base64
 
 this_program_use_to_sell = True
 this_program_ID = ""
@@ -15,6 +16,34 @@ certificate_state = False
 
 state = 0
 #用于描述线程状态
+
+def getVmess(username,ip,uuid):
+	a = '''{
+	"v": "2",
+	"ps": "'''
+	a2 = username
+	a3 = '''",
+	"add": "'''
+	b = ip
+	c = '''",
+	"port": "26373",
+	"id": "'''
+	d = uuid
+	e = '''",
+	"aid": "10",
+	"net": "tcp",
+	"type": "http",
+	"host": "www.baidu.com",
+	"path": "",
+	"tls": ""
+	}'''
+	data = a + a2 + a3 + b + c + d + e
+	data = data.encode("utf-8")
+	data = base64.b64encode(data)
+	data = str(data)
+	data = data[2:-1]
+	data = "vmess://" + data
+	return data
 
 def get_Lcv2_config():
 	global this_program_ID
@@ -210,12 +239,12 @@ class UserData():
 
 class Lcv2_Socket():
 
-	def __init__(self,ip="",email="",uuid=""):
+	def __init__(self,ip="",email="",uuid="",time=10):
 		self.ip = ip
 		self.email = email
 		self.uuid = uuid
 		self.sock = socket.socket()
-		self.sock.settimeout(10)
+		self.sock.settimeout(time)
 
 
 	def connectServer(self):
@@ -274,19 +303,6 @@ class Lcv2_Socket():
 			return False, "0"
 
 
-	def getVmess(self):
-		#获取用户vmess链接的服务器函数
-		#此函数没有错误处理
-
-		dataList = ["get_vmess",self.uuid]
-		data = '*data*'.join(dataList)
-
-		self.sock.sendall(data.encode())
-		serverRecv = self.sock.recv(1024).decode()
-
-		return serverRecv
-
-
 	def closeConnect(self):
 		self.sock.close()
 
@@ -301,15 +317,20 @@ def mainService():
 		data = UserData()
 		data.readUserData()
 		userdata = data.getUserDetails()
-
 		for server_ip, users in userdata.items():
 			for one_user in users:
-				lcv2Sock = Lcv2_Socket()
-				print("\n查找用户：" + one_user[0])
-				lcv2Sock.ip = server_ip
-				lcv2Sock.email = one_user[0]
-				lcv2Sock.connectServer()
-				state, traffic = lcv2Sock.readLcv2User()
+				try:
+					lcv2Sock = Lcv2_Socket(time=5)
+					print("\n查找用户：" + one_user[0])
+					lcv2Sock.ip = server_ip
+					lcv2Sock.email = one_user[0]
+					lcv2Sock.connectServer()
+					state, traffic = lcv2Sock.readLcv2User()
+					lcv2Sock.closeConnect()
+				except Exception as e:
+					print(e)
+					print("服务器抓取错误！")
+					state = False
 
 				if state== True and traffic != "0":
 					data.ip = server_ip
@@ -320,7 +341,6 @@ def mainService():
 					print("删除流量：" + str(traffic))
 				else:
 					print("错误！没有找到用户："+one_user[0])
-				lcv2Sock.closeConnect()
 		
 		data.writeUserData()
 		print("用户信息更新完成！")
@@ -384,19 +404,20 @@ def mainService():
 def dataControl(cmd):
 	#cmd命令控制程序
 	if cmd[0] == "h":
-		print("\nLcv2 信息主控使用帮助(ip为服务器编号)（自动保存）")
+		print("\nLcv2 信息主控使用帮助(ip为服务器编号,tip为整个ip)（自动保存）")
 		print("au [ip] [email] [traffic] 添加用户到服务器下")
 		print("du [ip] [email] 删除用户在服务器下")
 		print("tu [ip] [email] [newIp] 转移用户到新的服务器")
-		print("ptu [ip] [newIp] 转移所有指定用户到新的服务器")#
+		print("ptu [tip] [newtIp] 转移所有指定用户到新的服务器")
 		print("at [ip] [email] [traffic] 添加用户流量")
 		print("dt [ip] [email] [traffic] 删除用户流量")
 		print("initusdata 初始化用户信息文件")#
 		print("initserver 进行服务器初始化")
 		print("ud 更新用户流量数据 ")
-		print("as [ip] 添加服务器")
+		print("as [tip] 添加服务器")
 		print("ds [ip] 删除服务器")
-		print("gvm [ip] [email] 获取用户vmess链接\n")
+		print("gvm [ip] [email] 获取用户vmess链接")
+		print("pgvm [ip] 批量获取用户vmess链接\n")
 		print("q  强制退出程序")
 		print("lst  列出所有子进程")
 		print("---------信息查找浏览分类---------")
@@ -405,6 +426,80 @@ def dataControl(cmd):
 		print("lu [ip] 列出指定ip下的所有用户")
 		print("fu [email] 查询指定用户在所有ip下")
 		print("wt 延迟主进程更新时间")
+
+	elif cmd[0] == "pgvm":
+		print("正在获取用户vmess")
+		data = UserData()
+		data.readUserData()
+		data.ip = cmd[1]
+		serverip = data.getIp()
+		userdata = data.getUserDetails()
+		for ip, userlist in userdata.items():
+			if serverip == ip:
+				for one_user in userlist:
+					vmess = getVmess(one_user[0],serverip,one_user[1])
+					print("\n用户名称：" + one_user[0])
+					print("信息码：")
+					print(vmess)
+					input("输入回车继续")
+		print("完成")
+
+
+	elif cmd[0] == "ptu":
+			print("用户转移模式")
+			data = UserData()
+			data.readUserData()
+			data = data.getUserDetails()
+			#获取用户信息
+			for ip, UserList in data.items():
+				if ip == cmd[1]:
+					for oneUserData in UserList:
+
+						print("用户信息")
+						print(oneUserData)
+						#加入到新的数据结构
+						data = UserData()
+						data.readUserData()
+						data.ip = cmd[2]
+						data.email = oneUserData[0]
+						data.uuid = oneUserData[1]
+						data.traffic = oneUserData[2]
+						data.addUser()
+						data.writeUserData()
+						print("新服务器数据库加入完成")
+						#删除用户在旧的数据
+						data = UserData()
+						data.readUserData()
+						data.ip = ip
+						data.email = oneUserData[0]
+						_ = data.delUser()
+						data.writeUserData()
+						print("旧数据删除完成")
+						#加入到新的子服务器
+						sock = Lcv2_Socket()
+						sock.ip = cmd[2]
+						sock.email = oneUserData[0]
+						sock.uuid = oneUserData[1]
+						sock.connectServer()
+						sock.addLcv2User()
+						sock.closeConnect()
+						print("加入新子服务器完成")
+
+						#删除用户在久的子服务器
+						try:
+							sock = Lcv2_Socket()
+							sock.ip = ip
+							sock.email = oneUserData[0]
+							sock.uuid = oneUserData[1]
+							sock.connectServer()
+							sock.delLcv2User()
+							sock.closeConnect()
+						except Exception as e:
+							print(e)
+						print("移除旧子服务器完成")
+
+						print("完成")
+
 
 	elif cmd[0] == "tu":
 		print("用户转移模式")
@@ -654,15 +749,9 @@ def dataControl(cmd):
 				for one_user in userlist:
 					if one_user[0] == cmd[2]:
 						uuidd = one_user[1]
-
-		sock = Lcv2_Socket()
-		sock.ip = serverip
-		sock.uuid = uuidd
-		sock.connectServer()
-		vmess = sock.getVmess()
-		sock.closeConnect()
-		print("\n信息码：")
-		print(vmess)
+						vmess = getVmess(cmd[2],serverip,uuidd)
+						print("\n信息码：")
+						print(vmess)
 		print("完成")
 
 
@@ -720,7 +809,8 @@ def main():
 		mainUserUpdatet.start()
 
 if __name__=='__main__':
-	print("Lcv2 V7.0 主服务器 启动")
+	print("Lcv2 V7.1 主服务器 启动")
+	print("运行环境：Google Cloud Debian9")
 	get_Lcv2_config()
 
 	print("申请自主用户更新线程")
