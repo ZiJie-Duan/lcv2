@@ -20,7 +20,7 @@ state = 0
 def getVmess(username,ip,uuid):
 	a = '''{
 	"v": "2",
-	"ps": "'''
+	"ps": "Lcv2_7.1_'''
 	a2 = username
 	a3 = '''",
 	"add": "'''
