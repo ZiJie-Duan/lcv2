@@ -808,6 +808,8 @@ def main():
 		mainUserUpdatet.setDaemon(True)
 		mainUserUpdatet.start()
 
+
+
 if __name__=='__main__':
 	print("Lcv2 V7.1 主服务器 启动")
 	print("运行环境：Google Cloud Debian9")
